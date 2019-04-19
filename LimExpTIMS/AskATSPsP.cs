@@ -8,5 +8,6 @@ namespace TR.LimExpTIMS
 {
   class AskATSPsP
   {
+    //統合型ATS車上装置
   }
 }

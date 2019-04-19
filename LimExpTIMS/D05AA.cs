@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace TR.LimExpTIMS
 {
-  class KikuSC59A
+  class D05AA
   {
-    //定速 / 抑速 / 低定速
+    //D05AA ブレーキ確認情報(動作要因)
   }
 }

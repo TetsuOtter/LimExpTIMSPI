@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace TR.LimExpTIMS
 {
-  class KikuSC59A
+  class S00Ax
   {
-    //定速 / 抑速 / 低定速
+    //起動画面 S00AA
+    //初期選択 S00AB
   }
 }

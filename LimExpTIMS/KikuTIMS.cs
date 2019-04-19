@@ -8,5 +8,6 @@ namespace TR.LimExpTIMS
 {
   class KikuTIMS
   {
+    //TIMS装置
   }
 }

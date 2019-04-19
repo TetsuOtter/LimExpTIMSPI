@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace TR.LimExpTIMS
 {
-  class KikuSC59A
+  class AnnXX
   {
-    //定速 / 抑速 / 低定速
+    //Accident / Attention
+    //A06AA ATS-P非常ブレーキ動作
   }
 }

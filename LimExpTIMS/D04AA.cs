@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace TR.LimExpTIMS
 {
-  class KikuSC59A
+  class D04AA
   {
-    //定速 / 抑速 / 低定速
+    //D04AA 列番設定
   }
 }

@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace TR.LimExpTIMS
 {
-  class KikuSC59A
+  class Keiki
   {
-    //定速 / 抑速 / 低定速
+    //No.1(実装準備) / No.1+2 / No.2計器モニタ表示
   }
 }
