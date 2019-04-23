@@ -11,37 +11,37 @@ namespace TR.LimExpTIMS
   {
     //定速 / 抑速 / 低定速
 
-    public const CallingConvention CalCnv = CallingConvention.StdCall;
+    private const CallingConvention CalCnv = CallingConvention.StdCall;
     [DllImport("SC59A.dll", CallingConvention = CalCnv)]
     internal static extern void Load();
     [DllImport("SC59A.dll", CallingConvention = CalCnv)]
     internal static extern void Dispose();
     [DllImport("SC59A.dll", CallingConvention = CalCnv)]
-    internal static extern void SetVehicleSpec();
+    internal static extern void SetVehicleSpec(Spec s);
     [DllImport("SC59A.dll", CallingConvention = CalCnv)]
-    internal static extern void Initialize();
+    internal static extern void Initialize(int s);
     [DllImport("SC59A.dll", CallingConvention = CalCnv)]
-    internal static extern void Elapse();
+    internal static extern unsafe void Elapse(State s, int* Pa, int* So);
     [DllImport("SC59A.dll", CallingConvention = CalCnv)]
-    internal static extern void SetPower();
+    internal static extern void SetPower(int p);
     [DllImport("SC59A.dll", CallingConvention = CalCnv)]
-    internal static extern void SetBrake();
+    internal static extern void SetBrake(int b);
     [DllImport("SC59A.dll", CallingConvention = CalCnv)]
-    internal static extern void SetReverser();
+    internal static extern void SetReverser(int r);
     [DllImport("SC59A.dll", CallingConvention = CalCnv)]
-    internal static extern void KeyDown();
+    internal static extern void KeyDown(int k);
     [DllImport("SC59A.dll", CallingConvention = CalCnv)]
-    internal static extern void KeyUp();
+    internal static extern void KeyUp(int k);
     [DllImport("SC59A.dll", CallingConvention = CalCnv)]
-    internal static extern void HornBlow();
+    internal static extern void HornBlow(int k);
     [DllImport("SC59A.dll", CallingConvention = CalCnv)]
     internal static extern void DoorOpen();
     [DllImport("SC59A.dll", CallingConvention = CalCnv)]
     internal static extern void DoorClose();
     [DllImport("SC59A.dll", CallingConvention = CalCnv)]
-    internal static extern void SetSignal();
+    internal static extern void SetSignal(int s);
     [DllImport("SC59A.dll", CallingConvention = CalCnv)]
-    internal static extern void SetBeaconData();
+    internal static extern void SetBeaconData(Beacon b);
     //[DllImport("SC59A.dll", CallingConvention = CalCnv)]
     //internal static extern void GetPluginVersion();
 

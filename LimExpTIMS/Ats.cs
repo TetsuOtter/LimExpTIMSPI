@@ -190,7 +190,7 @@ namespace TR.LimExpTIMS
     /// <summary>Called when set the Vehicle Spec</summary>
     /// <param name="s">Set Spec</param>
     [DllExport(CallingConvention = CalCnv)]
-    public static void SetVehicleSpec(Spec s) => Main.GetVehicleSpec(s);
+    public static void SetVehicleSpec(Spec s) => Main.SetVehicleSpec(s);
 
     /// <summary>Called when car is put</summary>
     /// <param name="s">Default Brake Position (Refer to InitialPos class)</param>
