@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TR.LimExpTIMSPI
+namespace TR.LimExpTIMS
 {
 
   /// <summary>列車のスペックに関する構造体</summary>
@@ -160,8 +160,6 @@ namespace TR.LimExpTIMSPI
     /// <summary>ATSKey_L (Default : D0)</summary>
     public const int L = 15;
   }
-
-
 
   /// <summary>処理を実装するクラス</summary>
   static public class Ats

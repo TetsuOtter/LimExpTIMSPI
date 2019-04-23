@@ -5,21 +5,24 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace TR.LimExpTIMSPI
+namespace TR.LimExpTIMS
 {
   /// <summary>メインの機能をここに実装する。</summary>
   static internal class Main
   {
+
     static internal void Load()
     {
 #if DEBUG
       MessageBox.Show("LimExpTIMSPI Debug Build");//If you don't need, please remove it.
 #endif
+
+      AskATSPsP.Load();
     }
 
     static internal void Dispose()
     {
-
+      AskATSPsP.Dispose();
     }
 
     static internal void GetVehicleSpec(Spec s)
@@ -35,6 +38,9 @@ namespace TR.LimExpTIMSPI
     static unsafe internal void Elapse(State st, int* Pa, int* Sa)
     {
       //If you want to change the Handle state, please access to Ats.Handle
+
+
+
     }
 
     static internal void SetPower(int p)
