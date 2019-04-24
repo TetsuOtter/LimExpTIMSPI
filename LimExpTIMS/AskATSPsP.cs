@@ -22,7 +22,7 @@ namespace TR.LimExpTIMS
     [DllImport("Integrated_ATS(Ps).dll", CallingConvention = CalCnv)]
     internal static extern void Initialize(int s);
     [DllImport("Integrated_ATS(Ps).dll", CallingConvention = CalCnv)]
-    internal static extern unsafe void Elapse(State s, int* Pa, int* So);
+    internal static extern unsafe Hand Elapse(State s, int* Pa, int* So);
     [DllImport("Integrated_ATS(Ps).dll", CallingConvention = CalCnv)]
     internal static extern void SetPower(int p);
     [DllImport("Integrated_ATS(Ps).dll", CallingConvention = CalCnv)]

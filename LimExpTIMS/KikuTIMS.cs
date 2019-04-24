@@ -10,30 +10,35 @@ namespace TR.LimExpTIMS
   class KikuTIMS
   {
     //TIMS装置
+    /*public KikuTIMS()
+    {
+
+    }
+    internal bool Loaded = false;*/
 
     private const CallingConvention CalCnv = CallingConvention.StdCall;
     [DllImport("TIMS_new_m.dll", CallingConvention = CalCnv)]
     internal static extern void Load();
-    [DllImport("TIMS_new_m.dll", CallingConvention = CalCnv)]
-    internal static extern void Dispose();
+    //[DllImport("TIMS_new_m.dll", CallingConvention = CalCnv)]
+    //internal static extern void Dispose();
     [DllImport("TIMS_new_m.dll", CallingConvention = CalCnv)]
     internal static extern void SetVehicleSpec(Spec s);
     [DllImport("TIMS_new_m.dll", CallingConvention = CalCnv)]
     internal static extern void Initialize(int s);
     [DllImport("TIMS_new_m.dll", CallingConvention = CalCnv)]
-    internal static extern unsafe void Elapse(State s, int* Pa, int* So);
+    internal static extern unsafe Hand Elapse(State s, int* Pa, int* So);
     [DllImport("TIMS_new_m.dll", CallingConvention = CalCnv)]
     internal static extern void SetPower(int p);
     [DllImport("TIMS_new_m.dll", CallingConvention = CalCnv)]
     internal static extern void SetBrake(int b);
     [DllImport("TIMS_new_m.dll", CallingConvention = CalCnv)]
     internal static extern void SetReverser(int r);
-    [DllImport("TIMS_new_m.dll", CallingConvention = CalCnv)]
-    internal static extern void KeyDown(int k);
-    [DllImport("TIMS_new_m.dll", CallingConvention = CalCnv)]
-    internal static extern void KeyUp(int k);
-    [DllImport("TIMS_new_m.dll", CallingConvention = CalCnv)]
-    internal static extern void HornBlow(int k);
+    //[DllImport("TIMS_new_m.dll", CallingConvention = CalCnv)]
+    //internal static extern void KeyDown(int k);
+    //[DllImport("TIMS_new_m.dll", CallingConvention = CalCnv)]
+    //internal static extern void KeyUp(int k);
+    //[DllImport("TIMS_new_m.dll", CallingConvention = CalCnv)]
+    //internal static extern void HornBlow(int k);
     [DllImport("TIMS_new_m.dll", CallingConvention = CalCnv)]
     internal static extern void DoorOpen();
     [DllImport("TIMS_new_m.dll", CallingConvention = CalCnv)]
