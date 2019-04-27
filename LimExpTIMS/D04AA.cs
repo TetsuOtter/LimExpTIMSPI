@@ -9,5 +9,6 @@ namespace TR.LimExpTIMS
   class D04AA
   {
     //D04AA 列番設定
+    //v100で未実装
   }
 }
