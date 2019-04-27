@@ -75,6 +75,7 @@ namespace TR.LimExpTIMS
 
     //Radio etc.
     internal static int RadioCHNum = 0;
+    internal static byte TsuJoState = 0;
 
     //Others
     internal static bool IsAirSecAleart = false;
@@ -390,10 +391,12 @@ namespace TR.LimExpTIMS
           break;
         case TIMSPageENum.S00AB:
           Pa[48] = IsS00ABUteshiBtnPushing ? 3 : 2;//運転士押下中?
-          if (RadioCHNum == 0) Pa[48] += 2;//運行情報はありません。
+          //無線チャンネルが0 or 1 or 11(A1)以上 or "情報"なし
+          if (RadioCHNum <= 1 || RadioCHNum >= 11 || TsuJoState == 0 || TsuJoState == 2) Pa[48] += 2;//運行情報はありません。
           
           break;
         case TIMSPageENum.D00AA:
+
           break;
         default:
           Pa[48] = 0;
@@ -408,6 +411,10 @@ namespace TR.LimExpTIMS
         }
         else if (!IsTimeTableSet) Pa[211] = 3;//列番設定せい
       }
+
+      //通告情報欄関連
+      Pa[80] = TsuJoState;
+      if (TRBIDSppLoaded) Pa[80] += 4;//モニタ中
 
       //TIMS Page Number
       Pa[79] = (int)TIMSPageNum;
@@ -542,11 +549,11 @@ namespace TR.LimExpTIMS
             break;
 
           case ACKeyNum:
-            ACDCState = ACDCStateENum.AC;
+            //ACDCState = ACDCStateENum.AC;
             IsACDCBtnPushing = true;
             break;
           case DCKeyNum:
-            ACDCState = ACDCStateENum.DC;
+            //ACDCState = ACDCStateENum.DC;
             IsACDCBtnPushing = true;
             break;
         }
@@ -556,10 +563,40 @@ namespace TR.LimExpTIMS
         switch (DispMode)
         {
           case DisplayingModeENum.Driving:
-            if (TIMSPageNum == TIMSPageENum.S00AB && k == ATSKeys.C2)
+            switch (TIMSPageNum)
             {
-              IsS00ABUteshiBtnPushing = true;
-              IsTIMSTouching = true;
+              case TIMSPageENum.S00AB:
+                if (k == ATSKeys.C2)
+                {
+                  IsS00ABUteshiBtnPushing = true;
+                  IsTIMSTouching = true;
+                }
+                break;
+              case TIMSPageENum.D00AA:
+                switch (k)
+                {
+                  case ATSKeys.C1://初期選択
+                    IsShokiSentakuPuhsing = true;
+                    IsTIMSTouching = true;
+                    break;
+                  case ATSKeys.C2://運転情報
+                    D00AAButtonPushingNum = 1;
+                    IsTIMSTouching = true;
+                    break;
+                  case ATSKeys.D://運転情報
+                    D00AAButtonPushingNum = 1;
+                    IsTIMSTouching = true;
+                    break;
+                  case ATSKeys.E://ブレーキ確認情報
+                    D00AAButtonPushingNum = 2;
+                    IsTIMSTouching = true;
+                    break;
+                  case ATSKeys.F://列番設定
+                    D00AAButtonPushingNum = 3;
+                    IsTIMSTouching = true;
+                    break;
+                }
+                break;
             }
             break;
           case DisplayingModeENum.CabNFBShowing:
@@ -649,13 +686,42 @@ namespace TR.LimExpTIMS
             //IC Insert/Remove
             if (k == ATSKeys.J) ICInsertState.Turn();
 
-            //S00AB UteshiBtn
-            if(TIMSPageNum== TIMSPageENum.S00AB && k == ATSKeys.C2)
+            switch (TIMSPageNum)
             {
-              IsS00ABUteshiBtnPushing = false;
-              TIMSPageNum = TIMSPageENum.D00AA;
+              case TIMSPageENum.S00AB:
+                //S00AB UteshiBtn
+                if (k == ATSKeys.C2)
+                {
+                  IsS00ABUteshiBtnPushing = false;
+                  TIMSPageNum = TIMSPageENum.D00AA;
+                }
+                break;
+              case TIMSPageENum.D00AA:
+                switch (k)
+                {
+                  case ATSKeys.C1://初期選択
+                    IsShokiSentakuPuhsing = false;
+                    TIMSPageNum = TIMSPageENum.S00AB;
+                    break;
+                  case ATSKeys.C2://運転情報
+                    D00AAButtonPushingNum = 0;
+                    TIMSPageNum = TIMSPageENum.D01AA;
+                    break;
+                  case ATSKeys.D://運転情報
+                    D00AAButtonPushingNum = 0;
+                    TIMSPageNum = TIMSPageENum.D01AA;
+                    break;
+                  case ATSKeys.E://ブレーキ確認情報
+                    D00AAButtonPushingNum = 0;
+                    //TIMSPageNum = TIMSPageENum.D05AA;//未実装
+                    break;
+                  case ATSKeys.F://列番設定
+                    D00AAButtonPushingNum = 0;
+                    //TIMSPageNum = TIMSPageENum.D04AA;//未実装
+                    break;
+                }
+                break;
             }
-
             break;
           case DisplayingModeENum.CabNFBShowing:
             if (k == 12)
@@ -718,8 +784,12 @@ namespace TR.LimExpTIMS
         case 139:
           RadioCHNum = b.Data;
           break;
+        case 140:
+          TsuJoState = (byte)(b.Data % 4);
+          break;
       }
     }
+
 
 
     static private unsafe void OnceSoundSetting(int* Sa)
@@ -786,7 +856,7 @@ namespace TR.LimExpTIMS
       static private bool _PantaRaise = false;
 
     }
-
+    //COMP
     static private unsafe void CabNFBPanels(int* Pa)
     {
       const int BaseIndex = 212;

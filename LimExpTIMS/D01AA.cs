@@ -20,7 +20,13 @@ namespace TR.LimExpTIMS
     }
     static internal unsafe void Elapse(int* p)
     {
+      //無線ch番号表示
+      p[249] = Main.RadioCHNum + 1;
+      if (!Main.IsTimeTableSet)
+      {
+        //自炊出力を上書き
 
+      }
     }
   }
 }
