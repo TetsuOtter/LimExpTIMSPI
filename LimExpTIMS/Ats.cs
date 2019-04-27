@@ -171,8 +171,17 @@ namespace TR.LimExpTIMS
     public static bool DoorClosed { get; set; } = false;
     /// <summary>Current State of Handles</summary>
     public static Hand Handle = default;
+    /// <summary>Spec Info</summary>
+    public static Spec SpecD = default;
+    /// <summary>Current State</summary>
+    public static State StateD = default;
     /// <summary>Current Key State</summary>
     public static bool[] IsKeyDown { get; set; } = new bool[16];
+    /// <summary>Theoretical Speed</summary>
+    public static double GPSSpeed = 0;
+
+    private static double LastLoc = 0;
+    private static int LastTime = 0; 
 
     /// <summary>Called when this plugin is loaded</summary>
     [DllExport(CallingConvention = CalCnv)]
@@ -190,7 +199,7 @@ namespace TR.LimExpTIMS
     /// <summary>Called when set the Vehicle Spec</summary>
     /// <param name="s">Set Spec</param>
     [DllExport(CallingConvention = CalCnv)]
-    public static void SetVehicleSpec(Spec s) => Main.SetVehicleSpec(s);
+    public static void SetVehicleSpec(Spec s) { SpecD = s; Main.SetVehicleSpec(s); }
 
     /// <summary>Called when car is put</summary>
     /// <param name="s">Default Brake Position (Refer to InitialPos class)</param>
@@ -205,6 +214,17 @@ namespace TR.LimExpTIMS
     [DllExport(CallingConvention = CalCnv)]
     static unsafe public Hand Elapse(State st, int* Pa, int* Sa)
     {
+      StateD = st;
+      if (LastLoc != st.Z && st.T != LastTime)
+      {
+        int dt = st.T - LastTime;
+        if (dt != 0)
+        {
+          GPSSpeed = (st.Z - LastLoc) / dt;
+        }
+        LastLoc = st.Z;
+        LastTime = st.T;
+      }
       Main.Elapse(st, Pa, Sa);
       return Handle;
     }
@@ -287,4 +307,6 @@ namespace TR.LimExpTIMS
 
 
   }
+
+
 }

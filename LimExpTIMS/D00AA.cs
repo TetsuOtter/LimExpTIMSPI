@@ -9,5 +9,18 @@ namespace TR.LimExpTIMS
   class D00AA
   {
     //D00AA 運転士メニュー
+    static internal unsafe void Elapse(int* Pa)
+    {
+
+    }
+
+    static internal void KeyDown(int k)
+    {
+
+    }
+    static internal void KeyUp(int k)
+    {
+
+    }
   }
 }
