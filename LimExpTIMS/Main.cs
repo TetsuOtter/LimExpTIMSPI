@@ -707,6 +707,18 @@ namespace TR.LimExpTIMS
       if (AskATSPsPLoaded) AskATSPsP.SetBeaconData(b);
       //if(KikuSC59ALoaded) KikuSC59A.SetBeaconData(b);
       if (KikuTIMSLoaded) KikuTIMS.SetBeaconData(b);
+      switch (b.Num)
+      {
+        case 137:
+          IsAirSecAleart = true;
+          break;
+        case 138:
+          IsAirSecAleart = false;
+          break;
+        case 139:
+          RadioCHNum = b.Data;
+          break;
+      }
     }
 
 
