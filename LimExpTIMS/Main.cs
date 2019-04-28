@@ -44,7 +44,7 @@ namespace TR.LimExpTIMS
     private static bool IsMCKeyTurnFailed = false;
 
     //停車前デッキ放送
-    private static bool IsBeforeStoppingAnnouncePlayed = false;
+    private static bool IsBeforeStoppingAnnouncePlay = false;
 
     //IC関連
     private static bool IsICInserted = false;//Sound
@@ -82,6 +82,7 @@ namespace TR.LimExpTIMS
     //Others
     internal static bool IsAirSecAleart = false;
     private static byte ICRWBusyCount = 0;
+    private static int ACDCStateRec = 0;
 
     //TIMS PageNumber
     internal enum TIMSPageENum//あとで適宜変更
@@ -119,8 +120,8 @@ namespace TR.LimExpTIMS
       ON
     };
 
-    private enum ACDCStateENum { None, DC, AC};
-    private static ACDCStateENum ACDCState = ACDCStateENum.None;
+    //private enum ACDCStateENum { None, DC, AC};
+    //private static ACDCStateENum ACDCState = ACDCStateENum.None;
     private const int DCKeyNum = ATSKeys.K;
     private const int ACKeyNum = ATSKeys.L;
 
@@ -298,8 +299,8 @@ namespace TR.LimExpTIMS
       const int ACDisp = 217;
       if (Pa[ACDisp] == 1) { Pa[218] = 2; }//ACDisp==1ならAC, そうでないならDC出力のまま。
 
-      //AC-DCどちらか判別できない場合
-      if (Pa[218] != 0) Pa[217] = Pa[218];
+      if (Pa[218] != 0) ACDCStateRec = Pa[218];
+      Pa[217] = ACDCStateRec;//ACDC Button
 
       //Location & Speed Display
       int SpeedTenHund = Pa[100] * 10 + Pa[101];
@@ -447,6 +448,8 @@ namespace TR.LimExpTIMS
       //MC & Reverser表示
       Pa[33] = 1 - Ats.Handle.R;
       Pa[32] = (Ats.SpecD.B + 1 - Ats.Handle.B) + Ats.Handle.P;
+
+      D01AA.Elapse(Pa);//D01AAのIC状態による表示Wrap
 
       //IC R/Wの点滅
       if (ICInsertState && !ICwasRead && ICReading)
@@ -861,6 +864,9 @@ namespace TR.LimExpTIMS
         case 140:
           TsuJoState = (byte)(b.Data % 4);
           break;
+        case 145:
+          IsBeforeStoppingAnnouncePlay = true;
+          break;
       }
     }
 
@@ -895,6 +901,14 @@ namespace TR.LimExpTIMS
       //IC Insert/Remove
       Sa[109].SPO(ref IsICInserted);
       Sa[110].SPO(ref IsICRemoved);
+
+      //停車予告
+      Sa[107].SPO(ref IsBeforeStoppingAnnouncePlay);
+
+      //Control Failed
+      Sa[54].SPO(ref IsMCControlFailed);
+      Sa[55].SPO(ref IsRevControlFailed);
+      Sa[56].SPO(ref IsMCKeyTurnFailed);
     }
 
 
