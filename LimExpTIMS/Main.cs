@@ -478,7 +478,7 @@ namespace TR.LimExpTIMS
     static private int PNum = 0;
     static internal void SetPower(int p)
     {
-      if (Ats.Handle.R != 0)
+      if (Ats.Handle.R != 0 || CabSeSLoc != CabSeSLocationENum.F)
       {
         if (TRBIDSppLoaded) TRBIDSpp.SetPower(p);
         if (AskATSPsPLoaded) AskATSPsP.SetPower(p);
@@ -503,7 +503,7 @@ namespace TR.LimExpTIMS
         if (KikuSC59ALoaded) KikuSC59A.SetBrake(b);
         if (KikuTIMSLoaded) KikuTIMS.SetBrake(b);
       }
-      if (Ats.Handle.R != 0)
+      if (Ats.Handle.R != 0 || CabSeSLoc != CabSeSLocationENum.F)
       {
         if (TRBIDSppLoaded) TRBIDSpp.SetBrake(b);
         if (AskATSPsPLoaded) AskATSPsP.SetBrake(b);
@@ -529,7 +529,7 @@ namespace TR.LimExpTIMS
         if (KikuSC59ALoaded) KikuSC59A.SetReverser(r);
         if (KikuTIMSLoaded) KikuTIMS.SetReverser(r);
       }
-      if (Ats.Handle.P == 0 && Ats.Handle.B == Ats.SpecD.B + 1 && MCKeyState == MCKeyStateENum.ON)
+      if ((Ats.Handle.P == 0 && Ats.Handle.B == Ats.SpecD.B + 1 && MCKeyState == MCKeyStateENum.ON) || CabSeSLoc != CabSeSLocationENum.F)
       {
         if (TRBIDSppLoaded) TRBIDSpp.SetReverser(r);
         if (AskATSPsPLoaded) AskATSPsP.SetReverser(r);
@@ -711,10 +711,10 @@ namespace TR.LimExpTIMS
               DispMode = DisplayingModeENum.CabNFBShowing;
               break;
             case DisplayingModeENum.CabNFBShowing:
-              DispMode = DisplayingModeENum.CabSeSShowing;
+              if (Ats.StateD.V == 0) DispMode = DisplayingModeENum.CabSeSShowing;//走行中の離席はアウト
               break;
             case DisplayingModeENum.CabSeSShowing:
-              DispMode = DisplayingModeENum.OutOfCar;
+              if (Ats.StateD.V == 0) DispMode = DisplayingModeENum.OutOfCar;
               break;
           }
         }
