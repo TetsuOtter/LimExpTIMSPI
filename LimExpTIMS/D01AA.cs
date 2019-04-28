@@ -27,6 +27,11 @@ namespace TR.LimExpTIMS
         for (int i = 91; i <= 97; i++) p[i] = 0;//P列番
         p[117] = 0;
       }
+      else
+      {
+        for (int i = 91; i <= 96; i++)p[i] = p[i + 20];
+        p[97] = p[119];
+      }
     }
   }
 }

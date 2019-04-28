@@ -133,6 +133,8 @@ namespace TR.LimExpTIMS
       }
       if (Main.CabSeSLoc != Main.CabSeSLocationENum.F) IsBeforeNotFADC = true;
 
+      //耐雪ブレーキ表示
+      Pa[21] = Main.NFBConfig.SnoBrake ? 1 : 0;
 
       //MR針位置の設定
       //自炊を変換するのみ

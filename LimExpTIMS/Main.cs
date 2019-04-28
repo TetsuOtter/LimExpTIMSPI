@@ -406,9 +406,6 @@ namespace TR.LimExpTIMS
           if (RadioCHNum <= 1 || RadioCHNum >= 11 || TsuJoState == 0 || TsuJoState == 2) Pa[48] += 2;//運行情報はありません。
           
           break;
-        case TIMSPageENum.D00AA:
-
-          break;
         default:
           Pa[48] = 0;
           break;
@@ -473,6 +470,24 @@ namespace TR.LimExpTIMS
       if (Ats.IsKeyDown[ATSKeys.S]) Pa[250] = 1 + (int)DispMode;
       else Pa[250] = 0;
 
+      //ATS-P表示灯(Pa[2]参照実装)
+      Pa[8] = Pa[2];
+
+      //未実装機能のゼロ埋め
+      Pa[6] = Pa[7] = Pa[9] = Pa[11] = Pa[12] = Pa[16] = Pa[17] = Pa[20] = 0;
+      for (int i = 22; i <= 27; i++) Pa[i] = 0;
+      Pa[34] = Pa[35] = Pa[36] = 0;
+      for (int i = 40; i <= 44; i++) Pa[i] = 0;
+      Pa[49] = 0;
+      for (int i = 52; i <= 70; i++) Pa[i] = 0;
+      for (int i = 72; i <= 78; i++) Pa[i] = 0;
+      for (int i = 81; i <= 84; i++) Pa[i] = 0;
+      for (int i = 86; i <= 90; i++) Pa[i] = 0;
+      Pa[104] = Pa[110] = Pa[120] = Pa[121] = Pa[127] = Pa[129] = 0;
+      for (int i = 170; i <= 177; i++) Pa[i] = 0;
+      Pa[186] = Pa[187] = 0;
+      for (int i = 198; i <= 202; i++) Pa[i] = 0;
+      Pa[208] = Pa[209] = Pa[211] = Pa[216] = Pa[235] = Pa[251] = Pa[252] = Pa[254] = Pa[255] = 0;
       
     }
     static private int PNum = 0;
@@ -736,7 +751,7 @@ namespace TR.LimExpTIMS
             if (k == ATSKeys.J)
             {
               ICInsertState.Turn();
-              if (ICInsertState) IsICInserted = true;
+              if (ICInsertState) { IsICInserted = true; ICReading = true; }
               else IsICRemoved = true;
             }
 
