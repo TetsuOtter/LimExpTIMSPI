@@ -42,6 +42,9 @@
     <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup>
     <DllExportIdent>65C8A9CF-CDA3-4651-82A2-EF4D34F5721F</DllExportIdent>
     <DllExportMetaLibName>DllExport.dll</DllExportMetaLibName>
     <DllExportNamespace>TR.LimExpTIMS</DllExportNamespace>
@@ -74,7 +77,6 @@
     <Compile Include="AnnXX.cs" />
     <Compile Include="AskATSPsP.cs" />
     <Compile Include="Ats.cs" />
-    <Compile Include="D00AA.cs" />
     <Compile Include="D01AA.cs" />
     <Compile Include="D04AA.cs" />
     <Compile Include="D05AA.cs" />

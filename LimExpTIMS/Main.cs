@@ -10,10 +10,10 @@ namespace TR.LimExpTIMS
   /// <summary>メインの機能をここに実装する。</summary>
   static internal class Main
   {
-    private static bool AskATSPsPLoaded = false;
-    private static bool KikuSC59ALoaded = false;
-    private static bool KikuTIMSLoaded = false;
-    private static bool TRBIDSppLoaded = false;
+    public static bool AskATSPsPLoaded { get; private set; } = false;
+    public static bool KikuSC59ALoaded { get; private set; } = false;
+    public static bool KikuTIMSLoaded { get; private set; } = false;
+    public static bool TRBIDSppLoaded { get; private set; } = false;
     //そのうちイベントドリブンにしたい。
 
     //IC R/W関連
@@ -53,14 +53,15 @@ namespace TR.LimExpTIMS
     private static bool ICInsertState = false;
     private static bool wasICRead = false;
     public static bool IsTimeTableSet = false;
+    public static bool IsTrainNumSet = false;
 
     //バックライト関連
     private static int No1KeikiBL = BLBlack;
     private static int No2KeikiBL = BLBlack;
     private static int TIMSBL = 0;
     private static int TIMSSound = 0;
-    private const int BLBlack = 5;
-    private const int BLRed = 6;
+    public const int BLBlack = 5;
+    public const int BLRed = 6;
     private static bool IsTIMSAngry = false;
     private static bool IsNo1BLKeyPushed = false;
     private static bool IsNo2BLKeyPushed = false;
@@ -71,7 +72,8 @@ namespace TR.LimExpTIMS
     static private bool IsShokiSentakuPuhsing = false;
     static private byte D00AAButtonPushingNum = 0;
     static private bool IsS00ABUteshiBtnPushing = false;
-
+    static private bool IsShortCutKey1Pressed = false;
+    static private bool IsShortCutKey2Pressed = false;
 
     //Radio etc.
     internal static int RadioCHNum = 0;
@@ -79,6 +81,7 @@ namespace TR.LimExpTIMS
 
     //Others
     internal static bool IsAirSecAleart = false;
+    private static byte ICRWBusyCount = 0;
 
     //TIMS PageNumber
     internal enum TIMSPageENum//あとで適宜変更
@@ -90,12 +93,14 @@ namespace TR.LimExpTIMS
       D01AA,
       D04AA,
       D05AA,
+      A01AA,
+      A06AA
 
     };
     static internal TIMSPageENum TIMSPageNum = TIMSPageENum.S00AA;
 
-    private enum CabSeSLocationENum { F, N, B };
-    static CabSeSLocationENum CabSeSLoc = CabSeSLocationENum.N;
+    public enum CabSeSLocationENum { F, N, B };
+    static public CabSeSLocationENum CabSeSLoc { get; private set; } = CabSeSLocationENum.N;
 
     private enum DisplayingModeENum
     {
@@ -120,6 +125,8 @@ namespace TR.LimExpTIMS
     private const int ACKeyNum = ATSKeys.L;
 
     private const int TIMSFlushTime = 400;
+    private const byte ICRWFlushCountMAX = 10;
+    private const int ICRWBusyCycle = 250;
 
     //Useful Function
     static public void Turn(ref this bool b) => b = !b;
@@ -135,6 +142,9 @@ namespace TR.LimExpTIMS
       if (PlayingState) { So = Sound.Once; PlayingState = false; }
       else So = Sound.Continue;
     }
+
+
+
 
     static internal void Load()
     {
@@ -293,10 +303,10 @@ namespace TR.LimExpTIMS
 
       //Location & Speed Display
       int SpeedTenHund = Pa[100] * 10 + Pa[101];
-      Pa[101] = Pa[104];//0.1
-      Pa[100] = Pa[103] % 10;//1
-      Pa[99] = (Pa[103] / 10) % 10;//10
-      Pa[98] = Pa[103] / 100;//1100
+      Pa[101] = 1 + Pa[104];//0.1
+      Pa[100] = 1 + (Pa[103] % 10);//1
+      Pa[99] = 1 + ((Pa[103] / 10) % 10);//10
+      Pa[98] = 1 + (Pa[103] / 100);//1100
       Pa[103] = SpeedTenHund;
 
       //空転 / 滑走表示
@@ -412,6 +422,9 @@ namespace TR.LimExpTIMS
         else if (!IsTimeTableSet) Pa[211] = 3;//列番設定せい
       }
 
+      if (IsShortCutKey1Pressed) Pa[238] = 1;
+      if (IsShortCutKey2Pressed) Pa[238] = 2;
+
       //通告情報欄関連
       Pa[80] = TsuJoState;
       if (TRBIDSppLoaded) Pa[80] += 4;//モニタ中
@@ -429,11 +442,29 @@ namespace TR.LimExpTIMS
 
       OnceSoundSetting(Sa);
 
-      Keiki.No12.Panel(Pa);
+      Keiki.Elapse(Pa);//BLの上書きあるかも
 
       //MC & Reverser表示
       Pa[33] = 1 - Ats.Handle.R;
       Pa[32] = (Ats.SpecD.B + 1 - Ats.Handle.B) + Ats.Handle.P;
+
+      //IC R/Wの点滅
+      if (ICInsertState && !ICwasRead && ICReading)
+      {
+        if (ICRWBusyCount < ICRWFlushCountMAX)
+        {
+          Pa[253] = 3 + (st.T / ICRWBusyCycle) % 2;
+          ICRWBusyCount++;
+        }
+        else
+        {
+          ICRWBusyCount = 0;
+          ICwasRead = true;
+          ICReading = false;
+        }
+      }
+      else Pa[253] = ICInsertState ? 3 : 0;
+      
 
       //HELP1
       if (Ats.IsKeyDown[ATSKeys.S]) Pa[250] = 1 + (int)DispMode;
@@ -442,16 +473,8 @@ namespace TR.LimExpTIMS
       
     }
     static private int PNum = 0;
-    static private bool IsPFirst = true;
     static internal void SetPower(int p)
     {
-      /*if (IsPFirst) {
-        PNum = p; IsPFirst = false;
-        if (TRBIDSppLoaded) TRBIDSpp.SetPower(p);
-        if (AskATSPsPLoaded) AskATSPsP.SetPower(p);
-        if (KikuSC59ALoaded) KikuSC59A.SetPower(p);
-        if (KikuTIMSLoaded) KikuTIMS.SetPower(p);
-      }*/
       if (Ats.Handle.R != 0)
       {
         if (TRBIDSppLoaded) TRBIDSpp.SetPower(p);
@@ -597,6 +620,29 @@ namespace TR.LimExpTIMS
                     break;
                 }
                 break;
+              case TIMSPageENum.D01AA:
+                if (k == ATSKeys.C1) { IsShokiSentakuPuhsing = true; IsTIMSTouching = true; }
+                if (k == ATSKeys.D) { IsShortCutKey1Pressed = true; IsTIMSTouching = true; }
+                if (k == ATSKeys.E) { IsShortCutKey2Pressed = true; IsTIMSTouching = true; }
+                break;
+              case TIMSPageENum.D04AA:
+                if (k == ATSKeys.C1) { IsShokiSentakuPuhsing = true; IsTIMSTouching = true; }
+                if (k == ATSKeys.D) { IsShortCutKey1Pressed = true; IsTIMSTouching = true; }
+                if (k == ATSKeys.E) { IsShortCutKey2Pressed = true; IsTIMSTouching = true; }
+                break;
+              case TIMSPageENum.D05AA:
+                if (k == ATSKeys.C1) { IsShokiSentakuPuhsing = true; IsTIMSTouching = true; }
+                if (k == ATSKeys.D) { IsShortCutKey1Pressed = true; IsTIMSTouching = true; }
+                if (k == ATSKeys.E) { IsShortCutKey2Pressed = true; IsTIMSTouching = true; }
+                break;
+              case TIMSPageENum.A01AA:
+                if (k == ATSKeys.C1) { IsShokiSentakuPuhsing = true; IsTIMSTouching = true; }
+                if (k == ATSKeys.D) { IsShortCutKey1Pressed = true; IsTIMSTouching = true; }
+                if (k == ATSKeys.E) { IsShortCutKey2Pressed = true; IsTIMSTouching = true; }
+                break;
+              case TIMSPageENum.A06AA:
+                if (k == ATSKeys.D) { IsShortCutKey1Pressed = true; IsTIMSTouching = true; }
+                break;
             }
             break;
           case DisplayingModeENum.CabNFBShowing:
@@ -616,27 +662,27 @@ namespace TR.LimExpTIMS
       //if(KikuSC59ALoaded) KikuSC59A.KeyUp(k);
       //if(KikuTIMSLoaded) KikuTIMS.KeyUp(k);
 
-      //BL and Sound Keys Setting Start
-      switch (k)
-      {
-        case 7://No1
-          IsNo1BLKeyPushed = false;
-          break;
-        case 8://TIMSSo
-          IsTIMSSoundPushed = false;
-          break;
-        case 9://TIMSBL
-          IsTIMSBLKeyPushed = false;
-          break;
-        case 10://No2
-          IsNo2BLKeyPushed = false;
-          break;
-      }
-      //BL and Sound Keys Setting End
 
       //Mode Changing Event
       if (Ats.IsKeyDown[0])
       {
+        //BL and Sound Keys Setting Start
+        switch (k)
+        {
+          case 7://No1
+            IsNo1BLKeyPushed = false;
+            break;
+          case 8://TIMSSo
+            IsTIMSSoundPushed = false;
+            break;
+          case 9://TIMSBL
+            IsTIMSBLKeyPushed = false;
+            break;
+          case 10://No2
+            IsNo2BLKeyPushed = false;
+            break;
+        }
+        //BL and Sound Keys Setting End
         //Num Up
         if (k == 5)
         {
@@ -684,7 +730,12 @@ namespace TR.LimExpTIMS
         {
           case DisplayingModeENum.Driving:
             //IC Insert/Remove
-            if (k == ATSKeys.J) ICInsertState.Turn();
+            if (k == ATSKeys.J)
+            {
+              ICInsertState.Turn();
+              if (ICInsertState) IsICInserted = true;
+              else IsICRemoved = true;
+            }
 
             switch (TIMSPageNum)
             {
@@ -720,6 +771,29 @@ namespace TR.LimExpTIMS
                     //TIMSPageNum = TIMSPageENum.D04AA;//未実装
                     break;
                 }
+                break;
+              case TIMSPageENum.D01AA:
+                if (k == ATSKeys.C1) { IsShokiSentakuPuhsing = false; TIMSPageNum = TIMSPageENum.S00AB; }
+                if (k == ATSKeys.D) { IsShortCutKey1Pressed = false; TIMSPageNum = TIMSPageENum.D00AA; }
+                if (k == ATSKeys.E) { IsShortCutKey2Pressed = false; TIMSPageNum = TIMSPageENum.D01AA; }
+                break;
+              case TIMSPageENum.D04AA:
+                if (k == ATSKeys.C1) { IsShokiSentakuPuhsing = false; TIMSPageNum = TIMSPageENum.S00AB; }
+                if (k == ATSKeys.D) { IsShortCutKey1Pressed = false; TIMSPageNum = TIMSPageENum.D00AA; }
+                if (k == ATSKeys.E) { IsShortCutKey2Pressed = false; TIMSPageNum = TIMSPageENum.D01AA; }
+                break;
+              case TIMSPageENum.D05AA:
+                if (k == ATSKeys.C1) { IsShokiSentakuPuhsing = false; TIMSPageNum = TIMSPageENum.S00AB; }
+                if (k == ATSKeys.D) { IsShortCutKey1Pressed = false; TIMSPageNum = TIMSPageENum.D00AA; }
+                if (k == ATSKeys.E) { IsShortCutKey2Pressed = false; TIMSPageNum = TIMSPageENum.D01AA; }
+                break;
+              case TIMSPageENum.A01AA:
+                if (k == ATSKeys.C1) { IsShokiSentakuPuhsing = false; TIMSPageNum = TIMSPageENum.S00AB; }
+                if (k == ATSKeys.D) { IsShortCutKey1Pressed = false; TIMSPageNum = TIMSPageENum.D00AA; }
+                if (k == ATSKeys.E) { IsShortCutKey2Pressed = false; TIMSPageNum = TIMSPageENum.D01AA; }
+                break;
+              case TIMSPageENum.A06AA:
+                if (k == ATSKeys.D) { IsShortCutKey1Pressed = false; TIMSPageNum = TIMSPageENum.D00AA; }
                 break;
             }
             break;
