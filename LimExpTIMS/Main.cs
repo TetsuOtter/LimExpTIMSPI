@@ -314,9 +314,9 @@ namespace TR.LimExpTIMS
       Pa[103] = SpeedTenHund;
 
       //空転 / 滑走表示
-      Pa[237] = 0;//とりあえずリセット
-      if ((Ats.GPSSpeed + 5) < st.V) Pa[237] = 1 + ((st.T / TIMSFlushTime) % 2);//理論より速い:空転
-      if ((Ats.GPSSpeed - 5) > st.V) Pa[237] = 3 + ((st.T / TIMSFlushTime) % 2);//理論より遅い:滑走
+      Pa[238] = 0;//とりあえずリセット
+      if ((Ats.GPSSpeed + 5) < st.V) Pa[238] = 1 + ((st.T / TIMSFlushTime) % 2);//理論より速い:空転
+      if ((Ats.GPSSpeed - 5) > st.V) Pa[238] = 3 + ((st.T / TIMSFlushTime) % 2);//理論より遅い:滑走
 
       //上部MSエリア設定
       if(CabSeSLoc!= CabSeSLocationENum.F)
@@ -423,8 +423,8 @@ namespace TR.LimExpTIMS
         else if (!IsTimeTableSet) Pa[211] = 3;//列番設定せい
       }
 
-      if (IsShortCutKey1Pressed) Pa[238] = 1;
-      if (IsShortCutKey2Pressed) Pa[238] = 2;
+      if (IsShortCutKey1Pressed) Pa[239] = 1;
+      if (IsShortCutKey2Pressed) Pa[239] = 2;
 
       //通告情報欄関連
       Pa[80] = TsuJoState;
@@ -444,6 +444,9 @@ namespace TR.LimExpTIMS
           break;
         case TIMSPageENum.D05AA:
           Pa[248] = 3;
+          break;
+        default:
+          Pa[248] = 0;
           break;
       }
 
