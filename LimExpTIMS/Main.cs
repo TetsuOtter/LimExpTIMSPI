@@ -289,9 +289,12 @@ namespace TR.LimExpTIMS
       Hand hd = default;
       if (TRBIDSppLoaded) hd = TRBIDSpp.Elapse(st, Pa, Sa);
       if (AskATSPsPLoaded) hd = AskATSPsP.Elapse(st, Pa, Sa);
-      if (KikuSC59ALoaded) hd = KikuSC59A.Elapse(st, Pa, Sa);
       if (KikuTIMSLoaded) hd = KikuTIMS.Elapse(st, Pa, Sa);
-      if (hd.B != BNum || hd.P != PNum || hd.R != RNum)//どれか一つでも違えば出力する。
+      if (KikuSC59ALoaded) hd = KikuSC59A.Elapse(st, Pa, Sa);
+
+      IsHoldingSPDBrEnabled = KikuSC59ALoaded && Pa[35] == 1;//SC59Aが読み込まれていて、かつ抑速が有効ならTRUE
+
+        if (hd.B != BNum || hd.P != PNum || hd.R != RNum)//どれか一つでも違えば出力する。
       {
         Ats.Handle = hd;
       }
@@ -430,6 +433,20 @@ namespace TR.LimExpTIMS
       //TIMS Page Number
       Pa[79] = (int)TIMSPageNum;
 
+      //TIMS Page Base
+      switch (TIMSPageNum)
+      {
+        case TIMSPageENum.D00AA:
+          Pa[248] = 1;
+          break;
+        case TIMSPageENum.D04AA:
+          Pa[248] = 2;
+          break;
+        case TIMSPageENum.D05AA:
+          Pa[248] = 3;
+          break;
+      }
+
       //BackLight / Sound Btn Displaying
       BLSoSet(Pa);
 
@@ -509,6 +526,7 @@ namespace TR.LimExpTIMS
     }
     static private int BNum = 0;
     static private bool IsBFirst = true;
+    static private bool IsHoldingSPDBrEnabled = false;
     static internal void SetBrake(int b)
     {
       if (IsBFirst) {
@@ -532,6 +550,7 @@ namespace TR.LimExpTIMS
         IsMCControlFailed = true;
         Ats.Handle.B = (int)BNum;
       }
+      if (KikuSC59ALoaded && ((IsHoldingSPDBrEnabled && b != 1) || (!IsHoldingSPDBrEnabled && b == 1))) KikuSC59A.KeyDown(ATSKeys.J);//抑速有効かつB抑速以外 or 抑速無効かつB抑速
     }
     static private int RNum = 0;
     static private bool IsRFirst = true;
