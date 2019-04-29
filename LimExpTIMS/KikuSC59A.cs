@@ -10,7 +10,7 @@ namespace TR.LimExpTIMS
   class KikuSC59A
   {
     //定速 / 抑速 / 低定速
-    const string PIPath = "../../../SC59A/SC59A.dll";
+    const string PIPath = "../../../SC59A/SC59A_TRLimExpTIMS.dll";
 
     private const CallingConvention CalCnv = CallingConvention.StdCall;
     [DllImport(PIPath, CallingConvention = CalCnv)]
