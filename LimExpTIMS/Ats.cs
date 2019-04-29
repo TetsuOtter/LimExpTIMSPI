@@ -220,11 +220,12 @@ namespace TR.LimExpTIMS
         int dt = st.T - LastTime;
         if (dt != 0)
         {
-          GPSSpeed = (st.Z - LastLoc) / dt;
+          GPSSpeed = ((st.Z - LastLoc) * 60 * 60) / dt;//km/min
         }
         LastLoc = st.Z;
         LastTime = st.T;
       }
+      else GPSSpeed = 0;
       Main.Elapse(st, Pa, Sa);
       return Handle;
     }

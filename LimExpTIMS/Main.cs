@@ -315,8 +315,10 @@ namespace TR.LimExpTIMS
 
       //空転 / 滑走表示
       Pa[238] = 0;//とりあえずリセット
-      if ((Ats.GPSSpeed + 5) < st.V) Pa[238] = 1 + ((st.T / TIMSFlushTime) % 2);//理論より速い:空転
-      if ((Ats.GPSSpeed - 5) > st.V) Pa[238] = 3 + ((st.T / TIMSFlushTime) % 2);//理論より遅い:滑走
+      double WheelSPD = st.V;// / 60;//km/min
+      const double SPDThreshold = 5;// / 60;//km/min
+      if ((Ats.GPSSpeed + SPDThreshold) < WheelSPD) Pa[238] = 1 + ((st.T / TIMSFlushTime) % 2);//理論より速い:空転
+      if ((Ats.GPSSpeed - SPDThreshold) > WheelSPD) Pa[238] = 3 + ((st.T / TIMSFlushTime) % 2);//理論より遅い:滑走
 
       //上部MSエリア設定
       if(CabSeSLoc!= CabSeSLocationENum.F)
