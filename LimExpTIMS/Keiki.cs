@@ -39,7 +39,7 @@ namespace TR.LimExpTIMS
 
           //ATS Wrapper
           for (int i = 0; i <= 21; i++) Pa[i] = 0;
-          
+          Pa[19] = 140;//Ps Pattern Bar
 
         }
         else if (IsBeforeNotF)//R=>B=>NULL
