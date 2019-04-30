@@ -13,7 +13,7 @@ namespace TR.LimExpTIMS
     static internal unsafe void Elapse(int* p)
     {
       //無線ch番号表示
-      p[249] = Main.RadioCHNum + 1;
+      p[Panel.TIMS.RadioChannelNum] = Main.RadioCHNum + 1;
       if (!Main.IsTimeTableSet)
       {
         //自炊出力を上書き
@@ -25,12 +25,12 @@ namespace TR.LimExpTIMS
       if(Main.CabSeSLoc!= Main.CabSeSLocationENum.F)//CabSeS"後"のときはP列番が表示されない。Setされない。
       {
         for (int i = 91; i <= 97; i++) p[i] = 0;//P列番
-        p[117] = 0;
+        p[Panel.TIMS.D01AA.SettingCompleteLamp] = 0;
       }
       else
       {
         for (int i = 91; i <= 96; i++)p[i] = p[i + 20];
-        p[97] = p[119];
+        p[Panel.TIMS.D01AA.PTrainNum.NumSuffix2] = p[Panel.TIMS.D01AA.TrainNum.NumSuffix2];
       }
     }
   }
