@@ -543,7 +543,7 @@ namespace TR.LimExpTIMS
       {
         if (TRBIDSppLoaded) TRBIDSpp.SetBrake(b);
         if (AskATSPsPLoaded) AskATSPsP.SetBrake(b);
-        if (KikuSC59ALoaded) KikuSC59A.SetBrake(b);
+        if (KikuSC59ALoaded && b != 1) KikuSC59A.SetBrake(b);//b==1(抑速段)のときはそれを送らない。
         if (KikuTIMSLoaded) KikuTIMS.SetBrake(b);
         BNum = b;
       }
