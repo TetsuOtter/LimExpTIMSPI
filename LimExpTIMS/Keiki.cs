@@ -72,8 +72,8 @@ namespace TR.LimExpTIMS
 
       if (IsADCChangeChacking)
       {
-        int TimeDifference = Ats.StateD.T - (int)ADCCheckStartTime;
         if (ADCCheckStartTime == null) ADCCheckStartTime = Ats.StateD.T;
+        int TimeDifference = Ats.StateD.T - (int)ADCCheckStartTime;
         if (TimeDifference > ADCChangeCheckLength || TimeDifference < 0)
         {
           ADCCheckStartTime = null;
@@ -92,6 +92,7 @@ namespace TR.LimExpTIMS
           if (Pa[Panel.GCP.ACDCLamp] == 1)//DC区間の場合
           {
             Pa[Panel.GCP.AccidentLamp] = 1;//事故
+            Pa[Panel.GCP.ThreePhaseLamp] = 1;//三相
 
             Pa[Panel.GCP.DCVolNeedle] = 0;//直流電圧系の針
             Pa[Panel.GCP.DCVolUnusual] = 1;//DC電圧異常
@@ -99,7 +100,7 @@ namespace TR.LimExpTIMS
             Pa[Panel.Cab.VCBState] = 3;//VCB状態(両点灯)
 
             Pa[Panel.GCP.ControlVolNeedle] = 87 - (TimeDifference / ControlVoltageDecSPD);//制御電圧計の針
-            Pa[Panel.GCP.ControlVolUnusual] = 0;//制御電圧異常
+            Pa[Panel.GCP.ControlVolUnusual] = 1;//制御電圧異常
             Pa[Panel.GCP.ControlVol10] = Pa[Panel.GCP.ControlVolNeedle] / 10;//制御電圧10の位
             Pa[Panel.GCP.ControlVol1] = Pa[Panel.GCP.ControlVolNeedle] % 10;//制御電圧1の位
 
@@ -107,6 +108,7 @@ namespace TR.LimExpTIMS
           else if (Pa[Panel.GCP.ACDCLamp] == 2)//AC区間の場合
           {
             Pa[Panel.GCP.AccidentLamp] = 1;//事故
+            Pa[Panel.GCP.ThreePhaseLamp] = 1;//三相
 
             Pa[Panel.GCP.ACVolNeedle] = 0;//交流電圧系の針
             Pa[Panel.GCP.ACVolUnusual] = 1;//AC電圧異常
@@ -114,7 +116,7 @@ namespace TR.LimExpTIMS
             Pa[Panel.Cab.VCBState] = 3;//VCB状態(両点灯)
 
             Pa[Panel.GCP.ControlVolNeedle] = 87 - (TimeDifference / ControlVoltageDecSPD);//制御電圧計の針
-            Pa[Panel.GCP.ControlVolUnusual] = 0;//制御電圧異常
+            Pa[Panel.GCP.ControlVolUnusual] = 1;//制御電圧異常
             Pa[Panel.GCP.ControlVol10] = Pa[Panel.GCP.ControlVolNeedle] / 10;//制御電圧10の位
             Pa[Panel.GCP.ControlVol1] = Pa[Panel.GCP.ControlVolNeedle] % 10;//制御電圧1の位
           }
