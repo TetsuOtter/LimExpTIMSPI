@@ -34,12 +34,12 @@ namespace TR.LimExpTIMS
           TimeCounter = Ats.StateD.T;
 
           //B段数表示Wrapper
-          Pa[30] = 0;
-          Pa[31] = 0;
+          Pa[Panel.GCP.BrakeLocationDisplay] = 0;
+          Pa[Panel.GCP.EmergencyBrakeLamp] = 0;
 
           //ATS Wrapper
           for (int i = 0; i <= 21; i++) Pa[i] = 0;
-          Pa[19] = 140;//Ps Pattern Bar
+          Pa[Panel.Ats.PsPatternSpeed] = 140;//Ps Pattern Bar
 
         }
         else if (IsBeforeNotF)//R=>B=>NULL
@@ -48,8 +48,8 @@ namespace TR.LimExpTIMS
           {
             if (IsBeforeB)
             {
-              No1BLNum = Pa[241];//No1
-              No2BLNum = Pa[242];//No2
+              No1BLNum = Pa[Panel.GCP.No1BrightAdjust];//No1
+              No2BLNum = Pa[Panel.GCP.No2BrightAdjust];//No2
             }else if (IsBeforeR)
             {
               No1BLNum = No2BLNum = Main.BLBlack;//R=>B
@@ -64,8 +64,8 @@ namespace TR.LimExpTIMS
 
             TimeCounter = Ats.StateD.T;
           }
-          Pa[241] = No1BLNum;
-          Pa[242] = No1BLNum;
+          Pa[Panel.GCP.No1BrightAdjust] = No1BLNum;
+          Pa[Panel.GCP.No2BrightAdjust] = No2BLNum;
 
         }
       }
@@ -89,34 +89,34 @@ namespace TR.LimExpTIMS
           //事故表示0.5s後くらいに96V?87V? 三相
           //VCB表示消灯は5sくらい VCB入ると事故消灯
           //要調査
-          if (Pa[218] == 1)//DC区間の場合
+          if (Pa[Panel.GCP.ACDCLamp] == 1)//DC区間の場合
           {
-            Pa[233] = 1;//事故
+            Pa[Panel.GCP.AccidentLamp] = 1;//事故
 
-            Pa[232] = 0;//直流電圧系の針
-            Pa[226] = 1;//DC電圧異常
+            Pa[Panel.GCP.DCVolNeedle] = 0;//直流電圧系の針
+            Pa[Panel.GCP.DCVolUnusual] = 1;//DC電圧異常
 
-            Pa[236] = 3;//VCB状態(両点灯)
+            Pa[Panel.Cab.VCBState] = 3;//VCB状態(両点灯)
 
-            Pa[230] = 87 - (TimeDifference / ControlVoltageDecSPD);//制御電圧計の針
-            Pa[219] = 0;//制御電圧異常
-            Pa[220] = Pa[230] / 10;//制御電圧10の位
-            Pa[221] = Pa[230] % 10;//制御電圧1の位
+            Pa[Panel.GCP.ControlVolNeedle] = 87 - (TimeDifference / ControlVoltageDecSPD);//制御電圧計の針
+            Pa[Panel.GCP.ControlVolUnusual] = 0;//制御電圧異常
+            Pa[Panel.GCP.ControlVol10] = Pa[Panel.GCP.ControlVolNeedle] / 10;//制御電圧10の位
+            Pa[Panel.GCP.ControlVol1] = Pa[Panel.GCP.ControlVolNeedle] % 10;//制御電圧1の位
 
           }
-          else if (Pa[218] == 2)//AC区間の場合
+          else if (Pa[Panel.GCP.ACDCLamp] == 2)//AC区間の場合
           {
-            Pa[233] = 1;//事故
+            Pa[Panel.GCP.AccidentLamp] = 1;//事故
 
-            Pa[231] = 0;//交流電圧系の針
-            Pa[222] = 1;//AC電圧異常
+            Pa[Panel.GCP.ACVolNeedle] = 0;//交流電圧系の針
+            Pa[Panel.GCP.ACVolUnusual] = 1;//AC電圧異常
 
-            Pa[236] = 3;//VCB状態(両点灯)
+            Pa[Panel.Cab.VCBState] = 3;//VCB状態(両点灯)
 
-            Pa[230] = 87 - (TimeDifference / ControlVoltageDecSPD);//制御電圧計の針
-            Pa[219] = 0;//制御電圧異常
-            Pa[220] = Pa[230] / 10;//制御電圧10の位
-            Pa[221] = Pa[230] % 10;//制御電圧1の位
+            Pa[Panel.GCP.ControlVolNeedle] = 87 - (TimeDifference / ControlVoltageDecSPD);//制御電圧計の針
+            Pa[Panel.GCP.ControlVolUnusual] = 0;//制御電圧異常
+            Pa[Panel.GCP.ControlVol10] = Pa[Panel.GCP.ControlVolNeedle] / 10;//制御電圧10の位
+            Pa[Panel.GCP.ControlVol1] = Pa[Panel.GCP.ControlVolNeedle] % 10;//制御電圧1の位
           }
           else//ACでもDCでもないなら転換試験をしない。
           {
@@ -134,14 +134,14 @@ namespace TR.LimExpTIMS
       if (Main.CabSeSLoc != Main.CabSeSLocationENum.F) IsBeforeNotFADC = true;
 
       //耐雪ブレーキ表示
-      Pa[21] = Main.NFBConfig.SnoBrake ? 1 : 0;
+      Pa[Panel.GCP.SnowResistantBrake] = Main.NFBConfig.SnoBrake ? 1 : 0;
 
       //MR針位置の設定
       //自炊を変換するのみ
-      Pa[128] = 750 + (5 * (Pa[127] + Pa[128] + Pa[129]));//MR針
+      Pa[Panel.GCP.MRNeedle] = 750 + (5 * (Pa[127] + Pa[128] + Pa[129]));//MR針
 
-      Pa[120] = 0;//MR異常時用帯 非表示(v100)
-      Pa[121] = 0;//MR異常時用目盛 非表示(v100)
+      Pa[Panel.GCP.MRUnusualBand] = 0;//MR異常時用帯 非表示(v100)
+      Pa[Panel.GCP.MRUnusualScale] = 0;//MR異常時用目盛 非表示(v100)
 
 
     }

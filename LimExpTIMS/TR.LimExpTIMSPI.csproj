@@ -76,6 +76,7 @@
   <ItemGroup>
     <Compile Include="AnnXX.cs" />
     <Compile Include="AskATSPsP.cs" />
+    <Compile Include="Assign.cs" />
     <Compile Include="Ats.cs" />
     <Compile Include="D01AA.cs" />
     <Compile Include="D04AA.cs" />

@@ -129,11 +129,9 @@ namespace TR.LimExpTIMS
     private const byte ICRWFlushCountMAX = 10;
     private const int ICRWBusyCycle = 250;
 
+
     //Useful Function
     static public void Turn(ref this bool b) => b = !b;
-
-    
-
 
     /// <summary>Sound Play Once Method</summary>
     /// <param name="So">Sound Output State Value</param>
@@ -294,45 +292,44 @@ namespace TR.LimExpTIMS
 
       IsHoldingSPDBrEnabled = KikuSC59ALoaded && Pa[35] == 1;//SC59Aが読み込まれていて、かつ抑速が有効ならTRUE
 
-        if (hd.B != BNum || hd.P != PNum || hd.R != RNum)//どれか一つでも違えば出力する。
-      {
-        Ats.Handle = hd;
-      }
+      //どれか一つでも違えば出力する。
+      if (hd.B != BNum || hd.P != PNum || hd.R != RNum) Ats.Handle = hd;
+      
       //kikuTIMS出力を統合する処理
       const int ACDisp = 217;
-      if (Pa[ACDisp] == 1) { Pa[218] = 2; }//ACDisp==1ならAC, そうでないならDC出力のまま。
+      if (Pa[ACDisp] == 1) { Pa[Panel.GCP.ACDCLamp] = 2; }//ACDisp==1ならAC, そうでないならDC出力のまま。
 
-      if (Pa[218] != 0) ACDCStateRec = Pa[218];
-      Pa[217] = ACDCStateRec;//ACDC Button
+      if (Pa[Panel.GCP.ACDCLamp] != 0) ACDCStateRec = Pa[Panel.GCP.ACDCLamp];
+      Pa[Panel.Cab.ACDCButton] = ACDCStateRec;//ACDC Button
 
       //Location & Speed Display
-      int SpeedTenHund = Pa[100] * 10 + Pa[101];
-      Pa[101] = 1 + Pa[104];//0.1
-      Pa[100] = 1 + (Pa[103] % 10);//1
-      Pa[99] = 1 + ((Pa[103] / 10) % 10);//10
-      Pa[98] = 1 + (Pa[103] / 100);//1100
-      Pa[103] = SpeedTenHund;
+      int SpeedTenHund = Pa[100] * 10 + Pa[101];//100, 10
+      Pa[Panel.TIMS.LocationPoint1] = 1 + Pa[104];//0.1
+      Pa[Panel.TIMS.Location1] = 1 + (Pa[103] % 10);//1
+      Pa[Panel.TIMS.Location10] = 1 + ((Pa[103] / 10) % 10);//10
+      Pa[Panel.TIMS.Location1100] = 1 + (Pa[103] / 100);//1100
+      Pa[Panel.TIMS.CurrentSpeed110] = SpeedTenHund;
 
       //空転 / 滑走表示
-      Pa[238] = 0;//とりあえずリセット
+      Pa[Panel.TIMS.LowerMessageArea] = 0;//とりあえずリセット
       double WheelSPD = st.V;// / 60;//km/min
       const double SPDThreshold = 5;// / 60;//km/min
-      if ((Ats.GPSSpeed + SPDThreshold) < WheelSPD) Pa[238] = 1 + ((st.T / TIMSFlushTime) % 2);//理論より速い:空転
-      if ((Ats.GPSSpeed - SPDThreshold) > WheelSPD) Pa[238] = 3 + ((st.T / TIMSFlushTime) % 2);//理論より遅い:滑走
+      if ((Ats.GPSSpeed + SPDThreshold) < WheelSPD) Pa[Panel.TIMS.LowerMessageArea] = 1 + ((st.T / TIMSFlushTime) % 2);//理論より速い:空転
+      if ((Ats.GPSSpeed - SPDThreshold) > WheelSPD) Pa[Panel.TIMS.LowerMessageArea] = 3 + ((st.T / TIMSFlushTime) % 2);//理論より遅い:滑走
 
       //上部MSエリア設定
       if(CabSeSLoc!= CabSeSLocationENum.F)
       {
-        Pa[237] = 1 + ((st.T / TIMSFlushTime) % 2);
+        Pa[Panel.TIMS.UpperMessageArea] = 1 + ((st.T / TIMSFlushTime) % 2);
       }
       else
       {
-        if (Pa[237] > 0)//自炊から交直切換が来てるとき
+        if (Pa[Panel.TIMS.UpperMessageArea] > 0)//自炊から交直切換が来てるとき
         {
-          Pa[237] += 4;//交直は5,6(自炊1,2), 交交は7,8(3,4)
+          Pa[Panel.TIMS.UpperMessageArea] += 4;//交直は5,6(自炊1,2), 交交は7,8(3,4)
         }
-        else if (IsAirSecAleart) Pa[237] = 3 + ((st.T / TIMSFlushTime) % 2);//エアセク警報
-        else Pa[237] = 0;
+        else if (IsAirSecAleart) Pa[Panel.TIMS.UpperMessageArea] = 3 + ((st.T / TIMSFlushTime) % 2);//エアセク警報
+        else Pa[Panel.TIMS.UpperMessageArea] = 0;
       }
 
 
@@ -340,115 +337,116 @@ namespace TR.LimExpTIMS
       switch (Pa[116])
       {
         case 17://KR
-          Pa[116] = 9;
-          Pa[119] = 12;
+          Pa[Panel.TIMS.D01AA.TrainNum.NumSuffix1] = 9;
+          Pa[Panel.TIMS.D01AA.TrainNum.NumSuffix2] = 12;
           break;
         case 18://SR
-          Pa[116] = 13;
-          Pa[119] = 12;
+          Pa[Panel.TIMS.D01AA.TrainNum.NumSuffix1] = 13;
+          Pa[Panel.TIMS.D01AA.TrainNum.NumSuffix2] = 12;
           break;
       }
 
       //通過設定表示
-      if (Pa[117] >= 1)
+      if (Pa[Panel.TIMS.D01AA.PTrainNum.NumPrefix] >= 1)
       {
         const int oPo = 1;
         const int Poo = 2;
-        switch (Pa[111])
+        switch (Pa[Panel.TIMS.D01AA.TrainNum.NumPrefix])
         {
           case 1://回 o?
-            Pa[117] = Poo;
+            Pa[Panel.TIMS.D01AA.PassSettingStateLamp] = Poo;
             break;
           case 2://試 o?
-            Pa[117] = Poo;
+            Pa[Panel.TIMS.D01AA.PassSettingStateLamp] = Poo;
             break;
           case 3://配 o?
-            Pa[117] = Poo;
+            Pa[Panel.TIMS.D01AA.PassSettingStateLamp] = Poo;
             break;
           case 4://荷 o?
-            Pa[117] = Poo;
+            Pa[Panel.TIMS.D01AA.PassSettingStateLamp] = Poo;
             break;
           case 5://う x
-            Pa[117] = oPo;
+            Pa[Panel.TIMS.D01AA.PassSettingStateLamp] = oPo;
             break;
           case 6://現 x?
-            Pa[117] = oPo;
+            Pa[Panel.TIMS.D01AA.PassSettingStateLamp] = oPo;
             break;
           case 7://改 x?
-            Pa[117] = oPo;
+            Pa[Panel.TIMS.D01AA.PassSettingStateLamp] = oPo;
             break;
           case 8://救 o?
-            Pa[117] = Poo;
+            Pa[Panel.TIMS.D01AA.PassSettingStateLamp] = Poo;
             break;
           case 9://(う)回 o?
-            Pa[117] = Poo;
+            Pa[Panel.TIMS.D01AA.PassSettingStateLamp] = Poo;
             break;
           case 10://(現)回 o?
-            Pa[117] = Poo;
+            Pa[Panel.TIMS.D01AA.PassSettingStateLamp] = Poo;
             break;
           case 11://(改)回 o?
-            Pa[117] = Poo;
+            Pa[Panel.TIMS.D01AA.PassSettingStateLamp] = Poo;
             break;
         }
       }
 
       //ボタン表示関連
-      Pa[85] = IsShokiSentakuPuhsing ? 1 : 0;
-      Pa[71] = D00AAButtonPushingNum;
-      Pa[51] = ICInsertState && wasICRead ? 1 : 0;
+      Pa[Panel.TIMS.ShokiSentakuButton] = IsShokiSentakuPuhsing ? 1 : 0;
+      Pa[Panel.TIMS.D00AAButtonPushingImage] = D00AAButtonPushingNum;
+      Pa[Panel.TIMS.D00AAICButtons] = ICInsertState && wasICRead ? 1 : 0;
 
       //TIMS Page
-      Pa[210] = 0;//下部通知L
-      Pa[211] = 0;//下部通知R
+      Pa[Panel.TIMS.NotificationL] = 0;//下部通知L
+      Pa[Panel.TIMS.NotificationR] = 0;//下部通知R
       switch (TIMSPageNum)
       {
         case TIMSPageENum.S00AA:
-          Pa[48] = 1;
+          Pa[Panel.TIMS.S00AxPage] = 1;
           break;
         case TIMSPageENum.S00AB:
-          Pa[48] = IsS00ABUteshiBtnPushing ? 3 : 2;//運転士押下中?
+          Pa[Panel.TIMS.S00AxPage] = IsS00ABUteshiBtnPushing ? 3 : 2;//運転士押下中?
           //無線チャンネルが0 or 1 or 11(A1)以上 or "情報"なし
-          if (RadioCHNum <= 1 || RadioCHNum >= 11 || TsuJoState == 0 || TsuJoState == 2) Pa[48] += 2;//運行情報はありません。
+          if (RadioCHNum <= 1 || RadioCHNum >= 11 || TsuJoState == 0 || TsuJoState == 2) Pa[Panel.TIMS.S00AxPage] += 2;//運行情報はありません。
           
           break;
         default:
-          Pa[48] = 0;
+          Pa[Panel.TIMS.S00AxPage] = 0;
           break;
       }
       if (TIMSPageNum != TIMSPageENum.S00AA && CabSeSLoc == CabSeSLocationENum.F)
       {
         if (!wasICRead)
         {
-          if(TIMSPageNum== TIMSPageENum.D04AA) Pa[211] = 2;//IC入れるか列番設定せい
-          else Pa[211] = 1;//仕業カード挿入せい
+          if(TIMSPageNum== TIMSPageENum.D04AA) Pa[Panel.TIMS.NotificationR] = 2;//IC入れるか列番設定せい
+          else Pa[Panel.TIMS.NotificationR] = 1;//仕業カード挿入せい
         }
-        else if (!IsTimeTableSet) Pa[211] = 3;//列番設定せい
+        else if (!IsTimeTableSet) Pa[Panel.TIMS.NotificationR] = 3;//列番設定せい
       }
 
-      if (IsShortCutKey1Pressed) Pa[239] = 1;
-      if (IsShortCutKey2Pressed) Pa[239] = 2;
+      Pa[Panel.TIMS.ShortCutKeyState] = 0;//ｼｮｰﾄｶｯﾄｷｰリセット
+      if (IsShortCutKey1Pressed) Pa[Panel.TIMS.ShortCutKeyState] = 1;
+      if (IsShortCutKey2Pressed) Pa[Panel.TIMS.ShortCutKeyState] = 2;
 
       //通告情報欄関連
-      Pa[80] = TsuJoState;
-      if (TRBIDSppLoaded) Pa[80] += 4;//モニタ中
+      Pa[Panel.TIMS.TsukokuJohoMonitoringChar] = TsuJoState;
+      if (TRBIDSppLoaded) Pa[Panel.TIMS.TsukokuJohoMonitoringChar] += 4;//モニタ中
 
       //TIMS Page Number
-      Pa[79] = (int)TIMSPageNum;
+      Pa[Panel.TIMS.PageNameNum] = (int)TIMSPageNum;
 
       //TIMS Page Base
       switch (TIMSPageNum)
       {
         case TIMSPageENum.D00AA:
-          Pa[248] = 1;
+          Pa[Panel.TIMS.D0nXXBase] = 1;
           break;
         case TIMSPageENum.D04AA:
-          Pa[248] = 2;
+          Pa[Panel.TIMS.D0nXXBase] = 2;
           break;
         case TIMSPageENum.D05AA:
-          Pa[248] = 3;
+          Pa[Panel.TIMS.D0nXXBase] = 3;
           break;
         default:
-          Pa[248] = 0;
+          Pa[Panel.TIMS.D0nXXBase] = 0;
           break;
       }
 
@@ -465,8 +463,8 @@ namespace TR.LimExpTIMS
       Keiki.Elapse(Pa);//BLの上書きあるかも
 
       //MC & Reverser表示
-      Pa[33] = 1 - Ats.Handle.R;
-      Pa[32] = (Ats.SpecD.B + 1 - Ats.Handle.B) + Ats.Handle.P;
+      Pa[Panel.Cab.ReverserHandle] = 1 - Ats.Handle.R;
+      Pa[Panel.Cab.MasterControllerHandle] = (Ats.SpecD.B + 1 - Ats.Handle.B) + Ats.Handle.P;
 
       D01AA.Elapse(Pa);//D01AAのIC状態による表示Wrap
 
@@ -475,7 +473,7 @@ namespace TR.LimExpTIMS
       {
         if (ICRWBusyCount < ICRWFlushCountMAX)
         {
-          Pa[253] = 3 + (st.T / ICRWBusyCycle) % 2;
+          Pa[Panel.Cab.ICReaderWriter] = 3 + (st.T / ICRWBusyCycle) % 2;
           ICRWBusyCount++;
         }
         else
@@ -485,15 +483,15 @@ namespace TR.LimExpTIMS
           ICReading = false;
         }
       }
-      else Pa[253] = ICInsertState ? 3 : 0;
+      else Pa[Panel.Cab.ICReaderWriter] = ICInsertState ? 3 : 0;
       
 
       //HELP1
-      if (Ats.IsKeyDown[ATSKeys.S]) Pa[250] = 1 + (int)DispMode;
-      else Pa[250] = 0;
+      if (Ats.IsKeyDown[ATSKeys.S]) Pa[Panel.HELP1] = 1 + (int)DispMode;
+      else Pa[Panel.HELP1] = 0;
 
       //ATS-P表示灯(Pa[2]参照実装)
-      Pa[8] = Pa[2];
+      Pa[Panel.Ats.PLamp] = Pa[Panel.Ats.PPower];
 
       //未実装機能のゼロ埋め
       Pa[6] = Pa[7] = Pa[9] = Pa[11] = Pa[12] = Pa[16] = Pa[17] = Pa[20] = 0;
@@ -986,10 +984,10 @@ namespace TR.LimExpTIMS
     //COMP
     static private unsafe void CabNFBPanels(int* Pa)
     {
-      const int BaseIndex = 212;
-      const int NFB1Index = 213;//Assign33
-      const int NFB2Index = 214;//Assign34
-      const int NFB3Index = 215;//Assign35
+      const int BaseIndex = Panel.Cab.CabNFBBase;
+      const int NFB1Index = Panel.Cab.CabNFB1;//Assign33
+      const int NFB2Index = Panel.Cab.CabNFB2;//Assign34
+      const int NFB3Index = Panel.Cab.CabNFB3;//Assign35
       if (DispMode != DisplayingModeENum.CabNFBShowing)
       {
         Pa[BaseIndex] = 0;
@@ -1107,7 +1105,7 @@ namespace TR.LimExpTIMS
             break;
         }
       }
-      Pa[240] = outnum;
+      Pa[Panel.HeadState] = outnum;
     }
 
     //COMPLETED
@@ -1159,15 +1157,15 @@ namespace TR.LimExpTIMS
     static private unsafe void BLSoSet(int* Pa)
     {
       //Display
-      Pa[241] = No1KeikiBL;
-      Pa[242] = No2KeikiBL;
-      Pa[243] = TIMSBL;
+      Pa[Panel.GCP.No1BrightAdjust] = No1KeikiBL;
+      Pa[Panel.GCP.No2BrightAdjust] = No2KeikiBL;
+      Pa[Panel.TIMS.TIMSBrightAdjust] = TIMSBL;
 
       //Button
-      Pa[244] = No1KeikiBL * 2 + (IsNo1BLKeyPushed ? 2 : 1);
-      Pa[245] = No2KeikiBL * 2 + (IsNo2BLKeyPushed ? 2 : 1);
-      Pa[246] = TIMSBL * 2 + (IsTIMSBLKeyPushed ? 2 : 1);
-      Pa[247] = IsTIMSAngry ? 7 : TIMSSound * 2 + (IsTIMSSoundPushed ? 2 : 1);//Disabledなら7, 違ったら計算
+      Pa[Panel.GCP.No1BrightAdjustButton] = No1KeikiBL * 2 + (IsNo1BLKeyPushed ? 2 : 1);
+      Pa[Panel.GCP.No2BrightAdjustButton] = No2KeikiBL * 2 + (IsNo2BLKeyPushed ? 2 : 1);
+      Pa[Panel.TIMS.TIMSBrightAdjustButton] = TIMSBL * 2 + (IsTIMSBLKeyPushed ? 2 : 1);
+      Pa[Panel.TIMS.TIMSVolumeAdjustButton] = IsTIMSAngry ? 7 : TIMSSound * 2 + (IsTIMSSoundPushed ? 2 : 1);//Disabledなら7, 違ったら計算
     }
     static private void BLSoChangeEvent(byte DispNum)//1:No.1, 2:No.2, 3:TIMSBL, 4:TIMSSound
     {
