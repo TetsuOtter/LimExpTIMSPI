@@ -284,16 +284,19 @@ namespace TR.LimExpTIMS
     static unsafe internal void Elapse(State st, int* Pa, int* Sa)
     {
       //If you want to change the Handle state, please access to Ats.Handle
-      Hand hd = default;
-      if (TRBIDSppLoaded) hd = TRBIDSpp.Elapse(st, Pa, Sa);
-      if (AskATSPsPLoaded) hd = AskATSPsP.Elapse(st, Pa, Sa);
-      if (KikuTIMSLoaded) hd = KikuTIMS.Elapse(st, Pa, Sa);
-      if (KikuSC59ALoaded) hd = KikuSC59A.Elapse(st, Pa, Sa);
+      Hand ATShd = default;
+      Hand SC59Ahd = default;
+      if (TRBIDSppLoaded) TRBIDSpp.Elapse(st, Pa, Sa);//ハンドル出力なし
+      if (AskATSPsPLoaded) ATShd = AskATSPsP.Elapse(st, Pa, Sa);
+      if (KikuTIMSLoaded) KikuTIMS.Elapse(st, Pa, Sa);//ハンドル出力なし
+      if (KikuSC59ALoaded) SC59Ahd = KikuSC59A.Elapse(st, Pa, Sa);
 
+      Ats.Handle.B = Math.Max(ATShd.B, SC59Ahd.B);//どちらか大きい出力を採用
+      Ats.Handle.P = SC59Ahd.P;//ATSはP出力しないはず
+      //Ats.Handle.R = SC59Ahd.R;//PIで操作することはないはず。
+      Ats.Handle.C = SC59Ahd.C;
       IsHoldingSPDBrEnabled = KikuSC59ALoaded && Pa[35] == 1;//SC59Aが読み込まれていて、かつ抑速が有効ならTRUE
 
-      //どれか一つでも違えば出力する。
-      if (hd.B != BNum || hd.P != PNum || hd.R != RNum) Ats.Handle = hd;
       
       //kikuTIMS出力を統合する処理
       const int ACDisp = 217;
