@@ -5,9 +5,493 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+               FontFamily="../Fonts/JF-Dot-jiskan16s.ttf#JF Dot jiskan16s"
+  Width="800"
+  Height="436"
+  Loaded="Page_Loaded" Unloaded="Page_Unloaded">
+  <Page.Resources>
+    <SolidColorBrush x:Key="LineColor" Color="Lime"/>
+    <SolidColorBrush x:Key="StaticTextColor" Color="Lime"/>
+    <SolidColorBrush x:Key="VariableTextColor" Color="White"/>
+    <SolidColorBrush x:Key="TrainNumTextColor" Color="Yellow"/>
+    <SolidColorBrush x:Key="PTrainNumTextColor" Color="Aqua"/>
+  </Page.Resources>
+  <Grid Width="800" Height="436">
+    <TextBlock Text="列車番号"
+               Margin="95,25,0,0"
+               Foreground="{StaticResource StaticTextColor}"
+               FontFamily="../Fonts/JF-Dot-jiskan16s.ttf#JF Dot jiskan16s"
+               FontSize="16"/>
+    <TextBlock x:Name="TrainNumberTB"
+               Margin="200,25,0,0"
+               Foreground="{StaticResource TrainNumTextColor}"
+               FontFamily="../Fonts/JF-Dot-jiskan16s.ttf#JF Dot jiskan16s"
+               FontSize="16">
+      <TextBlock.RenderTransform>
+        <ScaleTransform ScaleX="2"/>
+      </TextBlock.RenderTransform>
+    </TextBlock>
+    <TextBlock x:Name="PTrainNumberTB"
+               Margin="513,2,0,0"
+               Foreground="{StaticResource PTrainNumTextColor}"
+               FontFamily="../Fonts/JF-Dot-jiskan16s.ttf#JF Dot jiskan16s"
+               FontSize="16"/>
+    <TextBlock x:Name="PTrainNumTsuTB"
+               Text="通"
+               Width="18"
+               Height="18"
+               Padding="0"
+               HorizontalAlignment="Right"
+               VerticalAlignment="Top"
+               Margin="495,2,323,0"
+               Foreground="{StaticResource PTrainNumTextColor}"
+               FontFamily="../Fonts/JF-Dot-jiskan16s.ttf#JF Dot jiskan16s"
+               FontSize="16"/>
+    <TextBlock Text="無線"
+               Margin="520,25,0,0"
+               Foreground="{StaticResource StaticTextColor}"
+               FontFamily="../Fonts/JF-Dot-jiskan16s.ttf#JF Dot jiskan16s"
+               FontSize="16"/>
+    <TextBlock x:Name="RadioCHTB"
+               Margin="572,25,0,0"
+               Foreground="{StaticResource VariableTextColor}"
+               FontFamily="../Fonts/JF-Dot-jiskan16s.ttf#JF Dot jiskan16s"
+               FontSize="16"/>
+    <TextBlock Text="ch"
+               Margin="590,25,0,0"
+               Foreground="{StaticResource StaticTextColor}"
+               FontFamily="../Fonts/JF-Dot-jiskan16s.ttf#JF Dot jiskan16s"
+               FontSize="16"/>
+    <TextBlock Text="Ｐ列番"
+               Margin="640,2,0,0"
+               Foreground="{StaticResource StaticTextColor}"
+               FontFamily="../Fonts/JF-Dot-jiskan16s.ttf#JF Dot jiskan16s"
+               FontSize="16"/>
+    <Border x:Name="PTrainNumSetRec" Margin="705,2,0,0" Height="20" Width="82" Background="Aqua" HorizontalAlignment="Left" VerticalAlignment="Top">
+      <TextBlock     Padding="1"
+                     Text="設定完了"
+                 HorizontalAlignment="Center"
+                   Foreground="Black"
+                   FontFamily="../Fonts/JF-Dot-jiskan16s.ttf#JF Dot jiskan16s"
+                   FontSize="16"/>
+    </Border>
+    <Border x:Name="PassSettingSetRec" Margin="705,22,0,0" Height="20" Width="82" Background="Yellow" HorizontalAlignment="Left" VerticalAlignment="Top">
+      <TextBlock Name="PassSettingTB"
+                     Padding="1"
+                     Text="通過設定"
+                 HorizontalAlignment="Center"
+                   Foreground="Black"
+                   FontFamily="../Fonts/JF-Dot-jiskan16s.ttf#JF Dot jiskan16s"
+                   FontSize="16"/>
+    </Border>
+    
+    <!--TimeTable Area-->
+    <TextBlock Text="時分"
+               Margin="18,54,0,0"
+               Foreground="{StaticResource StaticTextColor}"
+               FontFamily="../Fonts/JF-Dot-jiskan16s.ttf#JF Dot jiskan16s"
+               FontSize="16"/>
+    <TextBlock Text="停車場名"
+               Margin="122,54,0,0"
+               Foreground="{StaticResource StaticTextColor}"
+               FontFamily="../Fonts/JF-Dot-jiskan16s.ttf#JF Dot jiskan16s"
+               FontSize="16"/>
+    <Border Background="{x:Null}" Margin="345,54,0,0" Width="22" Padding="0" HorizontalAlignment="Left" VerticalAlignment="Top">
+      <TextBlock Text="着"
+               Padding="0"
+               HorizontalAlignment="Center"
+               VerticalAlignment="Top"
+               Foreground="{StaticResource StaticTextColor}"
+               FontFamily="../Fonts/JF-Dot-jiskan16s.ttf#JF Dot jiskan16s"
+               FontSize="16"/>
+    </Border>
+    <Border Background="{x:Null}" Margin="525,54,0,0" Width="22" Padding="0" HorizontalAlignment="Left" VerticalAlignment="Top">
+      <TextBlock Text="発"
+               Padding="0"
+               HorizontalAlignment="Center"
+               VerticalAlignment="Top"
+               Foreground="{StaticResource StaticTextColor}"
+               FontFamily="../Fonts/JF-Dot-jiskan16s.ttf#JF Dot jiskan16s"
+               FontSize="16"/>
+    </Border>
+    <TextBlock Text="番線"
+               Margin="648,54,0,0"
+               VerticalAlignment="Top"
+               HorizontalAlignment="Left"
+               Padding="0"
+               Foreground="{StaticResource StaticTextColor}"
+               FontFamily="../Fonts/JF-Dot-jiskan16s.ttf#JF Dot jiskan16s"
+               FontSize="16"/>
+    <TextBlock Text="制限"
+               Margin="728,54,0,0"
+               VerticalAlignment="Top"
+               HorizontalAlignment="Left"
+               Padding="0"
+               Foreground="{StaticResource StaticTextColor}"
+               FontFamily="../Fonts/JF-Dot-jiskan16s.ttf#JF Dot jiskan16s"
+               FontSize="16"/>
+    <Rectangle Margin="0,50,0,175" Fill="{x:Null}" Stroke="{StaticResource LineColor}" StrokeThickness="1"/>
+    <Grid x:Name="StaListGrid" Margin="0,60,0,175"/>
 
-    <Grid>
+    <!--Height 56 Width 450-->
+    <Grid x:Name="JokoGrid" Background="Yellow" Visibility="Collapsed" Margin="30,270,320,110">
+      <Border Background="{Binding YBFlush1}" Margin="0,5,396,5">
+        <TextBlock Text="徐行"
+               Margin="0,0,0,0"
+               VerticalAlignment="Center"
+               HorizontalAlignment="Center"
+               Padding="0"
+               Foreground="{Binding YBFlush2}"
+               FontFamily="../Fonts/JF-Dot-jiskan16s.ttf#JF Dot jiskan16s"
+               FontSize="16"/>
+      </Border>
+      <Rectangle Fill="Black" Opacity="1" Margin="54,5,153,5"/>
+      <Grid x:Name="Joko1Grid">
+        <TextBlock Text="km"
+               Margin="135,8,0,30"
+                 Width="18"
+                 Height="18"
+               VerticalAlignment="Top"
+               HorizontalAlignment="Left"
+               Padding="0"
+               Foreground="White"
+               FontFamily="../Fonts/JF-Dot-jiskan16s.ttf#JF Dot jiskan16s"
+               FontSize="16"/>
+        <TextBlock Text="km"
+               Margin="279,8,0,30"
+                 Width="18"
+                 Height="18"
+               VerticalAlignment="Top"
+               HorizontalAlignment="Left"
+               Padding="0"
+               Foreground="White"
+               FontFamily="../Fonts/JF-Dot-jiskan16s.ttf#JF Dot jiskan16s"
+               FontSize="16"/>
+        <Border Background="{x:Null}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="162,8,0,30" Width="36" Height="18">
+          <TextBlock Text="～"
+               Margin="0"
+               VerticalAlignment="Top"
+               HorizontalAlignment="Center"
+               Padding="6"
+               Foreground="White"
+               FontFamily="../Fonts/JF-Dot-jiskan16s.ttf#JF Dot jiskan16s"
+               FontSize="16"/>
+        </Border>
+
+        <TextBlock x:Name="Joko1Start"
+               Margin="54,8,270,30"
+                 Width="63"
+                 Height="18"
+               VerticalAlignment="Top"
+               HorizontalAlignment="Left"
+               Padding="0"
+               Foreground="White"
+               FontFamily="../Fonts/JF-Dot-jiskan16s.ttf#JF Dot jiskan16s"
+               FontSize="16"/>
+        <TextBlock x:Name="Joko1End"
+               Margin="198,8,189,30"
+                 Width="63"
+                 Height="18"
+               VerticalAlignment="Top"
+               HorizontalAlignment="Left"
+               Padding="0"
+               Foreground="White"
+               FontFamily="../Fonts/JF-Dot-jiskan16s.ttf#JF Dot jiskan16s"
+               FontSize="16"/>
+        <Rectangle Margin="297,5,0,29" Fill="{Binding YBFlush1}"/>
+        <TextBlock Text="制限"
+               Margin="306,8,0,30"
+                 Width="36"
+                 Height="18"
+               VerticalAlignment="Top"
+               HorizontalAlignment="Left"
+               Padding="0"
+               Foreground="{Binding YBFlush2}"
+               FontFamily="../Fonts/JF-Dot-jiskan16s.ttf#JF Dot jiskan16s"
+               FontSize="16"/>
+        <TextBlock x:Name="Joko1LimSP"
+               Margin="369,8,0,30"
+                 Width="27"
+                 Height="18"
+               VerticalAlignment="Top"
+               HorizontalAlignment="Left"
+               Padding="0"
+               Foreground="{Binding YBFlush2}"
+               FontFamily="../Fonts/JF-Dot-jiskan16s.ttf#JF Dot jiskan16s"
+               FontSize="16"/>
+        <TextBlock Text="km/h"
+               Margin="396,8,0,30"
+                 Width="36"
+                 Height="18"
+               VerticalAlignment="Top"
+               HorizontalAlignment="Left"
+               Padding="0"
+               Foreground="{Binding YBFlush2}"
+               FontFamily="../Fonts/JF-Dot-jiskan16s.ttf#JF Dot jiskan16s"
+               FontSize="16"/>
+
+      </Grid>
+      <Grid x:Name="Joko2Grid">
+        <TextBlock Text="km"
+               Margin="135,30,0,8"
+                 Width="18"
+                 Height="18"
+               VerticalAlignment="Top"
+               HorizontalAlignment="Left"
+               Padding="0"
+               Foreground="White"
+               FontFamily="../Fonts/JF-Dot-jiskan16s.ttf#JF Dot jiskan16s"
+               FontSize="16"/>
+        <TextBlock Text="km"
+               Margin="279,30,0,8"
+                 Width="18"
+                 Height="18"
+               VerticalAlignment="Top"
+               HorizontalAlignment="Left"
+               Padding="0"
+               Foreground="White"
+               FontFamily="../Fonts/JF-Dot-jiskan16s.ttf#JF Dot jiskan16s"
+               FontSize="16"/>
+        <Border Background="{x:Null}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="162,30,0,8" Width="36" Height="18">
+          <TextBlock Text="～"
+               Margin="0"
+               VerticalAlignment="Top"
+               HorizontalAlignment="Center"
+               Padding="6"
+               Foreground="White"
+               FontFamily="../Fonts/JF-Dot-jiskan16s.ttf#JF Dot jiskan16s"
+               FontSize="16"/>
+        </Border>
+
+        <TextBlock x:Name="Joko2Start"
+               Margin="54,30,270,8"
+                 Width="63"
+                 Height="18"
+               VerticalAlignment="Top"
+               HorizontalAlignment="Left"
+               Padding="0"
+               Foreground="White"
+               FontFamily="../Fonts/JF-Dot-jiskan16s.ttf#JF Dot jiskan16s"
+               FontSize="16"/>
+        <TextBlock x:Name="Joko2End"
+               Margin="198,30,189,8"
+                 Width="63"
+                 Height="18"
+               VerticalAlignment="Top"
+               HorizontalAlignment="Left"
+               Padding="0"
+               Foreground="White"
+               FontFamily="../Fonts/JF-Dot-jiskan16s.ttf#JF Dot jiskan16s"
+               FontSize="16"/>
+        <Rectangle Margin="297,29,0,5" Fill="{Binding YBFlush1}"/>
+        <TextBlock Text="制限"
+               Margin="306,30,0,8"
+                 Width="36"
+                 Height="18"
+               VerticalAlignment="Top"
+               HorizontalAlignment="Left"
+               Padding="0"
+               Foreground="{Binding YBFlush2}"
+               FontFamily="../Fonts/JF-Dot-jiskan16s.ttf#JF Dot jiskan16s"
+               FontSize="16"/>
+        <TextBlock x:Name="Joko2LimSP"
+               Margin="369,30,0,8"
+                 Width="27"
+                 Height="18"
+               VerticalAlignment="Top"
+               HorizontalAlignment="Left"
+               Padding="0"
+               Foreground="{Binding YBFlush2}"
+               FontFamily="../Fonts/JF-Dot-jiskan16s.ttf#JF Dot jiskan16s"
+               FontSize="16"/>
+        <TextBlock Text="km/h"
+               Margin="396,30,0,8"
+                 Width="36"
+                 Height="18"
+               VerticalAlignment="Top"
+               HorizontalAlignment="Left"
+               Padding="0"
+               Foreground="{Binding YBFlush2}"
+               FontFamily="../Fonts/JF-Dot-jiskan16s.ttf#JF Dot jiskan16s"
+               FontSize="16"/>
+      </Grid>
 
     </Grid>
+    <Rectangle Margin="30,350,30,5" Fill="Black"/>
+    <!--編成図-->
+    <Grid Margin="30,350,30,5">
+      <TextBlock Margin="8,8,0,0"
+               VerticalAlignment="Top"
+               HorizontalAlignment="Left"
+               FontFamily="../Fonts/JF-Dot-jiskan16s.ttf#JF Dot jiskan16s"
+               FontSize="16">
+        <Run Text="BC :" Foreground="{StaticResource StaticTextColor}"/>
+        <Run Text="{Binding Mode=OneWay,Path=BCPresTBText}" Foreground="{StaticResource VariableTextColor}"/>
+        <Run Text="kPa" Foreground="{StaticResource StaticTextColor}"/>
+      </TextBlock>
+      <TextBlock Margin="8,32,0,0"
+               VerticalAlignment="Top"
+               HorizontalAlignment="Left"
+               FontFamily="../Fonts/JF-Dot-jiskan16s.ttf#JF Dot jiskan16s"
+               FontSize="16">
+        <Run Text="MR :" Foreground="{StaticResource StaticTextColor}"/>
+        <Run Text="{Binding Mode=OneWay,Path=MRPresTBText}" Foreground="{StaticResource VariableTextColor}"/>
+        <Run Text="kPa" Foreground="{StaticResource StaticTextColor}"/>
+      </TextBlock>
+      <TextBlock Margin="8,56,0,0"
+               VerticalAlignment="Top"
+               HorizontalAlignment="Left"
+               FontFamily="../Fonts/JF-Dot-jiskan16s.ttf#JF Dot jiskan16s"
+               FontSize="16">
+        <Run Text="BP :" Foreground="{StaticResource StaticTextColor}"/>
+        <Run Text="{Binding Mode=OneWay,Path=BPPresTBText}" Foreground="{StaticResource VariableTextColor}"/>
+        <Run Text="kPa" Foreground="{StaticResource StaticTextColor}"/>
+      </TextBlock>
+
+      <TextBlock Margin="188,8,0,0"
+               VerticalAlignment="Top"
+               HorizontalAlignment="Left"
+               FontFamily="../Fonts/JF-Dot-jiskan16s.ttf#JF Dot jiskan16s"
+               FontSize="16">
+        <Run Text=" ER :" Foreground="{StaticResource StaticTextColor}"/>
+        <Run Text="{Binding Mode=OneWay,Path=ERPresTBText}" Foreground="{StaticResource VariableTextColor}"/>
+        <Run Text="kPa" Foreground="{StaticResource StaticTextColor}"/>
+      </TextBlock>
+      <TextBlock Margin="188,32,0,0"
+               VerticalAlignment="Top"
+               HorizontalAlignment="Left"
+               FontFamily="../Fonts/JF-Dot-jiskan16s.ttf#JF Dot jiskan16s"
+               FontSize="16">
+        <Run Text="SAP :" Foreground="{StaticResource StaticTextColor}"/>
+        <Run Text="{Binding Mode=OneWay,Path=SAPPresTBText}" Foreground="{StaticResource VariableTextColor}"/>
+        <Run Text="kPa" Foreground="{StaticResource StaticTextColor}"/>
+      </TextBlock>
+      <TextBlock Margin="188,56,0,0"
+               VerticalAlignment="Top"
+               HorizontalAlignment="Left"
+               FontFamily="../Fonts/JF-Dot-jiskan16s.ttf#JF Dot jiskan16s"
+               FontSize="16">
+        <Run Text=" I :" Foreground="{StaticResource StaticTextColor}"/>
+        <Run Text="{Binding Mode=OneWay,Path=CurrentTBText}" Foreground="{StaticResource VariableTextColor}"/>
+        <Run Text="A" Foreground="{StaticResource StaticTextColor}"/>
+      </TextBlock>
+
+      <TextBlock Margin="334,24,0,0"
+               VerticalAlignment="Top"
+               HorizontalAlignment="Left"
+               FontFamily="../Fonts/JF-Dot-jiskan16s.ttf#JF Dot jiskan16s"
+               FontSize="32">
+        <Run Text="ﾄﾞｱ :" Foreground="{StaticResource StaticTextColor}"/>
+        <Run Text="{Binding Mode=OneWay,Path=DoorStateTBText}" Foreground="{StaticResource VariableTextColor}"/>
+      </TextBlock>
+
+      <TextBlock Margin="494,8,0,0"
+               VerticalAlignment="Top"
+               HorizontalAlignment="Left"
+               FontFamily="../Fonts/JF-Dot-jiskan16s.ttf#JF Dot jiskan16s"
+               FontSize="16">
+        <Run Text="Radius :" Foreground="{StaticResource StaticTextColor}"/>
+        <Run Text="{Binding Mode=OneWay,Path=RadiusTBText}" Foreground="{StaticResource VariableTextColor}"/>
+        <Run Text="m" Foreground="{StaticResource StaticTextColor}"/>
+      </TextBlock>
+      <TextBlock Margin="494,32,0,0"
+               VerticalAlignment="Top"
+               HorizontalAlignment="Left"
+               FontFamily="../Fonts/JF-Dot-jiskan16s.ttf#JF Dot jiskan16s"
+               FontSize="16">
+        <Run Text="  Cant :" Foreground="{StaticResource StaticTextColor}"/>
+        <Run Text="{Binding Mode=OneWay,Path=CantTBText}" Foreground="{StaticResource VariableTextColor}"/>
+        <Run Text="mm" Foreground="{StaticResource StaticTextColor}"/>
+      </TextBlock>
+      <TextBlock Margin="494,56,0,0"
+               VerticalAlignment="Top"
+               HorizontalAlignment="Left"
+               FontFamily="../Fonts/JF-Dot-jiskan16s.ttf#JF Dot jiskan16s"
+               FontSize="16">
+        <Run Text=" Pitch :" Foreground="{StaticResource StaticTextColor}"/>
+        <Run Text="{Binding Mode=OneWay,Path=PitchTBText}" Foreground="{StaticResource VariableTextColor}"/>
+        <Run Text="‰" Foreground="{StaticResource StaticTextColor}"/>
+      </TextBlock>
+    </Grid>
+    <TextBlock Text="次停車駅"
+               Margin="90,328,0,0"
+               VerticalAlignment="Top"
+               HorizontalAlignment="Left"
+               Padding="0"
+               Foreground="{StaticResource StaticTextColor}"
+               FontFamily="../Fonts/JF-Dot-jiskan16s.ttf#JF Dot jiskan16s"
+               FontSize="16"/>
+    <TextBlock x:Name="NextStopTB"
+               Margin="162,328,0,0"
+               Width="108"
+               Height="18"
+               VerticalAlignment="Top"
+               HorizontalAlignment="Left"
+               Padding="0"
+               Foreground="{Binding StopSta}"
+               FontFamily="../Fonts/JF-Dot-jiskan16s.ttf#JF Dot jiskan16s"
+               FontSize="16">
+      <TextBlock.RenderTransform>
+        <ScaleTransform ScaleX="2" ScaleY="1"/>
+      </TextBlock.RenderTransform>
+    </TextBlock>
+    <TextBlock x:Name="NextStopArrHHTB"
+               Margin="378,328,0,0"
+               Width="36"
+               Height="18"
+               VerticalAlignment="Top"
+               HorizontalAlignment="Left"
+               Padding="0"
+               Foreground="Yellow"
+               FontFamily="../Fonts/JF-Dot-jiskan16s.ttf#JF Dot jiskan16s"
+               FontSize="16">
+      <TextBlock.RenderTransform>
+        <ScaleTransform ScaleX="2" ScaleY="1"/>
+      </TextBlock.RenderTransform>
+    </TextBlock>
+    <TextBlock x:Name="NextStopArrDotTB"
+               Margin="450,328,0,0"
+               Width="18"
+               Height="18"
+               VerticalAlignment="Top"
+               HorizontalAlignment="Left"
+               Padding="0"
+               Foreground="Yellow"
+               FontFamily="../Fonts/JF-Dot-jiskan16s.ttf#JF Dot jiskan16s"
+               FontSize="16"/>
+    <TextBlock x:Name="NextStopArrMMTB"
+               Margin="486,328,0,0"
+               Width="36"
+               Height="18"
+               VerticalAlignment="Top"
+               HorizontalAlignment="Left"
+               Padding="0"
+               Foreground="Yellow"
+               FontFamily="../Fonts/JF-Dot-jiskan16s.ttf#JF Dot jiskan16s"
+               FontSize="16">
+      <TextBlock.RenderTransform>
+        <ScaleTransform ScaleX="2" ScaleY="1"/>
+      </TextBlock.RenderTransform>
+    </TextBlock>
+    <TextBlock x:Name="NextStopArrSSTB"
+               Margin="558,328,0,0"
+               Width="10"
+               Height="10"
+               VerticalAlignment="Top"
+               HorizontalAlignment="Left"
+               Padding="0"
+               Foreground="Yellow"
+               FontFamily="../Fonts/JF-Dot-jiskan16s.ttf#JF Dot jiskan16s"
+               FontSize="10"/>
+    <TextBlock x:Name="NextStopTrackNameTB"
+               Margin="594,328,0,0"
+               Height="18"
+               VerticalAlignment="Top"
+               HorizontalAlignment="Left"
+               Padding="0"
+               Foreground="Yellow"
+               FontFamily="../Fonts/JF-Dot-jiskan16s.ttf#JF Dot jiskan16s"
+               FontSize="16"/>
+
+  </Grid>
 </Page>

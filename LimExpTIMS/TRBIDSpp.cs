@@ -10,7 +10,7 @@ namespace TR.LimExpTIMS
   class TRBIDSpp
   {
     //TR.BIDSpp.dll
-    const string PIPath = "../../../TR/TR.BIDSpp.dll";
+    const string PIPath = "../../../TR/TR.BIDSSMemLib.bve5.dll";
     private const CallingConvention CalCnv = CallingConvention.StdCall;
     [DllImport(PIPath, CallingConvention = CalCnv)]
     internal static extern void Load();

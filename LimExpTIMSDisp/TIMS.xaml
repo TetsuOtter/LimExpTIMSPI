@@ -6,19 +6,20 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
   UseLayoutRounding="True"
-  FontFamily="JF Dot jiskan16s">
+  Loaded="OnLoaded"
+  FontFamily="Fonts/JF-Dot-jiskan16s.ttf#JF Dot jiskan16s">
   <Page.Resources>
-    <SolidColorBrush x:Name="LineColor" Color="#FF00FF00"/>
-    <SolidColorBrush x:Name="BtnBColor" Color="#FF0000FF"/>
-    <SolidColorBrush x:Name="KikiJohoBtnColor" Color="#FF00FFFF"/>
-    <SolidColorBrush x:Name="KosyoBtnColor" Color="#FFFF0000"/>
-    <SolidColorBrush x:Name="AlarmBtnColor" Color="#FFFFFF00"/>
-    <SolidColorBrush x:Name="MsgAreaColor" Color="#FF000000"/>
-    <SolidColorBrush x:Name="StaticTextColor" Color="#FFFFFFFF"/>
+    <SolidColorBrush x:Key="LineColor" Color="#FF00FF00"/>
+    <SolidColorBrush x:Key="BtnBColor" Color="#FF0000FF"/>
+    <SolidColorBrush x:Key="KikiJohoBtnColor" Color="#FF00FFFF"/>
+    <SolidColorBrush x:Key="KosyoBtnColor" Color="#FFFF0000"/>
+    <SolidColorBrush x:Key="AlarmBtnColor" Color="#FFFFFF00"/>
+    <SolidColorBrush x:Key="MsgAreaColor" Color="#FF000000"/>
+    <SolidColorBrush x:Key="StaticTextColor" Color="#FFFFFFFF"/>
   </Page.Resources>
   <Grid>
     <Viewbox>
-    <!--<Grid.RowDefinitions>
+      <!--<Grid.RowDefinitions>
       <RowDefinition Height="*"/>
       <RowDefinition Height="600"/>
       <RowDefinition Height="*"/>
@@ -30,17 +31,17 @@
     </Grid.ColumnDefinitions>-->
     <!--<Grid Grid.Row="1" Grid.Column="1" Height="600" Width="800" Background="Black">-->
       <Grid Height="600" Width="800" Background="Black">
-      <!--Upper 800x64-->
-      <Grid Margin="0,0,0,536">
+        <!--Upper 800x64-->
+        <Grid Margin="0,0,0,536">
         <Rectangle Fill="Black"
                    Visibility="Collapsed"
                    Margin="0,0,58,0"/>
         <!--Tsukoku Info-->
-        <Image x:Name="TsukokuStr" Source="img/tsukoku.bmp"  Margin="8,0,760,56"/>
+          <Image x:Name="TsukokuStr" Source="img/tsukoku.bmp"  Margin="8,0,760,56"/>
         <Image x:Name="JohoStr" Source="img/joho.bmp"  Margin="56,0,696,56"/>
         <Image x:Name="MonitoringStr" Source="img/monitoring.bmp"  Margin="120,0,624,56"/>
 
-        <Button Click="OnTsukokuBtnClicked"
+          <Button Click="OnTsukokuBtnClicked"
                 x:Name="TsukokuBtn"
                 Style="{StaticResource AquaBtn}"
                 Content="Order"
@@ -74,60 +75,68 @@
         <!--Time, Speed, Location-->
         <TextBlock Margin="270,0,504,46"
                    TextAlignment="Center"
+                   Foreground="White"
                    Text="："
-                   FontFamily="JF Dot jiskan16s"
+                   FontFamily="Fonts/JF-Dot-jiskan16s.ttf#JF Dot jiskan16s"
                    FontSize="16"/>
         <TextBlock Margin="324,0,450,46"
                    TextAlignment="Center"
+                   Foreground="White"
                    Text="："
-                   FontFamily="JF Dot jiskan16s"
+                   FontFamily="Fonts/JF-Dot-jiskan16s.ttf#JF Dot jiskan16s"
                    FontSize="16"/>
         <TextBlock x:Name="Hour"
                    Margin="234,0,522,46"
                    TextAlignment="Center"
                    Text="１２"
-                   FontFamily="JF Dot jiskan16s"
+                   Foreground="White"
+                   FontFamily="Fonts/JF-Dot-jiskan16s.ttf#JF Dot jiskan16s"
                    FontSize="16"/>
         <TextBlock x:Name="Minute"
                    Margin="288,0,468,46"
                    TextAlignment="Center"
                    Text="３４"
-                   FontFamily="JF Dot jiskan16s"
+                   Foreground="White"
+                   FontFamily="Fonts/JF-Dot-jiskan16s.ttf#JF Dot jiskan16s"
                    FontSize="16"/>
         <TextBlock x:Name="Second"
                    Margin="342,0,414,46"
                    TextAlignment="Center"
                    Text="５６"
-                   FontFamily="JF Dot jiskan16s"
+                   Foreground="White"
+                   FontFamily="Fonts/JF-Dot-jiskan16s.ttf#JF Dot jiskan16s"
                    FontSize="16"/>
         <TextBlock x:Name="Speed"
                    Margin="216,22,454,24"
                    TextAlignment="Right"
                    Text="１２３４５６７８"
-                   FontFamily="JF Dot jiskan16s"
+                   Foreground="White"
+                   FontFamily="Fonts/JF-Dot-jiskan16s.ttf#JF Dot jiskan16s"
                    FontSize="16"/>
         <TextBlock Margin="346,22,418,24"
                    Text="km/h"
                    Foreground="{StaticResource StaticTextColor}"
-                   FontFamily="JF Dot jiskan16s"
+                   FontFamily="Fonts/JF-Dot-jiskan16s.ttf#JF Dot jiskan16s"
                    FontSize="16"/>
         <TextBlock x:Name="LocationInteger"
                    Margin="216,44,454,2"
                    TextAlignment="Right"
                    Text="１２３４５６７．"
-                   FontFamily="JF Dot jiskan16s"
+                   Foreground="White"
+                   FontFamily="Fonts/JF-Dot-jiskan16s.ttf#JF Dot jiskan16s"
                    FontSize="16"/>
         <TextBlock x:Name="LocationDecimal"
                    Margin="346,44,436,2"
                    TextAlignment="Right"
                    Text="８"
-                   FontFamily="JF Dot jiskan16s"
+                   Foreground="White"
+                   FontFamily="Fonts/JF-Dot-jiskan16s.ttf#JF Dot jiskan16s"
                    FontSize="16"/>
         <TextBlock Margin="364,44,418,2"
                    TextAlignment="Right"
                    Text="km"
+                   FontFamily="Fonts/JF-Dot-jiskan16s.ttf#JF Dot jiskan16s"
                    Foreground="{StaticResource StaticTextColor}"
-                   FontFamily="JF Dot jiskan16s"
                    FontSize="16"/>
 
         <Rectangle Margin="381,0,417,0" Fill="{StaticResource LineColor}"/>
@@ -149,9 +158,47 @@
         <Grid Margin="500,8,116,36" Background="{StaticResource MsgAreaColor}">
 
         </Grid>
-        <Grid Margin="500,32,116,12" Background="{StaticResource MsgAreaColor}">
-
-        </Grid>
+          <Grid Margin="500,32,116,12" Opacity="1" Background="{StaticResource MsgAreaColor}">
+            <Border x:Name="AirSecRec"
+                    Margin="0,0,0,0"
+                    Height="20"
+                    Width="36"
+                    Background="{Binding YBFlush1}"
+                    HorizontalAlignment="Right">
+              <TextBlock Padding="1"
+                     Text=" A･S"
+                         HorizontalAlignment="Center"
+                   Foreground="{Binding YBFlush2}"
+                   FontFamily="Fonts/JF-Dot-jiskan16s.ttf#JF Dot jiskan16s"
+                   FontSize="16"/>
+            </Border>
+            <Border x:Name="ACDCSecRec"
+                    Margin="0,0,0,0"
+                    Height="20"
+                    Width="72"
+                    Background="{Binding YBFlush1}"
+                    HorizontalAlignment="Right">
+              <TextBlock Padding="1"
+                     Text="交直切換"
+                         HorizontalAlignment="Center"
+                   Foreground="{Binding YBFlush2}"
+                   FontFamily="Fonts/JF-Dot-jiskan16s.ttf#JF Dot jiskan16s"
+                   FontSize="16"/>
+            </Border>
+            <Border x:Name="ACACSecRec"
+                    Margin="0,0,0,0"
+                    Height="20"
+                    Width="72"
+                    Background="{Binding YBFlush1}"
+                    HorizontalAlignment="Right">
+              <TextBlock Padding="1"
+                     Text="交　交"
+                         HorizontalAlignment="Center"
+                   Foreground="{Binding YBFlush2}"
+                   FontFamily="Fonts/JF-Dot-jiskan16s.ttf#JF Dot jiskan16s"
+                   FontSize="16"/>
+            </Border>
+          </Grid>
         <!--StartPage-->
         <Button Click="OnAlarmBtnClicked"
                 Style="{StaticResource YellowBtn}"
@@ -163,56 +210,50 @@
         <Button Style="{StaticResource BlueBtn}"
                 Click="GoStartPage"
                 x:Name="ShokiSentakuBtn"
-                Content="Start&#xa;Page"
+                Content="終了"
                 Margin="744,5,2,5"
                 Width="54"
                 Height="54"/>
 
       </Grid>
 
-      <Rectangle Margin="0,63,0,535" Fill="{StaticResource LineColor}"/>
+        <Rectangle Margin="0,63,0,535" Fill="{StaticResource LineColor}"/>
 
-      <!--Center 800x436-->
-      <Frame x:Name="CenterF" Margin="0,64,0,100"/>
-      <!--TIMSは激怒した。 800x500-->
-      <Frame x:Name="AngryF" Margin="0,0,0,100"/>
 
-      <Rectangle Margin="0,499,0,99" Fill="{StaticResource LineColor}"/>
+        <Rectangle Margin="0,499,0,99" Fill="{StaticResource LineColor}"/>
       <!--Lower 800x76-->
       <Grid x:Name="LowerG" Margin="0,500,0,24">
         <Button Click="OnL1BClick"
                 x:Name="LowerFirstBtn"
                 Style="{StaticResource BlueBtn}"
-                Content="Driver's&#xa;Menu"
+                Content="読　込"
                 Margin="8,4,60,8"
                 Width="96"
                 Height="64"/>
         <Button Click="OnL2BClick"
                 x:Name="LowerSecondBtn"
                 Style="{StaticResource BlueBtn}"
-                Content="Driver&#xa;AssistPage"
+                Content="行　路"
                 Margin="108,4,60,8"
                 Width="96"
                 Height="64"/>
         <Button Click="OnL3BClick"
                 x:Name="LowerThirdBtn"
                 Style="{StaticResource BlueBtn}"
-                Content="First Aid&#xa;Manual"
+                Content="表示切替"
                 Margin="208,4,60,8"
                 Width="96"
                 Height="64"/>
         <Button Click="OnL4BClick"
                 x:Name="LowerFourthBtn"
                 Style="{StaticResource BlueBtn}"
-                Content="Emergency"
+                Content="Software&#xa;License"
                 Margin="308,4,60,8"
                 Width="96"
                 Height="64"/>
         <Button Style="{StaticResource BlueBtnImg}"
                 Click="OnSPClick"
                 x:Name="SPBtn"
-                PointerPressed="SPImgChange"
-                PointerReleased="SPImgChange"
                 Margin="704,4,60,4"
                 Width="36"
                 Height="68">
@@ -221,8 +262,6 @@
         <Button Style="{StaticResource BlueBtnImg}"
                 Click="OnBLClick"
                 x:Name="BLBtn"
-                PointerPressed="BLImgChange"
-                PointerReleased="BLImgChange"
                 Margin="758,4,4,4"
                 Width="36"
                 Height="68">
@@ -232,7 +271,24 @@
 
         <!--Lower Messaging Area 1-->
         <Grid Margin="416,4,100,52" Background="{StaticResource MsgAreaColor}">
-            <TextBlock x:Name="TestTB" FontFamily="JF Dot jiskan16s" Foreground="White" FontSize="8"/>
+            <Border x:Name="KutenRec" Margin="0,0,0,0" Height="20" Width="36" Background="{Binding AqBFlush1}" HorizontalAlignment="Left">
+              <TextBlock Padding="0"
+                     Text="空転"
+                         HorizontalAlignment="Center"
+                         VerticalAlignment="Center"
+                   Foreground="{Binding AqBFlush2}"
+                   FontFamily="Fonts/JF-Dot-jiskan16s.ttf#JF Dot jiskan16s"
+                   FontSize="16"/>
+            </Border>
+            <Border x:Name="KassoRec" Margin="40,0,0,0" Height="20" Width="36" Background="{Binding AqBFlush1}" HorizontalAlignment="Left">
+              <TextBlock Padding="0"
+                     Text="滑走"
+                         HorizontalAlignment="Center"
+                         VerticalAlignment="Center"
+                   Foreground="{Binding AqBFlush2}"
+                   FontFamily="Fonts/JF-Dot-jiskan16s.ttf#JF Dot jiskan16s"
+                   FontSize="16"/>
+            </Border>
           </Grid>
         <!--Lower Messaging Area 2-->
         <Grid Margin="416,28,100,28" Background="{StaticResource MsgAreaColor}">
@@ -244,12 +300,54 @@
         </Grid>
       </Grid>
 
-      <Rectangle Margin="0,575,0,23" Fill="{StaticResource LineColor}"/>
       <!--Notification-->
       <Grid Margin="0,576,0,0">
+          <Border Margin="400,0,0,0" Background="Red" HorizontalAlignment="Left">
+            <TextBlock Name="NoticeTextR"
+                     Padding="4"
+                     Text="列番を設定して下さい。"
+                   Foreground="White"
+                   FontFamily="Fonts/JF-Dot-jiskan16s.ttf#JF Dot jiskan16s"
+                   FontSize="16"/>
+          </Border>
+        </Grid>
+        <Rectangle Margin="0,575,0,23" Fill="{StaticResource LineColor}"/>
+
         
+        
+        <!--Center 800x436-->
+        <TextBlock Text="１２３４５６７８９０"
+                   Foreground="#FF00FF00"
+                   x:Name="PageNameStr"
+           FontFamily="Fonts/JF-Dot-jiskan16s.ttf#JF Dot jiskan16s"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+           FontSize="16"
+           Margin="90,66,355,0">
+          <TextBlock.RenderTransform>
+            <ScaleTransform ScaleX="2" ScaleY="1"/>
+          </TextBlock.RenderTransform>
+        </TextBlock>
+        <TextBlock Text="PageNum"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Foreground="#FF00FF00"
+                   x:Name="PageNumberStr"
+           FontFamily="Fonts/JF-Dot-jiskan16s.ttf#JF Dot jiskan16s"
+           FontSize="16"
+           Margin="18,66,0,0"/>
+        <Frame x:Name="CenterF"  Margin="0,64,0,100"/>
+        
+        <!--TIMSは激怒した。 800x500-->
+        <Frame x:Name="AngryF"  Margin="0,0,0,100"/>
+
+        <Rectangle Margin="0,0,0,0"
+                           Visibility="Collapsed"
+                           IsHitTestVisible="False"
+                     x:Name="OverRec"
+                     Opacity="0"
+                     Fill="Black"/>
       </Grid>
-    </Grid>
     </Viewbox>
   </Grid>
 </Page>

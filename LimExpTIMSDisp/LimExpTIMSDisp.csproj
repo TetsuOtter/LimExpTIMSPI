@@ -12,12 +12,13 @@
     <DefaultLanguage>ja-JP</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.17763.0</TargetPlatformVersion>
-    <TargetPlatformMinVersion>10.0.10240.0</TargetPlatformMinVersion>
+    <TargetPlatformMinVersion>10.0.17134.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WindowsXamlEnableOverview>true</WindowsXamlEnableOverview>
-    <PackageCertificateKeyFile>E657TIMS_TemporaryKey.pfx</PackageCertificateKeyFile>
+    <PackageCertificateKeyFile>LimExpTIMSDisp_TemporaryKey.pfx</PackageCertificateKeyFile>
+    <PackageCertificateThumbprint>D9688EFDF900DC091EB249F822A318EB628D25D2</PackageCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -29,7 +30,7 @@
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <ErrorReport>prompt</ErrorReport>
     <Prefer32Bit>true</Prefer32Bit>
-    <Optimize>true</Optimize>
+    <Optimize>false</Optimize>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <OutputPath>bin\x86\Release\</OutputPath>
@@ -123,23 +124,39 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Driver\D00AA.xaml.cs">
+      <DependentUpon>D00AA.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Driver\D01AA.xaml.cs">
       <DependentUpon>D01AA.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Driver\D04AA.xaml.cs">
+      <DependentUpon>D04AA.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Driver\D05AA.xaml.cs">
+      <DependentUpon>D05AA.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Driver\D10AA.xaml.cs">
+      <DependentUpon>D10AA.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="kanaxs-1.0.0.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="SMemTalk.cs" />
+    <Compile Include="TimeTable.cs" />
     <Compile Include="TIMS.xaml.cs">
       <DependentUpon>TIMS.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UsefulFunc.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
+    <Content Include="Sound\TIMS_Touch.wav" />
     <None Include="LimExpTIMSDisp_TemporaryKey.pfx" />
     <Content Include="Fonts\JF-Dot-jiskan16s.ttf" />
     <None Include="Stations.csv" />
@@ -188,6 +205,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Driver\D10AA.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -207,7 +228,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
-      <Version>6.2.3</Version>
+      <Version>6.2.8</Version>
     </PackageReference>
     <PackageReference Include="Win2D.uwp">
       <Version>1.23.0</Version>
@@ -217,6 +238,12 @@
     <Folder Include="Attentnion\" />
     <Folder Include="img\spbl\" />
     <Folder Include="Start\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\BIDSSMemLib\BIDSSMemLib.Standard\BIDSSMemLib.Standard.csproj">
+      <Project>{efac8fde-f055-4be9-8236-8b89a9732581}</Project>
+      <Name>BIDSSMemLib.Standard</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

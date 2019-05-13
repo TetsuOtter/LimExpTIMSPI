@@ -6,7 +6,7 @@
     <!--https://www.youtube.com/watch?v=QmbPpVUsK-8-->
     <!--BlueFlush : B-W-B Text:W-Blue-W -->
     <Style x:Key="BlueBtn" TargetType="Button">
-      <Setter Property="FontFamily" Value="JF Dot jiskan16s"/>
+      <Setter Property="FontFamily" Value="Fonts/JF-Dot-jiskan16s.ttf#JF Dot jiskan16s"/>
       <Setter Property="Background" Value="#FF0000FF"/>
       <Setter Property="Foreground" Value="White"/>
       <Setter Property="BorderBrush" Value="#00000000"/>

@@ -5,9 +5,13 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
+  Loaded="Page_Loaded"
+  Unloaded="Page_Unloaded"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
-  <Grid>
+  <Page.Resources>
+    <MediaElement x:Name="TouchSound0" Source="/Sound/TIMS_Touch.wav" AutoPlay="False"/>
+  </Page.Resources>
+  <Grid Tapped="OnTapped">
     <Frame x:Name="MainFrame"/>
   </Grid>
 </Page>

@@ -1,0 +1,18 @@
+﻿<NavigationWindow x:Class="TR.LimExpTIMSDisp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+                  ShowsNavigationUI="False"
+        Title="JRE特急型TIMSモニタ風表示器" Background="#22000000" Height="600" Width="800"  Loaded="Page_Loaded"
+        Closing="Window_Closing"
+                  Source="TIMS.xaml"
+                  RenderOptions.EdgeMode="Aliased"
+                  RenderOptions.BitmapScalingMode="NearestNeighbor"
+  Unloaded="Page_Unloaded">
+  <NavigationWindow.Resources>
+    <MediaElement x:Name="TouchSound0" x:Key="TouchSound0Key" Opacity="0" IsHitTestVisible="False"  Source="/Sound/TIMS_Touch.wav"/>
+  </NavigationWindow.Resources>
+  <!--<Grid TouchDown="Grid_TouchDown" MouseDown="Grid_MouseDown">-->
+</NavigationWindow>

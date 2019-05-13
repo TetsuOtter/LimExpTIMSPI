@@ -5,6 +5,8 @@
   /// </summary>
   public class Settings
   {
+    public const double SpdDifferenceThreshold = 5;
+    public const int RefreshRate = 40;
     /// <summary>Process ID(Use as Identification number)</summary>
     static public uint MyProcessID { get; internal set; } = 0;
     /// <summary>Volume Setting (0:None, 1:Half, 2:Full)</summary>
@@ -150,5 +152,24 @@
       //Above : Tohoku & Hokkaido Area
     }
 
+
+    public static string LicenseString
+    {
+      get
+      {
+        return
+          "LimExpTIMSDispSim (Tetsu Otter)\n\n" +
+          "License Name : The MIT License\n(C) 2019 Tetsu Otter\n" +
+          "https://github.com/TetsuOtter/LimExpTIMSPI/blob/master/LICENSE \n\n" +
+          "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n" +
+          "dotnet Library (Microsoft)\n\n" +
+          "License Name : MICROSOFT SOFTWARE LICENSE TERMS(MICROSOFT.NET LIBRARY)\n" +
+          "https://dotnet.microsoft.com/dotnet_library_license.htm \n\n" +
+          "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n" +
+          "kanaxs C# 1.0.0(DOBON!)\n\n" +
+          "License Name : New BSD License\nCopyright (c) 2011, DOBON! <http://dobon.net>\n" +
+          "https://wiki.dobon.net/index.php?free%2FkanaxsCSharp%2Flicense \n";
+      }
+    }
   }
 }

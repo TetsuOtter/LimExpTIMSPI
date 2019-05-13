@@ -1,32 +1,27 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using TR.BIDSSMemLib;
 
 namespace TR.LimExpTIMSDisp
 {
   /// <summary>
-  /// Shared Memory Read/Write Class
+  /// Shared Memory Read/Write Wrapper Class
   /// </summary>
-  internal class SMemTalk
+  internal class SMemTalk : IDisposable
   {
-    internal SMemTalk(uint PID)
+    internal SMemLib SML = null;
+
+    public SMemTalk()
     {
-      //Write Version
+      SML = new SMemLib(3);
+      SML.ReadStart(5,100);
+      SML.ReadStart(1,100);
     }
-    internal class StationInfoChangedEventArgs : EventArgs
+
+
+    public void Dispose()
     {
-
-    }
-    /// <summary>
-    /// Class of Station Info(ID, Location etc.)
-    /// </summary>
-    internal class StationInfo
-    {
-
-      internal uint StationID = 0;
-
+      SML?.ReadStop(-1);
+      SML?.Dispose();
     }
   }
 }
