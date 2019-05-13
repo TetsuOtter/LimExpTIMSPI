@@ -10,9 +10,9 @@ using System.Windows;
 [assembly: AssemblyTitle("LimExpTIMSDispW")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("LimExpTIMSDispW")]
-[assembly: AssemblyCopyright("Copyright ©  2019")]
+[assembly: AssemblyCompany("Tech Otter")]
+[assembly: AssemblyProduct("LimExpTIMS / BIDS Project")]
+[assembly: AssemblyCopyright("Copyright © Tetsu Otter 2019")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
