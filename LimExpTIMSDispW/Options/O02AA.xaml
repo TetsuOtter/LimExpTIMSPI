@@ -1,0 +1,23 @@
+﻿<Page
+    x:Class="TR.LimExpTIMSDisp.Options.O02AA"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+               FontFamily="../Fonts/JF-Dot-jiskan16s.ttf#JF Dot jiskan16s"
+  Width="800"
+  Height="436"
+  Loaded="Page_Loaded" Unloaded="Page_Unloaded">
+  <Page.Resources>
+    <SolidColorBrush x:Key="LineColor" Color="Lime"/>
+    <SolidColorBrush x:Key="StaticTextColor" Color="Lime"/>
+    <SolidColorBrush x:Key="VariableTextColor" Color="White"/>
+    <SolidColorBrush x:Key="TrainNumTextColor" Color="Yellow"/>
+    <SolidColorBrush x:Key="PTrainNumTextColor" Color="Aqua"/>
+  </Page.Resources>
+
+  <Grid>
+        
+    </Grid>
+</Page>
