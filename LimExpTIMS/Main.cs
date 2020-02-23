@@ -85,40 +85,14 @@ namespace TR.LimExpTIMS
     private static int ACDCStateRec = 0;
 
     //TIMS PageNumber
-    internal enum TIMSPageENum//あとで適宜変更
-    {
-      None,
-      S00AA,
-      S00AB,
-      D00AA,
-      D01AA,
-      D04AA,
-      D05AA,
-      A01AA,
-      A06AA
-
-    };
     static internal TIMSPageENum TIMSPageNum = TIMSPageENum.S00AA;
 
     public enum CabSeSLocationENum { F, N, B };
     static public CabSeSLocationENum CabSeSLoc { get; private set; } = CabSeSLocationENum.N;
 
-    private enum DisplayingModeENum
-    {
-      Driving,
-      CabNFBShowing,
-      CabSeSShowing,
-      OutOfCar
-    };
     private static DisplayingModeENum DispMode = DisplayingModeENum.Driving;
 
     private static MCKeyStateENum MCKeyState = MCKeyStateENum.Removed;
-    private enum MCKeyStateENum
-    {
-      Removed,
-      OFF,
-      ON
-    };
 
     //private enum ACDCStateENum { None, DC, AC};
     //private static ACDCStateENum ACDCState = ACDCStateENum.None;
@@ -316,9 +290,9 @@ namespace TR.LimExpTIMS
       //空転 / 滑走表示
       Pa[Panel.TIMS.LowerMessageArea] = 0;//とりあえずリセット
       double WheelSPD = st.V;// / 60;//km/min
-      const double SPDThreshold = 5;// / 60;//km/min
-      if ((Ats.GPSSpeed + SPDThreshold) < WheelSPD) Pa[Panel.TIMS.LowerMessageArea] = 1 + ((st.T / TIMSFlushTime) % 2);//理論より速い:空転
-      if ((Ats.GPSSpeed - SPDThreshold) > WheelSPD) Pa[Panel.TIMS.LowerMessageArea] = 3 + ((st.T / TIMSFlushTime) % 2);//理論より遅い:滑走
+      
+      if ((Ats.GPSSpeed + vars.SPDThreshold) < WheelSPD) Pa[Panel.TIMS.LowerMessageArea] = 1 + ((st.T / TIMSFlushTime) % 2);//理論より速い:空転
+      if ((Ats.GPSSpeed - vars.SPDThreshold) > WheelSPD) Pa[Panel.TIMS.LowerMessageArea] = 3 + ((st.T / TIMSFlushTime) % 2);//理論より遅い:滑走
 
       //上部MSエリア設定
       if(CabSeSLoc!= CabSeSLocationENum.F)
