@@ -1,6 +1,6 @@
 ﻿namespace TR.LimExpTIMS
 {
-  public class Panel
+  public static class PanelAssign
   {
     public partial class Ats
     {
@@ -268,5 +268,87 @@
         public const int EmergencyCalledCar = 255;
       }
     }
+  }
+
+  public static class SoundAssign
+  {
+    public const int ATS_Sn_Bell = 0;
+    public const int ATS_Sn_Chime = 1;
+
+    public const int EBSystem_Buzzer = 3;
+    public const int ATS_P_Bell = 4;
+
+    public const int ATS_P_EBMsg = 6;
+    public const int ATS_P_ReleaseMsg = 7;
+
+
+    public const int ATS_Ps_Pattern_BrakeOut = 10;
+    public const int ATS_Ps_Pattern_Coming = 11;
+    public const int ATS_Ps_Pattern_Deleted = 12;
+    public const int ATS_Ps_Brake_Trip = 13;
+
+    public const int Accidental_Passage_Preventer_Stop_Once = 15;
+    public const int Accidental_Passage_Preventer_Pass_Once = 16;
+    public const int Accidental_Passage_Preventer_Stop_Loop = 17;
+
+
+    public const int BougoR_Sound = 30;
+    public const int ElecHorn = 31;
+    public const int AirHorn_Intro = 32;
+    public const int AirHorn_Loop = 33;
+    public const int AirHorn_AfterGlow = 34;
+    public const int MusicHorn = 35;
+
+
+    public const int TiltStart_L = 41;
+    public const int TiltStart_R = 42;
+    public const int TiltEnd_L = 43;
+    public const int TiltEnd_R = 44;
+
+
+    public const int MCCtrlSound_ToEnd = 50;
+    public const int MCCtrlSound_Inner = 51;
+    public const int RevCtrlSound_ToN = 52;
+    public const int RevCtrlSound_ToFR = 53;
+    public const int MCCtrl_Failed = 54;
+    public const int RevCtrl_Failed = 55;
+    public const int MCKey_Ctrl_Failed = 56;
+
+    public const int MCKey_Remove = 89;
+    public const int MCKey_ToON = 90;
+    public const int MCKey_ToOFF = 91;
+    public const int MCKey_Insert = 92;
+    public const int CabSeS_ToN = 93;
+    public const int CabSeS_ToFR = 94;
+    public const int ReduceSPD_Coming = 95;
+    public const int ReduceSPD_Running = 96;
+    public const int ReduceSPD_End = 97;
+
+    public const int Brake_Boost_Joyo = 100;
+    public const int Brake_Boost_Emerg = 101;
+    public const int AirSec_Warning = 102;
+    public const int EB_Warning_Msg = 103;
+    public const int OP_Info_Updated_Passenger = 104;
+    public const int Stop_Warning_Deck_Msg = 107;
+    public const int Passenger_Emg_Buzzer = 108;
+    public const int IC_Insert = 109;
+    public const int IC_Remove = 110;
+    public const int TIMS_Touch = 111;
+    public const int TIMS_Error_01 = 112;
+
+
+    public const int Cab_Btn_Push = 115;
+    public const int Cab_Btn_Release = 116;
+    public const int ACDCChangerBtn_Push = 117;
+    public const int ACDCChangerBtn_Release = 118;
+
+
+    public const int HB_Sound = 225;
+    public const int DCtoAC = 226;
+    public const int ACtoDC = 227;
+    public const int AirCond_OFF = 228;
+    public const int AirCond_ON = 229;
+    public const int AirCond_Drive = 230;
+    
   }
 }
