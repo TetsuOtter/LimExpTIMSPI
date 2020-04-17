@@ -1,48 +1,79 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TR.LimExpTIMS
 {
-  class TRBIDSpp
+  public class TRBIDSpp : IAtsPI
   {
+    DoDLLAct dda = new DoDLLAct();
+    public bool IsLoaded { get => dda.IsLoaded; }
+
     //TR.BIDSpp.dll
     const string PIPath = "../../../TR/TR.BIDSSMemLib.bve5.dll";
     private const CallingConvention CalCnv = CallingConvention.StdCall;
     [DllImport(PIPath, CallingConvention = CalCnv)]
-    internal static extern void Load();
+    private static extern void Load();
     [DllImport(PIPath, CallingConvention = CalCnv)]
-    internal static extern void Dispose();
+    private static extern void Dispose();
     [DllImport(PIPath, CallingConvention = CalCnv)]
-    internal static extern void SetVehicleSpec(Spec s);
+    private static extern void SetVehicleSpec(Spec s);
     [DllImport(PIPath, CallingConvention = CalCnv)]
-    internal static extern void Initialize(int s);
+    private static extern void Initialize(int s);
     [DllImport(PIPath, CallingConvention = CalCnv)]
-    internal static extern unsafe Hand Elapse(State s, int* Pa, int* So);
+    private static extern Hand Elapse(State s, IntPtr Pa, IntPtr So);
     [DllImport(PIPath, CallingConvention = CalCnv)]
-    internal static extern void SetPower(int p);
+    private static extern void SetPower(int p);
     [DllImport(PIPath, CallingConvention = CalCnv)]
-    internal static extern void SetBrake(int b);
+    private static extern void SetBrake(int b);
     [DllImport(PIPath, CallingConvention = CalCnv)]
-    internal static extern void SetReverser(int r);
+    private static extern void SetReverser(int r);
     [DllImport(PIPath, CallingConvention = CalCnv)]
-    internal static extern void KeyDown(int k);
+    private static extern void KeyDown(int k);
     [DllImport(PIPath, CallingConvention = CalCnv)]
-    internal static extern void KeyUp(int k);
+    private static extern void KeyUp(int k);
     [DllImport(PIPath, CallingConvention = CalCnv)]
-    internal static extern void HornBlow(int k);
+    private static extern void HornBlow(int k);
     [DllImport(PIPath, CallingConvention = CalCnv)]
-    internal static extern void DoorOpen();
+    private static extern void DoorOpen();
     [DllImport(PIPath, CallingConvention = CalCnv)]
-    internal static extern void DoorClose();
+    private static extern void DoorClose();
     [DllImport(PIPath, CallingConvention = CalCnv)]
-    internal static extern void SetSignal(int s);
+    private static extern void SetSignal(int s);
     [DllImport(PIPath, CallingConvention = CalCnv)]
-    internal static extern void SetBeaconData(Beacon b);
+    private static extern void SetBeaconData(Beacon b);
     //[DllImport(PIPath, CallingConvention = CalCnv)]
-    //internal static extern void GetPluginVersion();
+    //private static extern void GetPluginVersion();
+
+    void IAtsPI.Load() => dda.DoDLLAction(Load);
+
+    void IAtsPI.Dispose() => dda.DoDLLAction(Dispose);
+
+    void IAtsPI.SetVehicleSpec(Spec s) => dda.DoDLLAction(SetVehicleSpec, s);
+
+    void IAtsPI.Initialize(int s) => dda.DoDLLAction(Initialize, s);
+
+    Hand IAtsPI.Elapse(State s, IntPtr Pa, IntPtr So) => dda.DoDLLElapse(Elapse, s, Pa, So);
+
+    void IAtsPI.SetPower(int p) => dda.DoDLLAction(SetPower, p);
+
+    void IAtsPI.SetBrake(int b) => dda.DoDLLAction(SetBrake, b);
+
+    void IAtsPI.SetReverser(int r) => dda.DoDLLAction(SetReverser, r);
+
+    void IAtsPI.KeyDown(int k) => dda.DoDLLAction(KeyDown, k);
+
+    void IAtsPI.KeyUp(int k) => dda.DoDLLAction(KeyUp, k);
+
+    void IAtsPI.HornBlow(int k) => dda.DoDLLAction(HornBlow, k);
+
+    void IAtsPI.DoorOpen() => dda.DoDLLAction(DoorOpen);
+
+    void IAtsPI.DoorClose() => dda.DoDLLAction(DoorClose);
+
+    void IAtsPI.SetSignal(int s) => dda.DoDLLAction(SetSignal, s);
+
+    void IAtsPI.SetBeaconData(Beacon b) => dda.DoDLLAction(SetBeaconData, b);
+
+    uint IAtsPI.GetPluginVersion() => IAtsPIClass.VersionNum;
   }
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace TR.LimExpTIMS
 {
@@ -52,5 +53,32 @@ namespace TR.LimExpTIMS
     //[DllImport(PIPath, CallingConvention = CalCnv)]
     //internal static extern void GetPluginVersion();
 
+    static internal bool LoadPI()
+    {
+      while (true)
+      {
+        DialogResult dr;
+        try
+        {
+          Load();//読み込み失敗したらDllNotFoundException
+
+          Status.No1DispBL = DispBL.Max;
+          Status.TIMSDispBL = DispBL.Max;
+          TIMSDisp.PageNum = TIMSPageENum.S00AB;
+          
+          return true;
+        }
+        catch (DllNotFoundException e)
+        {
+          dr = MessageBox.Show("自炊TIMSプラグインが見つかりません。\n" + e.Message, "LimExpTIMS", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error);
+        }
+        catch (Exception e)
+        {
+          dr = MessageBox.Show("エラーが発生しました。\n" + e.ToString(), "LinExpTIMS", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error);
+        }
+        if (dr != DialogResult.Retry) return false;
+      }
+
+    }
   }
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace TR.LimExpTIMS
 {
@@ -46,5 +47,28 @@ namespace TR.LimExpTIMS
     //[DllImport("Integrated_ATS(Ps).dll", CallingConvention = CalCnv)]
     //internal static extern void GetPluginVersion();
 
+    static internal bool LoadPI()
+    {
+      while (true)
+      {
+        DialogResult dr;
+        try
+        {
+          Load();
+
+          Status.No2DispBL = DispBL.Max;
+          return true;
+        }
+        catch (DllNotFoundException e)
+        {
+          dr = MessageBox.Show("ATS-P/Ps統合型ATSプラグインが見つかりません。\n" + e.Message, "LimExpTIMS", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error);
+        }
+        catch (Exception e)
+        {
+          dr = MessageBox.Show("エラーが発生しました。\n" + e.ToString(), "LinExpTIMS", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error);
+        }
+        if (dr != DialogResult.Retry) return false;
+      }
+    }
   }
 }

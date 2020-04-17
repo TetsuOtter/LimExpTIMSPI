@@ -6,8 +6,15 @@ using System.Threading.Tasks;
 
 namespace TR.LimExpTIMS
 {
-  public static class vars
+  static class TIMSDisp
   {
-    public const double SPDThreshold = 5;//空転/滑走表示の閾値。
+    static public TIMSPageENum PageNum { get; set; }
+
+    static void Elap(State s, IntPtr pnl, IntPtr snd)
+    {
+
+    }
+
+
   }
 }

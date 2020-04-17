@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace TR.LimExpTIMS
 {
@@ -45,6 +46,29 @@ namespace TR.LimExpTIMS
     //internal static extern void SetBeaconData(Beacon b);
     //[DllImport(PIPath, CallingConvention = CalCnv)]
     //internal static extern void GetPluginVersion();
+
+    static internal bool LoadPI()
+    {
+      while (true)
+      {
+        DialogResult dr;
+        try
+        {
+          Load();
+
+          return true;
+        }
+        catch (DllNotFoundException e)
+        {
+          dr = MessageBox.Show("定速/抑速機能プラグインが見つかりません。\n" + e.Message, "LimExpTIMS", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error);
+        }
+        catch (Exception e)
+        {
+          dr = MessageBox.Show("エラーが発生しました。\n" + e.ToString(), "LinExpTIMS", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error);
+        }
+        if (dr != DialogResult.Retry) return false;
+      }
+    }
 
   }
 }
