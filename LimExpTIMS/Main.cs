@@ -21,15 +21,6 @@ namespace TR.LimExpTIMS
       else TurnOff(ref b);
     }
 
-    /// <summary>Sound Play Once Method</summary>
-    /// <param name="So">Sound Output State Value</param>
-    /// <param name="PlayingState">Playing State</param>
-    static private void SPO(ref this int So, ref bool PlayingState)
-    {
-      if (PlayingState) { So = Sound.Once; PlayingState = false; }
-      else So = Sound.Continue;
-    }
-
     static private ATSPsP.ATSIF atsIF;
     static private TIMS.TIMS_IF timsIF;
     static private Cab.Cab_IF cabIF;
@@ -53,8 +44,7 @@ namespace TR.LimExpTIMS
       unsafe
       {
         int* p = (int*)pa;
-        int* s = (int*)sa;
-        Parallel.For(0, cvs.PSArrayLength, (i) => s[i] = Sound.Continue);
+
         //各IFのプロパティより値を入れていく。
         //状態からPanel表示へのコンバートのみを行う。
         //状態変化は各IFから行う。
@@ -62,12 +52,81 @@ namespace TR.LimExpTIMS
 
         #region panels
         #endregion
-
-        #region sounds
-        #endregion
       }
+      #region sounds
+      SoundAssign.ATS_S_Chime.GetOutput(sa);
+      SoundAssign.ATS_S_Bell.GetOutput(sa);
+
+      SoundAssign.EBSystem_Buzzer.GetOutput(sa);
+      SoundAssign.ATS_P_Bell.GetOutput(sa);
+
+      SoundAssign.ATS_P_EBMsg.GetOutput(sa);
+      SoundAssign.ATS_P_ReleaseMsg.GetOutput(sa);
+
+      SoundAssign.ATS_Ps_Pattern_BrakeOut.GetOutput(sa);
+      SoundAssign.ATS_Ps_Pattern_Coming.GetOutput(sa);
+      SoundAssign.ATS_Ps_Pattern_Deleted.GetOutput(sa);
+      SoundAssign.ATS_Ps_Brake_Trip.GetOutput(sa);
+
+      SoundAssign.Accidental_Passage_Preventer_Stop_Once.GetOutput(sa);
+      SoundAssign.Accidental_Passage_Preventer_Pass_Once.GetOutput(sa);
+      SoundAssign.Accidental_Passage_Preventer_Stop_Loop.GetOutput(sa);
+
+      SoundAssign.BougoR_Sound.GetOutput(sa);
+      SoundAssign.ElecHorn.GetOutput(sa);
+      SoundAssign.AirHorn_Intro.GetOutput(sa);
+      SoundAssign.AirHorn_Loop.GetOutput(sa);
+      SoundAssign.AirHorn_AfterGlow.GetOutput(sa);
+      SoundAssign.MusicHorn.GetOutput(sa);
+
+      SoundAssign.TiltStart_L.GetOutput(sa);
+      SoundAssign.TiltStart_R.GetOutput(sa);
+      SoundAssign.TiltEnd_L.GetOutput(sa);
+      SoundAssign.TiltEnd_R.GetOutput(sa);
+
+      SoundAssign.MCCtrlSound_ToEnd.GetOutput(sa);
+      SoundAssign.MCCtrlSound_Inner.GetOutput(sa);
+      SoundAssign.RevCtrlSound_ToN.GetOutput(sa);
+      SoundAssign.RevCtrlSound_ToFR.GetOutput(sa);
+      SoundAssign.MCCtrl_Failed.GetOutput(sa);
+      SoundAssign.RevCtrl_Failed.GetOutput(sa);
+      SoundAssign.MCKey_Ctrl_Failed.GetOutput(sa);
+
+      SoundAssign.MCKey_Remove.GetOutput(sa);
+      SoundAssign.MCKey_ToON.GetOutput(sa);
+      SoundAssign.MCKey_ToOFF.GetOutput(sa);
+      SoundAssign.MCKey_Insert.GetOutput(sa);
+      SoundAssign.CabSeS_ToN.GetOutput(sa);
+      SoundAssign.CabSeS_ToFR.GetOutput(sa);
+      SoundAssign.ReduceSPD_Coming.GetOutput(sa);
+      SoundAssign.ReduceSPD_Running.GetOutput(sa);
+      SoundAssign.ReduceSPD_End.GetOutput(sa);
+
+      SoundAssign.Brake_Boost_Joyo.GetOutput(sa);
+      SoundAssign.Brake_Boost_Emerg.GetOutput(sa);
+      SoundAssign.AirSec_Warning.GetOutput(sa);
+      SoundAssign.EB_Warning_Msg.GetOutput(sa);
+      SoundAssign.OP_Info_Updated_Passenger.GetOutput(sa);
+      SoundAssign.Stop_Warning_Deck_Msg.GetOutput(sa);
+      SoundAssign.Passenger_Emg_Buzzer.GetOutput(sa);
+      SoundAssign.IC_Insert.GetOutput(sa);
+      SoundAssign.IC_Remove.GetOutput(sa);
+      SoundAssign.TIMS_Touch.GetOutput(sa);
+      SoundAssign.TIMS_Error_01.GetOutput(sa);
+      
+      SoundAssign.Cab_Btn_Push.GetOutput(sa);
+      SoundAssign.Cab_Btn_Release.GetOutput(sa);
+      SoundAssign.ACDCChangerBtn_Push.GetOutput(sa);
+      SoundAssign.ACDCChangerBtn_Release.GetOutput(sa);
+
+      SoundAssign.HB_Sound.GetOutput(sa);
+      SoundAssign.DCtoAC.GetOutput(sa);
+      SoundAssign.ACtoDC.GetOutput(sa);
+      SoundAssign.AirCond_OFF.GetOutput(sa);
+      SoundAssign.AirCond_ON.GetOutput(sa);
+      SoundAssign.AirCond_Drive.GetOutput(sa);
+      #endregion
     }
-    static private int PNum = 0;
     static internal void SetPower(int p) { }
     static internal void SetBrake(int b) { }
     static internal void SetReverser(int r) { }

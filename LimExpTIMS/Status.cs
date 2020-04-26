@@ -36,6 +36,6 @@ namespace TR.LimExpTIMS
     /// <summary>車両ボタンの押下状態</summary>
     static public bool[] Btn { get; set; } = new bool[Enum.GetNames(typeof(Btns)).Length];
 
-    
+    static public TIMSPageENum TIMSMon_PageNum { get; set; }
   }
 }

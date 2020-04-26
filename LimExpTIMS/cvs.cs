@@ -1,4 +1,6 @@
-﻿namespace TR.LimExpTIMS
+﻿using System;
+
+namespace TR.LimExpTIMS
 {
   //定数値核種を格納
 
@@ -107,7 +109,21 @@
     /// <summary>Panel / Soundの配列長</summary>
     public const int PSArrayLength = 256;
 
-    /// <summary>徐行案内をどれくらい前から出すかの設定</summary>
+    /// <summary>徐行案内をどれくらい前から出すかの設定[m]</summary>
     public const int ReduceSpeed_ShowDistance = 400;
+
+    /// <summary>徐行区間予告Msgを鳴らす頻度[ms]</summary>
+    public const int ReduceSpeed_ComingMsgCycle = 10 * 1000;
+    /// <summary>徐行区間内Msgを鳴らす頻度[ms]</summary>
+    public const int ReduceSpeed_RunningMsgCycle = 10 * 1000;
+
+    public static readonly int DisplayingModeENum_Count = Enum.GetNames(typeof(DisplayingModeENum)).Length;
+
+    /// <summary>エアセク警報を出し始める距離[ms]</summary>
+    public const int AirSec_Warning_ShowDistance = 400;
+    /// <summary>エアセク警報メッセージの再生間隔[ms]</summary>
+    public const int AirSec_Warning_MsgCycle = 10 * 1000;
+    /// <summary>エアセク警報を流すスピードの上限</summary>
+    public const int AirSec_Warning_ShowSpeed = 25;
   }
 }

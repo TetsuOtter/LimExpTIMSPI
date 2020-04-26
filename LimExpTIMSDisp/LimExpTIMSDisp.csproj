@@ -240,6 +240,10 @@
     <Folder Include="Start\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\source\repos\IAtsPI\IAtsPI.csproj">
+      <Project>{c01d180a-4ef3-41fe-abdd-af8a70d5ae5d}</Project>
+      <Name>IAtsPI</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\BIDSSMemLib\BIDSSMemLib.Standard\BIDSSMemLib.Standard.csproj">
       <Project>{efac8fde-f055-4be9-8236-8b89a9732581}</Project>
       <Name>BIDSSMemLib.Standard</Name>

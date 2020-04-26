@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TR.LimExpTIMS.TIMS
 {
-  public class TIMS_IF
+  public class TIMS_IF : IDisposable
   {
     SimTimer BlinkTimer = new SimTimer(cvs.TIMSFlushTime);
     bool Blink_P = false;
@@ -14,12 +14,22 @@ namespace TR.LimExpTIMS.TIMS
     {
       BlinkTimer.TimerEvent += (s, e) => Blink_P = !Blink_P;
       BlinkTimer.TimerStart();
+
+      Ats.KeyDownEv += Ats_KeyDownEv;
+      Ats.KeyUpEv += Ats_KeyUpEv;
     }
 
-    public void elp()
+    private void Ats_KeyUpEv(object sender, IntValEvArgs e)
     {
-      TouchSound.IsPlaying = true;
+      
     }
+
+    private void Ats_KeyDownEv(object sender, IntValEvArgs e)
+    {
+      
+    }
+
+
 
     #region PanelStatuses
     #region Common
@@ -42,9 +52,45 @@ namespace TR.LimExpTIMS.TIMS
     #endregion
     #endregion
 
-    #region SoundStatus
-    public SoundManager TouchSound { get; } = new SoundManager(SoundManager.PlayType.PlayOnce, SoundAssign.ATS_P_Bell);
+    #region IDisposable Support
+    private bool disposedValue = false; // 重複する呼び出しを検出するには
+
+    protected virtual void Dispose(bool disposing)
+    {
+      if (!disposedValue)
+      {
+        if (disposing)
+        {
+          // TODO: マネージ状態を破棄します (マネージ オブジェクト)。
+        }
+
+        // TODO: アンマネージ リソース (アンマネージ オブジェクト) を解放し、下のファイナライザーをオーバーライドします。
+        // TODO: 大きなフィールドを null に設定します。
+
+        Ats.KeyDownEv -= Ats_KeyDownEv;
+        Ats.KeyUpEv -= Ats_KeyUpEv;
+
+        disposedValue = true;
+      }
+    }
+
+    // TODO: 上の Dispose(bool disposing) にアンマネージ リソースを解放するコードが含まれる場合にのみ、ファイナライザーをオーバーライドします。
+    // ~TIMS_IF()
+    // {
+    //   // このコードを変更しないでください。クリーンアップ コードを上の Dispose(bool disposing) に記述します。
+    //   Dispose(false);
+    // }
+
+    // このコードは、破棄可能なパターンを正しく実装できるように追加されました。
+    void IDisposable.Dispose()
+    {
+      // このコードを変更しないでください。クリーンアップ コードを上の Dispose(bool disposing) に記述します。
+      Dispose(true);
+      // TODO: 上のファイナライザーがオーバーライドされる場合は、次の行のコメントを解除してください。
+      // GC.SuppressFinalize(this);
+    }
     #endregion
+
   }
 
   /// <summary>時刻表表示部表示情報</summary>

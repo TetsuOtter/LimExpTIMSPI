@@ -79,7 +79,11 @@
     </Compile>
     <Compile Include="ATSPsP\ATSIF.cs" />
     <Compile Include="Bus.cs" />
+    <Compile Include="ButtonManager.cs" />
     <Compile Include="Cab\Cab_IF.cs" />
+    <Compile Include="LogPrinter.cs" />
+    <Compile Include="SettingManager.cs" />
+    <Compile Include="SimTimer.cs" />
     <Compile Include="SoundManager.cs" />
     <Compile Include="TIMS\AnnXX.cs" />
     <Compile Include="ATSPsP\AskATSPsP.cs" />
@@ -90,11 +94,10 @@
     <Compile Include="TIMS\D05AA.cs" />
     <Compile Include="Keiki.cs" />
     <Compile Include="KikuSC59A.cs" />
-    <Compile Include="TIMS\KikuTIMS.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Status.cs" />
-    <Compile Include="structs.cs" />
+    <Compile Include="enums.cs" />
     <Compile Include="TIMS\TIMSDisp.cs" />
     <Compile Include="TIMS\TIMS_IF.cs" />
     <Compile Include="TRBIDSpp.cs" />

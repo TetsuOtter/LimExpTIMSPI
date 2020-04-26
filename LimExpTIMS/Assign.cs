@@ -272,83 +272,241 @@
 
   public static class SoundAssign
   {
-    public const int ATS_Sn_Bell = 0;
-    public const int ATS_Sn_Chime = 1;
+    public static readonly SoundManager ATS_S_Bell = new SoundManager(SoundManager.PlayType.PlayLoop, 0);
+    public static readonly SoundManager ATS_S_Chime = new SoundManager(SoundManager.PlayType.PlayLoop, 1);
 
-    public const int EBSystem_Buzzer = 3;
-    public const int ATS_P_Bell = 4;
+    public static readonly SoundManager EBSystem_Buzzer = new SoundManager(SoundManager.PlayType.PlayLoop, 3);
+    public static readonly SoundManager ATS_P_Bell = new SoundManager(SoundManager.PlayType.PlayOnce, 4);
 
-    public const int ATS_P_EBMsg = 6;
-    public const int ATS_P_ReleaseMsg = 7;
-
-
-    public const int ATS_Ps_Pattern_BrakeOut = 10;
-    public const int ATS_Ps_Pattern_Coming = 11;
-    public const int ATS_Ps_Pattern_Deleted = 12;
-    public const int ATS_Ps_Brake_Trip = 13;
-
-    public const int Accidental_Passage_Preventer_Stop_Once = 15;
-    public const int Accidental_Passage_Preventer_Pass_Once = 16;
-    public const int Accidental_Passage_Preventer_Stop_Loop = 17;
+    public static readonly SoundManager ATS_P_EBMsg = new SoundManager(SoundManager.PlayType.PlayOnce, 6);
+    public static readonly SoundManager ATS_P_ReleaseMsg = new SoundManager(SoundManager.PlayType.PlayOnce, 7);
 
 
-    public const int BougoR_Sound = 30;
-    public const int ElecHorn = 31;
-    public const int AirHorn_Intro = 32;
-    public const int AirHorn_Loop = 33;
-    public const int AirHorn_AfterGlow = 34;
-    public const int MusicHorn = 35;
+    public static readonly SoundManager ATS_Ps_Pattern_BrakeOut = new SoundManager(SoundManager.PlayType.PlayOnce, 10);
+    public static readonly SoundManager ATS_Ps_Pattern_Coming = new SoundManager(SoundManager.PlayType.PlayOnce, 11);
+    public static readonly SoundManager ATS_Ps_Pattern_Deleted = new SoundManager(SoundManager.PlayType.PlayOnce, 12);
+    public static readonly SoundManager ATS_Ps_Brake_Trip = new SoundManager(SoundManager.PlayType.PlayOnce, 13);
+
+    public static readonly SoundManager Accidental_Passage_Preventer_Stop_Once = new SoundManager(SoundManager.PlayType.PlayOnce, 15);
+    public static readonly SoundManager Accidental_Passage_Preventer_Pass_Once = new SoundManager(SoundManager.PlayType.PlayOnce, 16);
+    public static readonly SoundManager Accidental_Passage_Preventer_Stop_Loop = new SoundManager(SoundManager.PlayType.PlayLoop, 17);
 
 
-    public const int TiltStart_L = 41;
-    public const int TiltStart_R = 42;
-    public const int TiltEnd_L = 43;
-    public const int TiltEnd_R = 44;
+    public static readonly SoundManager BougoR_Sound = new SoundManager(SoundManager.PlayType.PlayLoop, 30);
+    public static readonly SoundManager ElecHorn = new SoundManager(SoundManager.PlayType.PlayLoop, 31);
+    public static readonly SoundManager AirHorn_Intro = new SoundManager(SoundManager.PlayType.PlayOnce,  32);
+    public static readonly SoundManager AirHorn_Loop = new SoundManager(SoundManager.PlayType.PlayLoop, 33);
+    public static readonly SoundManager AirHorn_AfterGlow = new SoundManager(SoundManager.PlayType.PlayOnce, 34);
+    public static readonly SoundManager MusicHorn = new SoundManager(SoundManager.PlayType.PlayOnce, 35);
 
 
-    public const int MCCtrlSound_ToEnd = 50;
-    public const int MCCtrlSound_Inner = 51;
-    public const int RevCtrlSound_ToN = 52;
-    public const int RevCtrlSound_ToFR = 53;
-    public const int MCCtrl_Failed = 54;
-    public const int RevCtrl_Failed = 55;
-    public const int MCKey_Ctrl_Failed = 56;
-
-    public const int MCKey_Remove = 89;
-    public const int MCKey_ToON = 90;
-    public const int MCKey_ToOFF = 91;
-    public const int MCKey_Insert = 92;
-    public const int CabSeS_ToN = 93;
-    public const int CabSeS_ToFR = 94;
-    public const int ReduceSPD_Coming = 95;
-    public const int ReduceSPD_Running = 96;
-    public const int ReduceSPD_End = 97;
-
-    public const int Brake_Boost_Joyo = 100;
-    public const int Brake_Boost_Emerg = 101;
-    public const int AirSec_Warning = 102;
-    public const int EB_Warning_Msg = 103;
-    public const int OP_Info_Updated_Passenger = 104;
-    public const int Stop_Warning_Deck_Msg = 107;
-    public const int Passenger_Emg_Buzzer = 108;
-    public const int IC_Insert = 109;
-    public const int IC_Remove = 110;
-    public const int TIMS_Touch = 111;
-    public const int TIMS_Error_01 = 112;
+    public static readonly SoundManager TiltStart_L = new SoundManager(SoundManager.PlayType.PlayOnce, 41);
+    public static readonly SoundManager TiltStart_R = new SoundManager(SoundManager.PlayType.PlayOnce, 42);
+    public static readonly SoundManager TiltEnd_L = new SoundManager(SoundManager.PlayType.PlayOnce, 43);
+    public static readonly SoundManager TiltEnd_R = new SoundManager(SoundManager.PlayType.PlayOnce, 44);
 
 
-    public const int Cab_Btn_Push = 115;
-    public const int Cab_Btn_Release = 116;
-    public const int ACDCChangerBtn_Push = 117;
-    public const int ACDCChangerBtn_Release = 118;
+    public static readonly SoundManager MCCtrlSound_ToEnd = new SoundManager(SoundManager.PlayType.PlayOnce, 50);
+    public static readonly SoundManager MCCtrlSound_Inner = new SoundManager(SoundManager.PlayType.PlayOnce, 51);
+    public static readonly SoundManager RevCtrlSound_ToN = new SoundManager(SoundManager.PlayType.PlayOnce, 52);
+    public static readonly SoundManager RevCtrlSound_ToFR = new SoundManager(SoundManager.PlayType.PlayOnce, 53);
+    public static readonly SoundManager MCCtrl_Failed = new SoundManager(SoundManager.PlayType.PlayOnce, 54);
+    public static readonly SoundManager RevCtrl_Failed = new SoundManager(SoundManager.PlayType.PlayOnce, 55);
+    public static readonly SoundManager MCKey_Ctrl_Failed = new SoundManager(SoundManager.PlayType.PlayOnce, 56);
+
+    public static readonly SoundManager MCKey_Remove = new SoundManager(SoundManager.PlayType.PlayOnce, 89);
+    public static readonly SoundManager MCKey_ToON = new SoundManager(SoundManager.PlayType.PlayOnce, 90);
+    public static readonly SoundManager MCKey_ToOFF = new SoundManager(SoundManager.PlayType.PlayOnce, 91);
+    public static readonly SoundManager MCKey_Insert = new SoundManager(SoundManager.PlayType.PlayOnce, 92);
+    public static readonly SoundManager CabSeS_ToN = new SoundManager(SoundManager.PlayType.PlayOnce, 93);
+    public static readonly SoundManager CabSeS_ToFR = new SoundManager(SoundManager.PlayType.PlayOnce, 94);
+    public static readonly SoundManager ReduceSPD_Coming = new SoundManager(SoundManager.PlayType.PlayOnce, 95, cvs.ReduceSpeed_ComingMsgCycle);//繰り返しはPIで実装
+    public static readonly SoundManager ReduceSPD_Running = new SoundManager(SoundManager.PlayType.PlayOnce, 96, cvs.ReduceSpeed_RunningMsgCycle);//繰り返しはPIで実装
+    public static readonly SoundManager ReduceSPD_End = new SoundManager(SoundManager.PlayType.PlayOnce, 97);
+
+    public static readonly SoundManager Brake_Boost_Joyo = new SoundManager(SoundManager.PlayType.PlayOnce, 100);
+    public static readonly SoundManager Brake_Boost_Emerg = new SoundManager(SoundManager.PlayType.PlayOnce, 101);
+    public static readonly SoundManager AirSec_Warning = new SoundManager(SoundManager.PlayType.PlayOnce, 102, cvs.AirSec_Warning_MsgCycle);//繰り返しはPIで実装
+    public static readonly SoundManager EB_Warning_Msg = new SoundManager(SoundManager.PlayType.PlayOnce, 103);
+    public static readonly SoundManager OP_Info_Updated_Passenger = new SoundManager(SoundManager.PlayType.PlayOnce, 104);
+    public static readonly SoundManager Stop_Warning_Deck_Msg = new SoundManager(SoundManager.PlayType.PlayOnce, 107);
+    public static readonly SoundManager Passenger_Emg_Buzzer = new SoundManager(SoundManager.PlayType.PlayLoop, 108);
+    public static readonly SoundManager IC_Insert = new SoundManager(SoundManager.PlayType.PlayOnce, 109);
+    public static readonly SoundManager IC_Remove = new SoundManager(SoundManager.PlayType.PlayOnce, 110);
+    public static readonly SoundManager TIMS_Touch = new SoundManager(SoundManager.PlayType.PlayOnce, 111);
+    public static readonly SoundManager TIMS_Error_01 = new SoundManager(SoundManager.PlayType.PlayLoop, 112);
 
 
-    public const int HB_Sound = 225;
-    public const int DCtoAC = 226;
-    public const int ACtoDC = 227;
-    public const int AirCond_OFF = 228;
-    public const int AirCond_ON = 229;
-    public const int AirCond_Drive = 230;
+    public static readonly SoundManager Cab_Btn_Push = new SoundManager(SoundManager.PlayType.PlayOnce, 115);
+    public static readonly SoundManager Cab_Btn_Release = new SoundManager(SoundManager.PlayType.PlayOnce, 116);
+    public static readonly SoundManager ACDCChangerBtn_Push = new SoundManager(SoundManager.PlayType.PlayOnce, 117);
+    public static readonly SoundManager ACDCChangerBtn_Release = new SoundManager(SoundManager.PlayType.PlayOnce, 118);
+
+
+    public static readonly SoundManager HB_Sound = new SoundManager(SoundManager.PlayType.PlayOnce, 225);
+    public static readonly SoundManager DCtoAC = new SoundManager(SoundManager.PlayType.PlayOnce, 226);
+    public static readonly SoundManager ACtoDC = new SoundManager(SoundManager.PlayType.PlayOnce, 227);
+    public static readonly SoundManager AirCond_OFF = new SoundManager(SoundManager.PlayType.PlayOnce, 228);
+    public static readonly SoundManager AirCond_ON = new SoundManager(SoundManager.PlayType.PlayOnce, 229);
+    public static readonly SoundManager AirCond_Drive = new SoundManager(SoundManager.PlayType.PlayLoop, 230);
     
   }
+
+  public static class ButtonAssign
+  {
+    #region 単独で機能する操作
+    public static readonly ButtonManager TEButton = new ButtonManager(ATSKeys.A1);
+    public static readonly ButtonManager EBReset = new ButtonManager(ATSKeys.A2);
+    public static readonly ButtonManager ATS_Restitution = new ButtonManager(ATSKeys.B1);
+    public static readonly ButtonManager ATSP_Release = new ButtonManager(ATSKeys.B2);
+    #endregion
+
+    #region モニタ輝度/音量操作
+    public static readonly ButtonManager No1Mon_BL = new ButtonManager(ATSKeys.D, ATSKeys.S);
+    public static readonly ButtonManager TIMSMon_Vol = new ButtonManager(ATSKeys.E, ATSKeys.S);
+    public static readonly ButtonManager TIMSMon_BL = new ButtonManager(ATSKeys.F, ATSKeys.S);
+    public static readonly ButtonManager No2Mon_BL = new ButtonManager(ATSKeys.G, ATSKeys.S);
+    #endregion
+    public const int CmbKey1 = ATSKeys.S;
+    #region combo機能
+    //0より下へは移動できないので、モード違い扱い。
+    public static readonly ButtonManager ModeChangeToLower = new ButtonManager(ATSKeys.C1, CmbKey1,
+      () => Status.DispMode > 0);
+
+    //最大値より上へは移動できないので、モード違い扱い。
+    public static readonly ButtonManager ModeChangeToBigger = new ButtonManager(ATSKeys.C2, CmbKey1,
+      () => Status.DispMode < (DisplayingModeENum)(cvs.DisplayingModeENum_Count - 1));
+
+    //ON状態でも「操作失敗音」再生のため、モード一致扱い。
+    public static readonly ButtonManager MCKey_Ins_Rmv = new ButtonManager(ATSKeys.H, CmbKey1);
+
+    //挿入さえされていれば、操作を実行できる。
+    public static readonly ButtonManager MCKey_Turn = new ButtonManager(ATSKeys.I, CmbKey1, () => Status.MCKey != MCKeyStateENum.Removed);
+
+    //音再生/表示切替のため、電源モード不一致でもイベント発火
+    public static readonly ButtonManager DCBtnCtrl = new ButtonManager(ATSKeys.K, CmbKey1);
+    public static readonly ButtonManager ACBtnCtrl = new ButtonManager(ATSKeys.L, CmbKey1);
+    #endregion
+
+    #region モードにより違う機能を提供する操作
+
+    public static bool D04AAMode_Chk()
+      => Cmb_ModChk(DisplayingModeENum.D04AA) && Status.TIMSMon_PageNum == TIMSPageENum.D04AA;
+
+    public static bool DrMode_SpecifPage(TIMSPageENum tpe)
+      => Cmb_ModChk(DisplayingModeENum.Driving) && Status.TIMSMon_PageNum == tpe;
+    
+    public static bool Cmb_ModChk(DisplayingModeENum mode)
+      => (!Ats.IsKeyDown[CmbKey1]) && Status.DispMode == mode;
+    /* F/F => F
+     * F/T => T
+     * T/F => F
+     * T/T => F
+     */
+
+    
+
+    public static readonly ButtonManager TIMSMon_ShokiSentaku = new ButtonManager(ATSKeys.C1, null, () =>
+    {
+      if (!Cmb_ModChk(DisplayingModeENum.Driving)) return false;
+      switch (Status.TIMSMon_PageNum)
+      {
+        case TIMSPageENum.A06AA: return false;
+        case TIMSPageENum.None: return false;
+        case TIMSPageENum.S00AA: return false;
+        case TIMSPageENum.S00AB: return false;
+        default: return true;
+      }
+    });
+
+    public static readonly ButtonManager TIMSMon_S00AB_DriverBtn = new ButtonManager(ATSKeys.C2, null,
+      () => DrMode_SpecifPage(TIMSPageENum.S00AB));
+
+    public static readonly ButtonManager TIMSMon_D00AA_DrvInf1 = new ButtonManager(ATSKeys.C2, null,
+      () => DrMode_SpecifPage(TIMSPageENum.D00AA));
+    public static readonly ButtonManager TIMSMon_D00AA_DrvInf2 = new ButtonManager(ATSKeys.D, null,
+      () => DrMode_SpecifPage(TIMSPageENum.D00AA));
+
+    public static readonly ButtonManager TIMSMon_D00AA_BrChkInf = new ButtonManager(ATSKeys.E, null,
+      () => DrMode_SpecifPage(TIMSPageENum.D00AA));
+    public static readonly ButtonManager TIMSMon_D00AA_TrainNumSet = new ButtonManager(ATSKeys.F, null,
+      () => DrMode_SpecifPage(TIMSPageENum.D00AA));
+
+    public static readonly ButtonManager TIMSMon_SC_DrvM = new ButtonManager(ATSKeys.D, null, () =>
+      {
+        if (!Cmb_ModChk(DisplayingModeENum.Driving)) return false;
+
+        switch (Status.TIMSMon_PageNum)
+        {
+          case TIMSPageENum.A01AA: return true;
+          case TIMSPageENum.A06AA: return true;
+          case TIMSPageENum.D01AA: return true;
+          case TIMSPageENum.D04AA: return true;
+          case TIMSPageENum.D05AA: return true;
+          default: return false;
+        }
+      });
+    public static readonly ButtonManager TIMSMon_SC_DrvInf = new ButtonManager(ATSKeys.E, null, () =>
+    {
+      if (!Cmb_ModChk(DisplayingModeENum.Driving)) return false;
+
+      switch (Status.TIMSMon_PageNum)
+      {
+        case TIMSPageENum.A01AA: return true;
+
+        case TIMSPageENum.D01AA: return true;
+        case TIMSPageENum.D04AA: return true;
+        case TIMSPageENum.D05AA: return true;
+        default: return false;
+      }
+    });
+
+    public static readonly ButtonManager TIMSMon_A06AA_GoBack = new ButtonManager(ATSKeys.C1, null,
+      () => DrMode_SpecifPage(TIMSPageENum.A06AA));
+    public static readonly ButtonManager TIMSMon_A06AA_Check = new ButtonManager(ATSKeys.C2, null,
+      () => DrMode_SpecifPage(TIMSPageENum.A06AA));
+
+    public static readonly ButtonManager Drive_ConstSPD = new ButtonManager(ATSKeys.J, null, () => Cmb_ModChk(DisplayingModeENum.Driving));
+    public static readonly ButtonManager Drive_PanDown = new ButtonManager(ATSKeys.J, null, () => Cmb_ModChk(DisplayingModeENum.Driving));
+
+    public static readonly ButtonManager CabNFB_VCBON = new ButtonManager(ATSKeys.C1, null, () => Cmb_ModChk(DisplayingModeENum.CabNFBShowing));
+    public static readonly ButtonManager CabNFB_VCBOFF = new ButtonManager(ATSKeys.C2, null, () => Cmb_ModChk(DisplayingModeENum.CabNFBShowing));
+    public static readonly ButtonManager CabNFB_TailLamp = new ButtonManager(ATSKeys.D, null, () => Cmb_ModChk(DisplayingModeENum.CabNFBShowing));
+    public static readonly ButtonManager CabNFB_CurLim = new ButtonManager(ATSKeys.E, null, () => Cmb_ModChk(DisplayingModeENum.CabNFBShowing));
+    public static readonly ButtonManager CabNFB_ElecBr = new ButtonManager(ATSKeys.F, null, () => Cmb_ModChk(DisplayingModeENum.CabNFBShowing));
+    public static readonly ButtonManager CabNFB_SnowResBr = new ButtonManager(ATSKeys.G, null, () => Cmb_ModChk(DisplayingModeENum.CabNFBShowing));
+    public static readonly ButtonManager CabNFB_DoorInterlock = new ButtonManager(ATSKeys.H, null, () => Cmb_ModChk(DisplayingModeENum.CabNFBShowing));
+    public static readonly ButtonManager CabNFB_PanUp = new ButtonManager(ATSKeys.I, null, () => Cmb_ModChk(DisplayingModeENum.CabNFBShowing));
+
+    public static readonly ButtonManager CabSeS_toF = new ButtonManager(ATSKeys.C1, null,
+      () => Cmb_ModChk(DisplayingModeENum.CabSeSShowing) && (Status.CabSeS_kore != direct.F));
+    public static readonly ButtonManager CabSeS_toR = new ButtonManager(ATSKeys.C2, null,
+      () => Cmb_ModChk(DisplayingModeENum.CabSeSShowing) && (Status.CabSeS_kore != direct.B));
+
+    public static readonly ButtonManager IC_Ins_Rmv = new ButtonManager(ATSKeys.F, null,
+      () => Cmb_ModChk(DisplayingModeENum.Driving));
+
+    public static readonly ButtonManager D04AA_SFrameUp = new ButtonManager(ATSKeys.C1, null,
+      () => D04AAMode_Chk());
+    public static readonly ButtonManager D04AA_SFrameDown = new ButtonManager(ATSKeys.C2, null,
+      () => D04AAMode_Chk());
+    public static readonly ButtonManager D04AA_LFrameLeft = new ButtonManager(ATSKeys.D, null,
+      () => D04AAMode_Chk());
+    public static readonly ButtonManager D04AA_LFrameRight = new ButtonManager(ATSKeys.E, null,
+      () => D04AAMode_Chk());
+    public static readonly ButtonManager D04AA_Bt1Click = new ButtonManager(ATSKeys.F, null,
+      () => D04AAMode_Chk());
+    public static readonly ButtonManager D04AA_Bt2Click = new ButtonManager(ATSKeys.G, null,
+      () => D04AAMode_Chk());
+    public static readonly ButtonManager D04AA_Bt3Click = new ButtonManager(ATSKeys.H, null,
+      () => D04AAMode_Chk());
+    public static readonly ButtonManager D04AA_LArrow = new ButtonManager(ATSKeys.I, null,
+      () => D04AAMode_Chk());
+    public static readonly ButtonManager D04AA_RArrow = new ButtonManager(ATSKeys.J, null,
+      () => D04AAMode_Chk());
+    public static readonly ButtonManager D04AA_DataSet = new ButtonManager(ATSKeys.L, null,
+      () => D04AAMode_Chk());
+    #endregion
+  }
+
 }

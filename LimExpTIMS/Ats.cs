@@ -112,7 +112,7 @@ namespace TR.LimExpTIMS
       Marshal.Copy(Pa, parr, 0, cvs.PSArrayLength);
       Marshal.Copy(Sa, sarr, 0, cvs.PSArrayLength);
 
-      Tick?.Invoke(null, new TickEvArgs() { state = st, panel = parr, sound = sarr });
+      ElapseEv?.Invoke(null, new TickEvArgs() { state = st, panel = parr, sound = sarr });
 
       Main.Elapse(st, Pa, Sa);
       LastLoc = st.Z;

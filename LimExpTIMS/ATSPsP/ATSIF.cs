@@ -32,12 +32,6 @@ namespace TR.LimExpTIMS.ATSPsP
     public bool P_Power_Lamp { get; private set; }
 
     public bool P_Pattern_Coming_Lamp { get; private set; }
-    public bool P_Brake_Release_Lamp { get; private set; }
-
-    public SoundManager Sn_Bell { get; private set; } = new SoundManager(SoundManager.PlayType.PlayLoop, SoundAssign.ATS_Sn_Bell);
-    public SoundManager Sn_Chime { get; private set; } = new SoundManager(SoundManager.PlayType.PlayLoop, SoundAssign.ATS_Sn_Chime);
-    public SoundManager EB_Buzzer { get; private set; } = new SoundManager(SoundManager.PlayType.PlayLoop, SoundAssign.EBSystem_Buzzer);
-    public SoundManager P_Bell { get; private set; } = new SoundManager(SoundManager.PlayType.PlayOnce, SoundAssign.ATS_P_Bell);
-    
+    public bool P_Brake_Release_Lamp { get; private set; }    
   }
 }

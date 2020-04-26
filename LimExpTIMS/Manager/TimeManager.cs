@@ -1,18 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TR.LimExpTIMS
 {
   /// <summary>シミュレータ内の時刻に基づいたタイマーを1つ提供する。</summary>
-  public class SimTimer : IDisposable
+  public class TimeManager : IDisposable
   {
     /// <summary>設定した時間経過した際に呼び出されます。</summary>
     public event EventHandler TimerEvent;
 
-    public SimTimer(int len = 0, bool isOneTime = false)
+    public TimeManager(int len = 0, bool isOneTime = false)
     {
       TimerLength = len;
       IsOneTimeTimer = isOneTime;

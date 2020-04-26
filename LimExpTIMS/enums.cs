@@ -4,11 +4,13 @@
   /// <summary>Panelに表示するデータのグループ/モード名</summary>
   public enum DisplayingModeENum
   {
+    D04AA,
     Driving,
     CabNFBShowing,
     CabSeSShowing,
     OutOfCar
   };
+
   /// <summary>マスコンキーの状態</summary>
   public enum MCKeyStateENum
   {
@@ -29,7 +31,6 @@
   /// <summary>TIMS Page Num列挙</summary>
   public enum TIMSPageENum//あとで適宜変更
   {
-    None,
     S00AA,
     S00AB,
     D00AA,
@@ -37,8 +38,9 @@
     D04AA,
     D05AA,
     A01AA,
-    A06AA
+    A06AA,
 
+    None,//(予備)
   };
   
   public enum DispBL
@@ -402,6 +404,17 @@
     Kai,
     /// <summary>"救"</summary>
     RescueTrain,
+    /// <summary>う回</summary>
+    Bypass_OutOfS,
+    /// <summary>現回</summary>
+    Gen_OutOfS,
+    /// <summary>改回</summary>
+    Kai_OutOfS,
+
+    /// <summary>"通"</summary>
+    PassSetting,
+
+    //以下, 念のために用意した表示種類
     /// <summary>"単"</summary>
     AloneCar,
     /// <summary>"前"</summary>
@@ -426,8 +439,6 @@
     Hen,
     Sui,
     Kyou,
-    /// <summary>"通"</summary>
-    PassSetting,
     /// <summary>"召"</summary>
     Royal,
 
@@ -446,6 +457,7 @@
   public enum Pnl_TIMSMon_TrainNum_Footer
   {
     //準備中
+    
   }
 
   public enum Pnl_TIMSMon_D04AA_KeyState
@@ -457,6 +469,26 @@
     SetBtW_LBtnPush,
     SetBtW_RBtnPush,
     SetBtPush
+  }
+
+  public enum Pnl_TIMSMon_D04AA_PassS_10KeyMode
+  {
+    /// <summary>表示なし</summary>
+    NoPass_NoSel,
+    /// <summary>通過設定なし 「数字」Selected</summary>
+    NoPass_Num,
+    /// <summary>通過設定なし 「英上」Selected</summary>
+    NoPass_Upper,
+    /// <summary>通過設定なし 「英下」Selected</summary>
+    NoPass_Lower,
+    /// <summary>通過設定あり モード選択なし</summary>
+    Pass_NoSel,
+    /// <summary>通過設定あり 「数字」Selected</summary>
+    Pass_Num,
+    /// <summary>通過設定あり 「英上」Selected</summary>
+    Pass_Upper,
+    /// <summary>通過設定あり 「英下」Selected</summary>
+    Pass_Lower
   }
 
   public enum Pnl_TIMSMon_LowerMsgArea
