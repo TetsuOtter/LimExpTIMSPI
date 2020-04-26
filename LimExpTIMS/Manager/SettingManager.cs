@@ -18,7 +18,7 @@ namespace TR.LimExpTIMS
     static public void Init()
     {
 #if DEBUG
-      LogPrinter.WriteLine("SettingManager", LogPrinter.LogLevel.Debug, LogPrinter.LogCategory.Execute_Information, string.Format("Init()\tIsEnabled:{0}\tSettings?.Count{1}", IsEnabled, Settings?.Count));
+      LogManager.WriteLine("SettingManager", LogManager.LogLevel.Debug, LogManager.LogCategory.Execute_Information, string.Format("Init()\tIsEnabled:{0}\tSettings?.Count{1}", IsEnabled, Settings?.Count));
 #endif
       if (IsEnabled || Settings != null) return;
 
@@ -34,7 +34,7 @@ namespace TR.LimExpTIMS
     static public bool GetData(string key, out string data)
     {
 #if DEBUG
-      LogPrinter.WriteLine("SettingManager", LogPrinter.LogLevel.Debug, LogPrinter.LogCategory.Execute_Information, string.Format("GetData(key{2})\tIsEnabled:{0}\tSettings?.Count{1}", IsEnabled, Settings?.Count, key));
+      LogManager.WriteLine("SettingManager", LogManager.LogLevel.Debug, LogManager.LogCategory.Execute_Information, string.Format("GetData(key{2})\tIsEnabled:{0}\tSettings?.Count{1}", IsEnabled, Settings?.Count, key));
 #endif
 
       if (!IsEnabled || Settings != null) Init();
@@ -49,11 +49,11 @@ namespace TR.LimExpTIMS
     static public bool SetData(string key, string data)
     {
 #if DEBUG
-      LogPrinter.WriteLine("SettingManager", LogPrinter.LogLevel.Debug, LogPrinter.LogCategory.Execute_Information, string.Format("SetData({0}, {1})", key, data));
+      LogManager.WriteLine("SettingManager", LogManager.LogLevel.Debug, LogManager.LogCategory.Execute_Information, string.Format("SetData({0}, {1})", key, data));
 #endif
       if (string.IsNullOrWhiteSpace(key))//必ず文字を含む必要があります.
       {
-        LogPrinter.WriteLine("SettingManager", LogPrinter.LogLevel.Warning, LogPrinter.LogCategory.Minor_Error, "KEY IS NULL or EMPTY or WHITESPACE!\tdata:" + data);
+        LogManager.WriteLine("SettingManager", LogManager.LogLevel.Warning, LogManager.LogCategory.Minor_Error, "KEY IS NULL or EMPTY or WHITESPACE!\tdata:" + data);
 #if DEBUG
         throw new ArgumentException("argument \'key\' is Null or Empty or WhiteSpace.  (Not accesptable)");
 #else
@@ -66,7 +66,7 @@ namespace TR.LimExpTIMS
       {
         //keyが存在する場合
 #if DEBUG
-        LogPrinter.WriteLine("SettingManager", LogPrinter.LogLevel.Debug, LogPrinter.LogCategory.Execute_Information, string.Format("SetData\tkey:{0}\tOldValue:{1}\tNewValue:{2}", key, Settings[key], data));
+        LogManager.WriteLine("SettingManager", LogManager.LogLevel.Debug, LogManager.LogCategory.Execute_Information, string.Format("SetData\tkey:{0}\tOldValue:{1}\tNewValue:{2}", key, Settings[key], data));
 #endif
         Settings[key] = data;
         return true;
@@ -75,7 +75,7 @@ namespace TR.LimExpTIMS
       {
         //keyが存在しない場合
 #if DEBUG
-        LogPrinter.WriteLine("SettingManager", LogPrinter.LogLevel.Debug, LogPrinter.LogCategory.Execute_Information, string.Format("SetData(New Key)\tkey:{0}\tNewValue:{2}", key, Settings[key], data));
+        LogManager.WriteLine("SettingManager", LogManager.LogLevel.Debug, LogManager.LogCategory.Execute_Information, string.Format("SetData(New Key)\tkey:{0}\tNewValue:{2}", key, Settings[key], data));
 #endif
         Settings.Add(key, data);
         return true;
@@ -86,7 +86,7 @@ namespace TR.LimExpTIMS
     static public void Save()
     {
 #if DEBUG
-      LogPrinter.WriteLine("SettingManager", LogPrinter.LogLevel.Debug, LogPrinter.LogCategory.Execute_Information, string.Format("Save()\tIsEnabled:{0}\tSettings?.Count{1}", IsEnabled, Settings?.Count));
+      LogManager.WriteLine("SettingManager", LogManager.LogLevel.Debug, LogManager.LogCategory.Execute_Information, string.Format("Save()\tIsEnabled:{0}\tSettings?.Count{1}", IsEnabled, Settings?.Count));
 #endif
       if (!IsEnabled || Settings == null) return;//有効でないか, 設定が存在しないなら実行しない
 

@@ -8,7 +8,7 @@ namespace TR.LimExpTIMS.TIMS
 {
   public class TIMS_IF : IDisposable
   {
-    SimTimer BlinkTimer = new SimTimer(cvs.TIMSFlushTime);
+    TimeManager BlinkTimer = new TimeManager(cvs.TIMSFlushTime);
     bool Blink_P = false;
     public TIMS_IF()
     {

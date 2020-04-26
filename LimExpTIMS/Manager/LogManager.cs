@@ -6,7 +6,7 @@ using System.Windows.Forms;
 namespace TR.LimExpTIMS
 {
   /// <summary>ログを出力する.</summary>
-  public static class LogPrinter
+  public static class LogManager
   {
     public enum LogLevel
     {
