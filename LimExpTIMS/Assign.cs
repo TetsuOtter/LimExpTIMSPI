@@ -289,7 +289,7 @@
 
     public static readonly SoundManager Accidental_Passage_Preventer_Stop_Once = new SoundManager(SoundManager.PlayType.PlayOnce, 15);
     public static readonly SoundManager Accidental_Passage_Preventer_Pass_Once = new SoundManager(SoundManager.PlayType.PlayOnce, 16);
-    public static readonly SoundManager Accidental_Passage_Preventer_Stop_Loop = new SoundManager(SoundManager.PlayType.PlayLoop, 17);
+    //public static readonly SoundManager Accidental_Passage_Preventer_Stop_Loop = new SoundManager(SoundManager.PlayType.PlayLoop, 17);//不要なため削除
 
 
     public static readonly SoundManager BougoR_Sound = new SoundManager(SoundManager.PlayType.PlayLoop, 30);
@@ -537,9 +537,9 @@
 
     //以下, LimExpTIMSPI独自の機能用Assign
 
-    /// <summary>LETsPIを使用できる路線であることを示すフラグ</summary>
-    LETsPI_Usable_Flag = 1501,
-    
+    /// <summary>LETsPIを使用できる路線であることを示すフラグ(路線IDも同時設定)</summary>
+    LETsPI_Usable_Flag = 1501,//車両側に設定されたIDと異なる場合, No.2Monでのみ駅名表示が可能
+
     /// <summary>LETsPIにBeaconの通過情報を流すかどうかを設定するフラグ</summary>
     LETsPI_Beacon_Suspend_Flag,
 
@@ -549,7 +549,10 @@
     /// <summary>各駅の停車種類を設定する.</summary>
     LETsPI_TIMS_Timetable_StopMode,//0:停車, 1:通過, 2:運転停車, 3:終着 etc
 
-    /// <summary>架線電源の周波数を設定する(DC, 非電化は0)</summary>
+    LETsPI_TIMS_TimeTable_TimeSep_Arr,//時刻表示区切り文字を設定
+    LETsPI_TIMS_TimeTable_TimeSep_Dep,//設定可能な値はPnl_TIMSMon_D01AA_TimeSepで定義される
+
+    /// <summary>架線電源の周波数を設定する(DC電源や非電化区間は0)</summary>
     LETsPI_TIMS_Frequency,
 
     /// <summary>防護無線を作動させる.</summary>
@@ -570,6 +573,9 @@
 
     /// <summary>車掌弁が扱われる長さを設定する</summary>
     LETsPI_Conductor_EB,
+
+    /// <summary>列番の記号部を設定する</summary>
+    LETsPI_TrNum_CharPart,
 
     /// <summary>無線chを変更させる.</summary>
     LETsPI_RadioCH_Change = 139,
@@ -593,6 +599,6 @@
 
   public static class AssignEnumConv
   {
-    public static int ToInt(ref this BeaconAssign b) => (int)b;
+    public static int ToInt(this BeaconAssign b) => (int)b;
   }
 }

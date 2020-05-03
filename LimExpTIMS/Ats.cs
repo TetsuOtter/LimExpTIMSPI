@@ -7,9 +7,12 @@ using System.Threading.Tasks;
 
 namespace TR.LimExpTIMS
 {
-  /// <summary>処理を実装するクラス</summary>
+  /// <summary>BVEと対話するインターフェイス</summary>
   static public class Ats
   {
+    public static bool IsLETsPIMode { get; private set; } = false;
+    public static bool IsBeaconEnabled { get; private set; } = true;
+
     public static event EventHandler DisposeEv;
     public static event EventHandler GetPluginVersionEv;
     public static event EventHandler<SpecEvArgs> SetVehicleSpecEv;
@@ -28,6 +31,15 @@ namespace TR.LimExpTIMS
     public static event EventHandler<IntValEvArgs> HornBlowEv;
 
     public static event EventHandler<BeaconEvArgs> SetBeaconEv;
+
+    public static void DisposeEvInL(Func<EventArgs, bool> f) => DisposeEv.EvInL(f);
+    public static void GetPluginVersionEvInL(Func<EventArgs, bool> f) => GetPluginVersionEv.EvInL(f);
+    public static void SetVehicleSpecEvInL(Func<SpecEvArgs, bool> f) => SetVehicleSpecEv.EvInL(f);
+    public static void InitializeEvInL(Func<IntValEvArgs, bool> f) => InitializeEv.EvInL(f);
+    public static void ElapseEvInL(Func<TickEvArgs, bool> f) => ElapseEv.EvInL(f);
+    public static void SetPowerEvInL(Func<IntValEvArgs, bool> f) => SetPowerEv.EvInL(f);
+    public static void SetBrakeInL(Func<IntValEvArgs, bool> f) => SetBrakeEv.EvInL(f);
+    //残りは省略 必要になったらつくる
 
     private const int Version = 0x00020000;
     public const CallingConvention CalCnv = CallingConvention.StdCall;
@@ -211,6 +223,24 @@ namespace TR.LimExpTIMS
     [DllExport(CallingConvention = CalCnv)]
     static public void SetBeaconData(Beacon b)
     {
+#if DEBUG
+      LogManager.WriteLine("Ats.SetBeaconData", LogManager.LogLevel.Debug, LogManager.LogCategory.Step_Log, string.Format("SetBeaconData(Z:{0}, Num:{1}, Sig:{2}, Data:{3})", b.Z, b.Num, b.Sig, b.Data));
+#endif
+      switch ((BeaconAssign)b.Num)
+      {
+        case BeaconAssign.LETsPI_Usable_Flag:
+          IsLETsPIMode = true;
+          LogManager.WriteLine("Ats.SetBeaconData", LogManager.LogLevel.Information, LogManager.LogCategory.Control_Log, "LETsPI Usable Flag ON");
+          break;
+        case BeaconAssign.LETsPI_Beacon_Suspend_Flag:
+          LogManager.WriteLine("Ats.SetBeaconData", LogManager.LogLevel.Information, LogManager.LogCategory.Execute_Information, string.Format("LETsPI Beacon Suspend Flag {0} to {1}", IsBeaconEnabled, b.Data != cvs.TRUE_VALUE));
+          IsBeaconEnabled = b.Data != cvs.TRUE_VALUE;//TRUEでないならBeacon有効, TRUEならBeacon無効
+
+          break;
+      }
+
+      if (IsBeaconEnabled) return;
+
       SetBeaconEv?.Invoke(null, new BeaconEvArgs(b));
       Main.SetBeaconData(b);
     }
@@ -229,12 +259,12 @@ namespace TR.LimExpTIMS
     public SpecEvArgs(in Spec s) => spec = s;
     public Spec spec;
   }
-  public class IntValEvArgs
+  public class IntValEvArgs : EventArgs
   {
     public IntValEvArgs(in int v) => val = v;
     public int val;
   }
-  public class BeaconEvArgs
+  public class BeaconEvArgs : EventArgs
   {
     public BeaconEvArgs(in Beacon b) => beacon = b;
     public Beacon beacon;

@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace TR.LimExpTIMS.TIMS
 {
-  public class TIMS_IF : IDisposable
+  public static class TIMS_IF
   {
-    TimeManager BlinkTimer = new TimeManager(cvs.TIMSFlushTime);
-    bool Blink_P = false;
-    public TIMS_IF()
+    static TimeManager BlinkTimer = new TimeManager(cvs.TIMSFlushTime);
+    static bool Blink_P = false;
+    public static void Init()
     {
       BlinkTimer.TimerEvent += (s, e) => Blink_P = !Blink_P;
       BlinkTimer.TimerStart();
@@ -19,12 +19,12 @@ namespace TR.LimExpTIMS.TIMS
       Ats.KeyUpEv += Ats_KeyUpEv;
     }
 
-    private void Ats_KeyUpEv(object sender, IntValEvArgs e)
+    static private void Ats_KeyUpEv(object sender, IntValEvArgs e)
     {
       
     }
 
-    private void Ats_KeyDownEv(object sender, IntValEvArgs e)
+    static private void Ats_KeyDownEv(object sender, IntValEvArgs e)
     {
       
     }
@@ -33,62 +33,30 @@ namespace TR.LimExpTIMS.TIMS
 
     #region PanelStatuses
     #region Common
-    public Pnl_TIMSMon_TsukokuJoho_Char TsukokuJoho_Char { get; private set; }
-    public Pnl_TIMSMon_Emerg_Warning_WC Emerg_Warning_WC_Btn { get; private set; }
+    static public Pnl_TIMSMon_TsukokuJoho_Char TsukokuJoho_Char { get; private set; }
+    static public Pnl_TIMSMon_Emerg_Warning_WC Emerg_Warning_WC_Btn { get; private set; }
+
+		#region 通告情報欄ボタン状態
+		static public Pnl_TIMSMon_TsukokuJoho_BtnState Tsukoku_Btn { get; private set; }
+    static public Pnl_TIMSMon_TsukokuJoho_BtnState Kisei_Btn { get; private set; }
+    static public Pnl_TIMSMon_TsukokuJoho_BtnState Shirei_Btn { get; private set; }
+    static public Pnl_TIMSMon_TsukokuJoho_BtnState Unkou_Btn { get; private set; }
+		#endregion
+		#endregion
+
+		#region D01AA
+		static public Pnl_Radio_CH Radio_CH { get; private set; }
+
+    static public StaInfo FirstRow { get; private set; } = null;
+    static public StaInfo SecondRow { get; private set; } = null;
+    static public StaInfo ThirdRow { get; private set; } = null;
+    static public StaInfo FourthRow { get; private set; } = null;
+    static public StaInfo FifthRow { get; private set; } = null;
+    static public StaInfo NextStop { get; private set; } = null;
+
+    static public ReduceSpeedInfo ReduceSPD1 { get; private set; } = null;
+    static public ReduceSpeedInfo ReduceSPD2 { get; private set; } = null;
     #endregion
-
-    #region D01AA
-    public Pnl_Radio_CH Radio_CH { get; private set; }
-
-    public StaInfo FirstRow { get; private set; } = null;
-    public StaInfo SecondRow { get; private set; } = null;
-    public StaInfo ThirdRow { get; private set; } = null;
-    public StaInfo FourthRow { get; private set; } = null;
-    public StaInfo FifthRow { get; private set; } = null;
-    public StaInfo NextStop { get; private set; } = null;
-
-    public ReduceSpeedInfo ReduceSPD1 { get; private set; } = null;
-    public ReduceSpeedInfo ReduceSPD2 { get; private set; } = null;
-    #endregion
-    #endregion
-
-    #region IDisposable Support
-    private bool disposedValue = false; // 重複する呼び出しを検出するには
-
-    protected virtual void Dispose(bool disposing)
-    {
-      if (!disposedValue)
-      {
-        if (disposing)
-        {
-          // TODO: マネージ状態を破棄します (マネージ オブジェクト)。
-        }
-
-        // TODO: アンマネージ リソース (アンマネージ オブジェクト) を解放し、下のファイナライザーをオーバーライドします。
-        // TODO: 大きなフィールドを null に設定します。
-
-        Ats.KeyDownEv -= Ats_KeyDownEv;
-        Ats.KeyUpEv -= Ats_KeyUpEv;
-
-        disposedValue = true;
-      }
-    }
-
-    // TODO: 上の Dispose(bool disposing) にアンマネージ リソースを解放するコードが含まれる場合にのみ、ファイナライザーをオーバーライドします。
-    // ~TIMS_IF()
-    // {
-    //   // このコードを変更しないでください。クリーンアップ コードを上の Dispose(bool disposing) に記述します。
-    //   Dispose(false);
-    // }
-
-    // このコードは、破棄可能なパターンを正しく実装できるように追加されました。
-    void IDisposable.Dispose()
-    {
-      // このコードを変更しないでください。クリーンアップ コードを上の Dispose(bool disposing) に記述します。
-      Dispose(true);
-      // TODO: 上のファイナライザーがオーバーライドされる場合は、次の行のコメントを解除してください。
-      // GC.SuppressFinalize(this);
-    }
     #endregion
 
   }
@@ -99,22 +67,21 @@ namespace TR.LimExpTIMS.TIMS
     /// <summary>停車駅であるか否か</summary>
     public bool IsStopSta { get; set; } = true;
 
+    /// <summary>駅位置</summary>
+    public int StaLocation { get; set; } = 0;
+
     /// <summary>駅名</summary>
     public int StaIndex { get; set; } = 0;
     /// <summary>時分</summary>
-    public int? TimeDst { get; set; } = null;
+    public TimeSetting TimeDst { get; set; } = new TimeSetting();
 
-    /// <summary>着(HH)</summary>
-    public byte? Arrive_HH { get; set; } = null;
-    /// <summary>着(MM)</summary>
-    public byte? Arrive_MM { get; set; } = null;
-    /// <summary>着(SS)</summary>
-    public byte Arrive_SS { get; set; } = 0;
+    /// <summary>着時刻設定</summary>
+    public TimeSetting Arrive { get; set; } = new TimeSetting();
+    
     public Pnl_TIMSMon_D01AA_TimeSep Arrive_Sep { get; set; } = Pnl_TIMSMon_D01AA_TimeSep.Blank;
 
-    public byte? Depart_HH { get; set; } = null;
-    public byte? Depart_MM { get; set; } = null;
-    public byte Depart_SS { get; set; } = 0;
+    /// <summary>発時刻設定</summary>
+    public TimeSetting Depart { get; set; } = new TimeSetting();
     public Pnl_TIMSMon_D01AA_TimeSep Depart_Sep { get; set; } = Pnl_TIMSMon_D01AA_TimeSep.Blank;
 
     /// <summary>番線</summary>
@@ -124,6 +91,23 @@ namespace TR.LimExpTIMS.TIMS
     public int? ArrLimitSPD { get; set; } = null;
     /// <summary>出発時制限</summary>
     public int? DepLimitSPD { get; set; } = null;
+  }
+
+  public class TimeSetting
+  {
+    public byte? HH { get; set; } = null;
+    public byte? MM { get; set; } = null;
+    public byte SS { get; set; } = 0;
+
+    public void SetFromBeaconD(in int data)
+    {
+      HH = data == 0 ? null : (byte?)((data / cvs.TIMS_TT_HHPos) % cvs.TIMS_TimeSetting_Len);
+      MM = data == 0 ? null : (byte?)((data / cvs.TIMS_TT_MMPos) % cvs.TIMS_TimeSetting_Len);
+      SS = (byte)(data % cvs.TIMS_TimeSetting_Len);//0はBlank
+    }
+
+    public override string ToString()
+      => string.Format("{0}:{1}:{2}", HH, MM, SS);
   }
 
   /// <summary>徐行情報</summary>

@@ -93,6 +93,7 @@ namespace TR.LimExpTIMS
     public const int L = 15;
   }
 
+  /// <summary>const values</summary>
   public static class cvs
   {
     public const double SPDThreshold = 5;//空転/滑走表示の閾値。
@@ -125,5 +126,47 @@ namespace TR.LimExpTIMS
     public const int AirSec_Warning_MsgCycle = 10 * 1000;
     /// <summary>エアセク警報を流すスピードの上限</summary>
     public const int AirSec_Warning_ShowSpeed = 25;
+
+    /// <summary>"真"を意味する値</summary>
+    public const int TRUE_VALUE = 1;
+    /// <summary>"偽"を意味する値</summary>
+    public const int FALSE_VALUE = 0;
+
+    /// <summary>一桁目までを取得する場合</summary>
+    public const int ColX1 = 10;
+    /// <summary>二桁目までを取得する場合</summary>
+    public const int ColX2 = 100;
+    /// <summary>三桁目までを取得する場合</summary>
+    public const int ColX3 = 1000;
+    /// <summary>四桁目までを取得する場合</summary>
+    public const int ColX4 = 10000;
+    /// <summary>五桁目までを取得する場合</summary>
+    public const int ColX5 = 100000;
+    /// <summary>六桁目までを取得する場合</summary>
+    public const int ColX6 = 1000000;
+    /// <summary>七桁目までを取得する場合</summary>
+    public const int ColX7 = 10000000;
+    /// <summary>八桁目までを取得する場合</summary>
+    public const int ColX8 = 100000000;
+
+    /// <summary>自炊TIMSにおける距離加算設定で距離を減算する場合</summary>
+    public const int Jisui_LocSetting_MinusSetBias = ColX6;
+
+    /// <summary>駅番号の桁長</summary>
+    public const int TIMS_StaName_IDLength = ColX3;
+
+    /// <summary>Beaconで時刻情報を設定する際の「時刻表桁番号」情報の開始位置</summary>
+    public const int TIMS_TT_Time_StaIDPos = TIMS_TimeSetting_Len * TIMS_TimeSetting_Len * TIMS_TimeSetting_Len;
+    /// <summary>Beaconで設定する時刻情報の「時」情報の開始位置</summary>
+    public const int TIMS_TT_HHPos = TIMS_TimeSetting_Len * TIMS_TimeSetting_Len;
+    /// <summary>Beaconで設定する時刻情報の「分」情報の開始位置</summary>
+    public const int TIMS_TT_MMPos = TIMS_TimeSetting_Len;
+    /// <summary>Beaconで設定する時刻情報の各情報の長さ</summary>
+    public const int TIMS_TimeSetting_Len = ColX2;
+
+    /// <summary>Beaconで設定する各駅位置情報の長さ</summary>
+    public const int LETsPI_TT_StaPos_PosLen = ColX7;
+    /// <summary>Beaconで設定する各駅時刻表表示のセパレータの種類設定の長さ</summary>
+    public const int LETsPI_TT_TimeSep_SepSetLen = ColX2;
   }
 }

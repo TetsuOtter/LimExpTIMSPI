@@ -111,10 +111,15 @@ namespace TR.LimExpTIMS
 
     public enum LogCategory
     {
+      /// <summary>重大なエラー</summary>
       Serious_Error,
+      /// <summary>軽微なエラー</summary>
       Minor_Error,
+      /// <summary>操作記録(他に影響するような操作を行った場合)</summary>
       Control_Log,
+      /// <summary>実行記録(処理順を追える程度のログ出力用)</summary>
       Step_Log,
+      /// <summary>実行記録(実行結果のログ出力用)</summary>
       Execute_Information
     }
   }

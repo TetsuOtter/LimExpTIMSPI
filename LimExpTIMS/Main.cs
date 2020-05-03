@@ -1,39 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace TR.LimExpTIMS
 {
-  /// <summary>メインの機能をここに実装する。</summary>
-  static internal class Main
+    /// <summary>メインの機能をここに実装する。</summary>
+    static internal class Main
   {
-
-    //Useful Function
-    static public void Turn(ref bool b) => b = !b;
-    static public void TurnOn(ref byte b) => b |= b;
-    static public void TurnOff(ref byte b) => b &= (byte)~b;
-    static public void Turn(ref byte b, bool turnOn)
-    {
-      if (turnOn) TurnOn(ref b);
-      else TurnOff(ref b);
-    }
-
-    static private ATSPsP.ATSIF atsIF;
-    static private TIMS.TIMS_IF timsIF;
-    static private Cab.Cab_IF cabIF;
-
     static internal void Load()
     {
 #if DEBUG
       MessageBox.Show("LimExpTIMSPI Debug Build");//If you don't need, please remove it.
 #endif
 
-      atsIF = new ATSPsP.ATSIF();
-      timsIF = new TIMS.TIMS_IF();
-      cabIF = new Cab.Cab_IF();
+      ATSPsP.ATSIF.Init();
+      TIMS.TIMS_IF.Init();
+      Cab.Cab_IF.Init();
     }
     static internal void Dispose() { }
     static internal void SetVehicleSpec(Spec s) { }
@@ -48,6 +29,7 @@ namespace TR.LimExpTIMS
         //各IFのプロパティより値を入れていく。
         //状態からPanel表示へのコンバートのみを行う。
         //状態変化は各IFから行う。
+        //モードによる表示/非表示はこちらで実装
 
 
         #region panels
@@ -70,7 +52,7 @@ namespace TR.LimExpTIMS
 
       SoundAssign.Accidental_Passage_Preventer_Stop_Once.GetOutput(sa);
       SoundAssign.Accidental_Passage_Preventer_Pass_Once.GetOutput(sa);
-      SoundAssign.Accidental_Passage_Preventer_Stop_Loop.GetOutput(sa);
+      //SoundAssign.Accidental_Passage_Preventer_Stop_Loop.GetOutput(sa);//不要なため削除
 
       SoundAssign.BougoR_Sound.GetOutput(sa);
       SoundAssign.ElecHorn.GetOutput(sa);

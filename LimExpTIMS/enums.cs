@@ -457,7 +457,29 @@
   public enum Pnl_TIMSMon_TrainNum_Footer
   {
     //準備中
-    
+    Blank = 0,
+    A = 1,
+    Z = 'Z'-'A'+1,
+
+    SO_Ebi,
+    SO_Atsu,
+    SO_Yama,
+    SO_Tsuka,
+    SO_Kashi,
+    SO_Nishi,
+    SO_Futa,
+    SO_Seya,
+    SO_Hama,
+    SO_Niyo,
+    SO_Hoshi,
+    SO_Shou,
+    SO_Izu,
+    SO_Shiyo,
+    SO_Haza,
+    SO_Izuchi,
+
+    SO_First = SO_Ebi,
+    SO_Last = SO_Izuchi
   }
 
   public enum Pnl_TIMSMon_D04AA_KeyState
@@ -591,6 +613,62 @@
     Green,
     Bluw,
     RED_Back//駅名のみ赤地&白文字
+  }
+
+
+  public enum Jisui_TIMS_TrNum_Footer
+  {
+    Blank,
+    A,
+    B,
+    C,
+    D,
+    E,
+    F,
+    G,
+    H,
+    K,
+    M,
+    P,
+    R,
+    S,
+    T,
+    Y,
+    Z,
+    KR,
+    SR,
+    SO_Ebi = 21,
+    SO_Atsu,
+    SO_Yama,
+    SO_Tsuka,
+    SO_Kashi,
+    SO_Nishi,
+    SO_Futa,
+    SO_Seya,
+    SO_Hama,
+    SO_Niyo,
+    SO_Hoshi,
+    SO_Shou,
+    SO_Izu,
+    SO_Shiyo,
+    SO_Haza,
+    SO_Izuchi,
+
+    SO_First = SO_Ebi,
+    SO_Last = SO_Izuchi
+  }
+
+
+  public enum Station_StopMode
+  {
+    /// <summary>通常の停車</summary>
+    Stop,
+    /// <summary>通過</summary>
+    Pass,
+    /// <summary>運転停車</summary>
+    TemporaryStop,
+    /// <summary>終着</summary>
+    LastStop,
   }
 
   static public class Pnl_BitAssign
