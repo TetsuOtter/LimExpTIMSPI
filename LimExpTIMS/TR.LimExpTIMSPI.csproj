@@ -82,6 +82,7 @@
     <Compile Include="Cab\Cab_IF.cs" />
     <Compile Include="Manager\LogManager.cs" />
     <Compile Include="Manager\SettingManager.cs" />
+    <Compile Include="Manager\SleepManager.cs" />
     <Compile Include="Manager\TimeManager.cs" />
     <Compile Include="Manager\SoundManager.cs" />
     <Compile Include="TIMS\AnnXX.cs" />
@@ -91,13 +92,16 @@
     <Compile Include="TIMS\D01AA.cs" />
     <Compile Include="TIMS\D04AA.cs" />
     <Compile Include="TIMS\D05AA.cs" />
-    <Compile Include="TIMS\Keiki.cs" />
+    <Compile Include="TIMS\No1Disp.cs" />
     <Compile Include="Other\KikuSC59A.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Status.cs" />
     <Compile Include="enums.cs" />
     <Compile Include="Manager\TimetableManager.cs" />
+    <Compile Include="TIMS\No2Disp.cs" />
+    <Compile Include="TIMS\ReduceSpeedInfo.cs" />
+    <Compile Include="TIMS\StaInfo.cs" />
     <Compile Include="TIMS\TIMSDisp.cs" />
     <Compile Include="TIMS\TIMS_IF.cs" />
     <Compile Include="SMem\TRBIDSpp.cs" />
