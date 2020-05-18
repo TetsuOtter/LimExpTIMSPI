@@ -48,7 +48,9 @@
     }
     public partial class GCP
     {
+      /// <summary>定速</summary>
       public const int ConstantSpeedLamp = 34;
+      /// <summary>抑速</summary>
       public const int HoldingSpeedLamp = 35;
       //36 NULL
     }
@@ -110,6 +112,7 @@
         public const int ParkingBrakeState = 77;
         public const int MovementProhibitionSystemState = 78;
       }
+
       public const int PageNameNum = 79;
       public const int TsukokuJohoMonitoringChar = 80;
       public const int UnkoJohoButton = 81;

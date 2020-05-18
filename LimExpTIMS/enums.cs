@@ -31,13 +31,21 @@
   /// <summary>TIMS Page Num列挙</summary>
   public enum TIMSPageENum//あとで適宜変更
   {
+    /// <summary>準備中</summary>
     S00AA,
+    /// <summary>初期選択</summary>
     S00AB,
+    /// <summary>運転士メニュー</summary>
     D00AA,
+    /// <summary>運転情報</summary>
     D01AA,
+    /// <summary>列番設定</summary>
     D04AA,
+    /// <summary>B確認情報</summary>
     D05AA,
+    /// <summary>非常通報</summary>
     A01AA,
+    /// <summary>P, Ps非常動作</summary>
     A06AA,
 
     None,//(予備)
@@ -180,22 +188,22 @@
   /// <summary>通告情報ボタン欄の文字</summary>
   public enum Pnl_TIMSMon_TsukokuJoho_Char
   {
-    /// <summary>空白</summary>
+    /// <summary>空白 0b000</summary>
     Blank,
-    /// <summary>ツウコク ジョウホウ</summary>
-    TJ_,
-    /// <summary>ツウコク</summary>
-    T__,
-    /// <summary>ジョウホウ</summary>
-    _J_,
-    /// <summary>モニタ中</summary>
+    /// <summary>モニタ中 0b001</summary>
     __M,
-    /// <summary>ツウコク ジョウホウ モニタ中</summary>
-    TJM,
-    /// <summary>ツウコク  モニタ中</summary>
+    /// <summary>ジョウホウ 0b010</summary>
+    _J_,
+    /// <summary> ジョウホウ モニタ中 0b011</summary>
+    _JM,
+    /// <summary>ツウコク 0b100</summary>
+    T__,
+    /// <summary>ツウコク  モニタ中 0b101</summary>
     T_M,
-    /// <summary> ジョウホウ モニタ中</summary>
-    _JM
+    /// <summary>ツウコク ジョウホウ 0b110</summary>
+    TJ_,
+    /// <summary>ツウコク ジョウホウ モニタ中 0b111</summary>
+    TJM,
   }
 
   /// <summary>TIMSモニタのボタン状態種類</summary>
@@ -287,19 +295,6 @@
 
   }
 
-  /// <summary>CabSeS位置表示種類</summary>
-  public enum Pnl_CabSeS_Display
-  {
-    /// <summary>無表示</summary>
-    Blank,
-    /// <summary>前</summary>
-    F,
-    /// <summary>中</summary>
-    N,
-    /// <summary>後</summary>
-    R
-  }
-
   /// <summary>ICリーダライタ表示種類</summary>
   public enum Pnl_IC_RW_Display
   {
@@ -375,6 +370,8 @@
   /// <summary>D00AAページのボタン押下状態種類</summary>
   public enum Pnl_TIMSMon_D00AA_Btn
   {
+    /// <summary>空白</summary>
+    Blank,
     /// <summary>運転情報ボタン押下</summary>
     Drive_Info_Push,
     /// <summary>ブレーキ確認情報ボタン押下</summary>
@@ -493,24 +490,16 @@
     SetBtPush
   }
 
-  public enum Pnl_TIMSMon_D04AA_PassS_10KeyMode
+  public enum Pnl_TIMSMon_D04AA_10KeyMode
   {
     /// <summary>表示なし</summary>
-    NoPass_NoSel,
-    /// <summary>通過設定なし 「数字」Selected</summary>
-    NoPass_Num,
-    /// <summary>通過設定なし 「英上」Selected</summary>
-    NoPass_Upper,
-    /// <summary>通過設定なし 「英下」Selected</summary>
-    NoPass_Lower,
-    /// <summary>通過設定あり モード選択なし</summary>
-    Pass_NoSel,
-    /// <summary>通過設定あり 「数字」Selected</summary>
-    Pass_Num,
-    /// <summary>通過設定あり 「英上」Selected</summary>
-    Pass_Upper,
-    /// <summary>通過設定あり 「英下」Selected</summary>
-    Pass_Lower
+    Blank,
+    /// <summary>「数字」Selected</summary>
+    Num,
+    /// <summary>「英上」Selected</summary>
+    Upper,
+    /// <summary>「英下」Selected</summary>
+    Lower
   }
 
   public enum Pnl_TIMSMon_LowerMsgArea

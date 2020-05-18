@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace TR.LimExpTIMS
 {
@@ -6,23 +7,27 @@ namespace TR.LimExpTIMS
   public class TimeManager : IDisposable
   {
     /// <summary>設定した時間経過した際に呼び出されます。</summary>
-    public event EventHandler TimerEvent;
+    private Action Act;
 
-    public TimeManager(int len = 0, bool isOneTime = false)
+    public TimeManager(int len, Action act, bool isOneTime = false)
     {
+      if (len <= 0) throw new ArgumentOutOfRangeException("lenには1以上の正の値のみを設定可能です.");
+      if (act == null) throw new ArgumentNullException("actにはメソッドを指定してください.");
+
       TimerLength = len;
       IsOneTimeTimer = isOneTime;
-
+      Act = act;
       Ats.ElapseEv += Ats_ElapseEv;
     }
 
     private int tRec = -1;
-    private void Ats_ElapseEv(object sender, TickEvArgs e)
+    private bool IsElapseRunning = false;
+    private async void Ats_ElapseEv(object sender, TickEvArgs e)
     {
+      if (IsElapseRunning) return;
+      if (!IsEnabled) return;
       int trec = tRec;
       tRec = e.state.T;
-
-      if (!IsEnabled) return;
       if (trec > e.state.T)//時間逆行を検知でOneTimeタイマー無効化
       {
         //Repeatタイマーは開始時刻を更新
@@ -32,10 +37,13 @@ namespace TR.LimExpTIMS
 
       if (FireTime > e.state.T) return;//まだ設定時刻ではない。
 
-      TimerEvent?.Invoke(this, default);
-
-      while (FireTime <= e.state.T)//null or 発火時刻が現在時刻より後になるまで+++++
+      IsElapseRunning = true;
+      while (FireTime <= Ats.StateD.T)//null or 発火時刻が現在時刻より後になるまで+++++
+      {
+        await Task.Run(Act.Invoke);
         FireTime = IsOneTimeTimer ? null : FireTime + TimerLength;
+      }
+      IsElapseRunning = false;
     }
 
     /// <summary>時刻監視中であるか否か</summary>

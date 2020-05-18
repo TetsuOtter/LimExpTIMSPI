@@ -4,12 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TR.LimExpTIMS
+namespace TR.LimExpTIMS.TIMS
 {
-  static class TIMSDisp
-  {
-    static public TIMSPageENum PageNum { get; set; }
-
-
-  }
+	static class No2Disp
+	{
+	}
 }

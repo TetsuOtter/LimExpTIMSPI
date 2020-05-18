@@ -168,5 +168,23 @@ namespace TR.LimExpTIMS
     public const int LETsPI_TT_StaPos_PosLen = ColX7;
     /// <summary>Beaconで設定する各駅時刻表表示のセパレータの種類設定の長さ</summary>
     public const int LETsPI_TT_TimeSep_SepSetLen = ColX2;
+
+    /// <summary>60fpsの場合の1frameにかかる時間を提供する</summary>
+    public const int fps_60 = 1000 / 60;
+
+    /// <summary>時刻表表示で1行更新するのにかかる時間[ms]</summary>
+    public const int Time_ToRefreshTT = fps_60;
+
+    /// <summary>ドアと連動して時刻表を更新させる場合に, PL滅から更新までにかける時間</summary>
+    public const int Time_ToRefreshTT_WithDoor = 2000;
+
+    /// <summary>SimTimeSpeedProviderで時間経過確認を行う間隔</summary>
+    public const int SimTimeSleepProvider_CheckInterval = 5;
+
+    /// <summary>1両の長さ[m]</summary>
+    public const int OneCarLength = 20;
+
+    /// <summary>1文字数値表示において, 空白を表す表示位置</summary>
+    public const int PElem_1charNum_BlankPos = 10;
   }
 }

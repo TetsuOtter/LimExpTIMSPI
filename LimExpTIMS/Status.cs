@@ -1,11 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.SqlServer.Server;
+using TR.LimExpTIMS.TIMS;
 
 namespace TR.LimExpTIMS
 {
+  /// <summary>状態を管理する.  ウィンドウ表示クラスで扱いやすいような形を用いる.</summary>
   static public class Status
   {
     /// <summary>自車のCabSeS状態</summary>
@@ -37,5 +36,113 @@ namespace TR.LimExpTIMS
     static public bool[] Btn { get; set; } = new bool[Enum.GetNames(typeof(Btns)).Length];
 
     static public TIMSPageENum TIMSMon_PageNum { get; set; }
-  }
+
+    #region TIMS Disp PanelStatuses
+    #region Common
+    static public Pnl_TIMSMon_TsukokuJoho_Char TsukokuJoho_Char { get; internal set; }
+    static public Pnl_TIMSMon_Emerg_Warning_WC Emerg_Warning_WC_Btn { get; internal set; }
+
+    #region 通告情報欄ボタン状態
+    static public Pnl_TIMSMon_TsukokuJoho_BtnState Tsukoku_Btn { get; internal set; }
+    static public Pnl_TIMSMon_TsukokuJoho_BtnState Kisei_Btn { get; internal set; }
+    static public Pnl_TIMSMon_TsukokuJoho_BtnState Shirei_Btn { get; internal set; }
+    static public Pnl_TIMSMon_TsukokuJoho_BtnState Unkou_Btn { get; internal set; }
+    #endregion
+
+    static public TimeSpan TIMS_DispTime { get; set; } = new TimeSpan(0);
+    static public int TIMS_DispSpeed { get; set; } = 0;
+
+    static public bool ShokiSentakuBtn { get; set; } = false;
+    #endregion
+
+    #region D00AA
+    public static Pnl_TIMSMon_D00AA_Btn D00AA_Btn { get; set; } = Pnl_TIMSMon_D00AA_Btn.Blank;
+		#endregion
+
+
+		#region D01AA
+		static public Pnl_Radio_CH Radio_CH { get; internal set; }
+
+    static public StaInfo FirstRow { get; internal set; } = null;
+    static public StaInfo SecondRow { get; internal set; } = null;
+    static public StaInfo ThirdRow { get; internal set; } = null;
+    static public StaInfo FourthRow { get; internal set; } = null;
+    static public StaInfo FifthRow { get; internal set; } = null;
+    static public StaInfo NextStop { get; internal set; } = null;
+
+    static public ReduceSpeedInfo ReduceSPD1 { get; internal set; } = null;
+    static public ReduceSpeedInfo ReduceSPD2 { get; internal set; } = null;
+    #endregion
+
+    #region D04AA
+    static public bool D04AA_PassSettingBtn { get; set; } = false;
+
+    static public Pnl_TIMSMon_TrainNum_Header D04AA_PrefixBtn { get; set; } = Pnl_TIMSMon_TrainNum_Header.Blank;
+    static public Pnl_TIMSMon_D04AA_10KeyMode D04AA_10KeyMode { get; set; } = Pnl_TIMSMon_D04AA_10KeyMode.Blank;
+
+    /// <summary>0:Blank, 1:D1...10:D0, 11:訂正</summary>
+    static public int D04AA_10KeyPressedNum { get; set; } = 0;
+    static public Pnl_TIMSMon_D04AA_KeyState D04AA_OtherKey { get; set; } = Pnl_TIMSMon_D04AA_KeyState.Blank;
+    #endregion
+    #endregion
+
+    #region No.1計器モニタ PanelStatus
+    static public int Keiki_DispSpeed { get; set; } = 0;
+    static public int SourceVoltage_DC { get; set; } = 0;
+    static public int SourceVoltage_AC { get; set; } = 0;
+    static public int Voltage_DC100V { get; set; } = 0;
+
+    static public bool Keiki_PL_DC { get; set; } = false;
+    static public bool Keiki_PL_AC { get; set; } = false;
+
+    static public int Keiki_BCPres { get; set; } = 0;
+    static public int Keiki_MRPres { get; set; } = 0;
+
+    static public int Keiki_BPos { get; set; } = 0;
+
+    static public bool Keiki_Yokusoku { get; set; } = false;
+    static public bool Keiki_EmergB { get; set; } = false;
+
+    static public bool Keiki_Jiko { get; set; } = false;
+    static public bool Keiki_3Phase { get; set; } = false;
+    static public bool Keiki_EmergShort { get; set; } = false;
+    static public bool Keiki_SnowResist { get; set; } = false;
+    static public bool Keiki_BackupStraightB { get; set; } = false;
+    static public bool Keiki_ConstSPD { get; set; } = false;
+    static public bool Keiki_ParkB { get; set; } = false;
+
+    static public int Keiki_ATSPsP_RunSPD { get; set; } = 0;
+    static public int Keiki_ATSPsP_LimSPD { get; set; } = 0;
+    #endregion
+
+    #region No.2計器モニタ(No1+2を含む) PanelStatus
+    static public bool ATSP_PW { get; set; } = false;
+    static public bool ATSP_PatternComing { get; set; } = false;
+    static public bool ATSP_Brake_Working { get; set; } = false;
+    static public bool ATSP_EmergB { get; set; } = false;
+    static public bool ATSP_Brake_Open { get; set; } = false;
+    static public bool ATSP_PL { get; set; } = false;
+    static public bool ATSP_Broken { get; set; } = false;
+
+    static public bool ATS_PW { get; set; } = false;
+    static public bool ATS_Trip { get; set; } = false;
+
+    static public bool ATSPs_PatternCreated { get; set; } = false;
+    static public bool ATSPs_PatternComing { get; set; } = false;
+    static public bool ATSPs_Brake_Working { get; set; } = false;
+    static public bool ATSPs_Brake_Open { get; set; } = false;
+    static public bool ATSPs_Broken { get; set; } = false;
+    #endregion
+
+    #region Cab States
+    static public bool EBAlermLamp { get; set; } = false;
+
+    /// <summary>マスコン位置 (B < 0 < P)</summary>
+    static public int MasCtrlPos { get; set; } = -9;
+    static public direct ReverserPos { get; set; } = direct.N;
+
+    static public Pnl_IC_RW_Display IC_RW { get; set; } = Pnl_IC_RW_Display.Blank;
+    static public bool IC_Readable { get; set; } = false;
+		#endregion
+	}
 }

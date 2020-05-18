@@ -112,24 +112,11 @@ namespace TR.LimExpTIMS
         case BeaconAssign.TIMS_NextStopComming://次駅接近 cmp
           if (Ats.IsLETsPIMode) return;//LETsPIモードでは無効(駅ごとのLocationをもとに自動再生)
           (e.beacon.Data >= 0 ? SoundAssign.Accidental_Passage_Preventer_Stop_Once : SoundAssign.Accidental_Passage_Preventer_Pass_Once).Play();//正なら停車 負なら通過
-          NextStaLocation = (Math.Abs(e.beacon.Data) % 10000) + e.beacon.Z;
-          //オプション設定は無効
+          Status.NextStop.StaLocation = (int)((Math.Abs(e.beacon.Data) % 10000) + e.beacon.Z);
 
-          //距離監視
-          Ats.ElapseEvInL((te) =>
-          {
-            if (te.state.Z < NextStaLocation) return false;
-            if (NextStaLocation != null)
-            {
-              StaList?.RemoveAt(0);
-              NextStaLocation = null;
-              NextStaPassed?.Invoke(null, null);
-            }
-            return true;
-          });
 
           LogManager.WriteLine("TimetableManager", LogManager.LogLevel.Information, LogManager.LogCategory.Execute_Information,
-            string.Format("Ats_SetBeaconEv.TIMS_NextStopComming\tNew NextStaLocation:{0}", NextStaLocation));
+            string.Format("Ats_SetBeaconEv.TIMS_NextStopComming\tNew NextStaLocation:{0}", Status.NextStop.StaLocation));
           return;
 
         case BeaconAssign.TIMS_NextStopStaNum://cmp
@@ -238,6 +225,15 @@ namespace TR.LimExpTIMS
           LogManager.WriteLine("TimetableManager", LogManager.LogLevel.Information, LogManager.LogCategory.Execute_Information,
                       string.Format("Ats_SetBeaconEv.LETsPI_TIMS_Timetable_StaLoc\tStaID:{0}\tNew StaLoc:{1}", StaList.IndexOf(sinfo), sinfo.StaLocation));
           return;
+
+        case BeaconAssign.LETsPI_TIMS_Timetable_StopMode:
+          //2桁を用いて停車種別を設定
+          //設定可能な値はenums.csのStation_StopModeに定義される.
+          sinfo = StaList.GetStaInfo(e.beacon.Data / cvs.ColX2);
+          sinfo.StopMode = (Station_StopMode)(e.beacon.Data % cvs.ColX2);
+          LogManager.WriteLine("TimetableManager", LogManager.LogLevel.Information, LogManager.LogCategory.Execute_Information,
+                      string.Format("Ats_SetBeaconEv.LETsPI_TIMS_Timetable_StopMode\tStaID:{0}\tNew StopMode:{1}", StaList.IndexOf(sinfo), sinfo.StopMode));
+          break;
 
         case BeaconAssign.LETsPI_TIMS_TimeTable_TimeSep_Arr:
           //2桁を用いて到着時刻表示に表示するセパレータを設定

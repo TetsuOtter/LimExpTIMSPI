@@ -31,6 +31,8 @@ namespace TR.LimExpTIMS
       else TurnOff(ref b);
     }
 
+    static public int ToInt(in this bool val) => val ? cvs.TRUE_VALUE : cvs.FALSE_VALUE;
+
     /// <summary>ラムダ式を用いて楽にイベントに登録/削除できる関数</summary>
     /// <param name="eh">購読するイベント</param>
     /// <param name="f">イベントで実行する関数(trueが返るまで実行され, trueが返ると購読解除が行われます.)</param>
