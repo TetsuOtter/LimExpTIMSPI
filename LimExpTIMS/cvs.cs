@@ -186,5 +186,7 @@ namespace TR.LimExpTIMS
 
     /// <summary>1文字数値表示において, 空白を表す表示位置</summary>
     public const int PElem_1charNum_BlankPos = 10;
+
+    
   }
 }

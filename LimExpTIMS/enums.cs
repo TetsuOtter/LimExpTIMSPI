@@ -604,6 +604,26 @@
     RED_Back//駅名のみ赤地&白文字
   }
 
+  public enum Pnl_TIMSMon_D01AA_UnitState
+  {
+    /// <summary>主パン上 0A</summary>
+    _VNNN,
+    /// <summary>主パン上 I+</summary>
+    _VPPP,
+    /// <summary>主パン上 I-</summary>
+    _VBBB,
+    /// <summary>主パン上 M1I+</summary>
+    _VNNP,
+    /// <summary>主パン上 M1I-</summary>
+    _VNNB,
+    /// <summary>主パン上 M2I+</summary>
+    _VNPN,
+    /// <summary>主パン上 M2I-</summary>
+    _VNBN,
+    /// <summary>全パン下 0A</summary>
+    __NNN,
+
+  }
 
   public enum Jisui_TIMS_TrNum_Footer
   {
@@ -646,7 +666,6 @@
     SO_First = SO_Ebi,
     SO_Last = SO_Izuchi
   }
-
 
   public enum Station_StopMode
   {

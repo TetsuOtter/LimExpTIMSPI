@@ -68,11 +68,14 @@ namespace TR.LimExpTIMS
         p[PanelAssign.TIMS.Minute] = Status.TIMS_DispTime.Minutes;
         p[PanelAssign.TIMS.Second] = Status.TIMS_DispTime.Seconds;
 
-        p[PanelAssign.TIMS.Speed100] = (Status.TIMS_DispSpeed / 100) % 10;
-        if (p[PanelAssign.TIMS.Speed100] == 0 && Status.TIMS_DispSpeed < 1000) p[PanelAssign.TIMS.Speed100] = cvs.PElem_1charNum_BlankPos;
-        p[PanelAssign.TIMS.Speed10] = (Status.TIMS_DispSpeed / 10) % 10;
-        if (p[PanelAssign.TIMS.Speed10] == 0 && Status.TIMS_DispSpeed < 100) p[PanelAssign.TIMS.Speed10] = cvs.PElem_1charNum_BlankPos;
+        //表示が2桁なら空白表示
+        p[PanelAssign.TIMS.Speed100] = Status.TIMS_DispSpeed < 100 ? (Status.TIMS_DispSpeed / 100) % 10 : cvs.PElem_1charNum_BlankPos;
+
+        //表示が1桁なら空白表示
+        p[PanelAssign.TIMS.Speed10] = Status.TIMS_DispSpeed < 10 ? (Status.TIMS_DispSpeed / 10) % 10 : cvs.PElem_1charNum_BlankPos;
+
         p[PanelAssign.TIMS.Speed1] = Status.TIMS_DispSpeed % 10;
+
 
         p[PanelAssign.GCP.SpeedMeterNeedle] = Status.Keiki_DispSpeed;
 
@@ -106,8 +109,80 @@ namespace TR.LimExpTIMS
 
         p[PanelAssign.TIMS.ShokiSentakuButton] = Status.ShokiSentakuBtn.ToInt();
 
+        p[PanelAssign.TIMS.D01AA.PTrainNum.NumPrefix] = Status.TIMSMon_PageNum == TIMSPageENum.D01AA ? (int)Status.PTrNum_Header : 0;
+        
+        if(Status.TIMSMon_PageNum== TIMSPageENum.D01AA)
+        {
+          p[PanelAssign.TIMS.D01AA.PTrainNum.NumPrefix] = (int)Status.PTrNum_Header;
+          p[PanelAssign.TIMS.D01AA.PTrainNum.Num1000] = (Status.PTrNum_Number / 1000) % 10;
+          p[PanelAssign.TIMS.D01AA.PTrainNum.Num100] = (Status.PTrNum_Number / 100) % 10;
+          p[PanelAssign.TIMS.D01AA.PTrainNum.Num10] = (Status.PTrNum_Number / 10) % 10;
+          p[PanelAssign.TIMS.D01AA.PTrainNum.Num1] = Status.PTrNum_Number % 10;
+          p[PanelAssign.TIMS.D01AA.PTrainNum.NumSuffix1] = (int)Status.PTrNum_Footer1;
+          p[PanelAssign.TIMS.D01AA.PTrainNum.NumSuffix2] = (int)Status.PTrNum_Footer2;
+        }
+        else
+        {
+          p[PanelAssign.TIMS.D01AA.PTrainNum.NumPrefix] = 0;
+          p[PanelAssign.TIMS.D01AA.PTrainNum.Num1000] = cvs.PElem_1charNum_BlankPos;
+          p[PanelAssign.TIMS.D01AA.PTrainNum.Num100] = cvs.PElem_1charNum_BlankPos;
+          p[PanelAssign.TIMS.D01AA.PTrainNum.Num10] = cvs.PElem_1charNum_BlankPos;
+          p[PanelAssign.TIMS.D01AA.PTrainNum.Num1] = cvs.PElem_1charNum_BlankPos;
+          p[PanelAssign.TIMS.D01AA.PTrainNum.NumSuffix1] = 0;
+          p[PanelAssign.TIMS.D01AA.PTrainNum.NumSuffix2] = 0;
+        }
 
-			}
+        //ゼロで空白 1~9で1桁, 10~99で2桁 それ以上も可
+        p[PanelAssign.TIMS.Location1100] = Status.TIMS_LocationEnabled ? Status.TIMS_LocationINT / 100 : 0;
+        //位置有効かつ2桁以上なら数値表示 無効か1桁なら空白
+        p[PanelAssign.TIMS.Location10] = Status.TIMS_LocationEnabled && Status.TIMS_LocationINT >= 10 ? (Status.TIMS_LocationINT / 10) % 10 : cvs.PElem_1charNum_BlankPos;
+        //位置無効なら空白
+        p[PanelAssign.TIMS.Location1] = Status.TIMS_LocationEnabled ? Status.TIMS_LocationINT % 10 : cvs.PElem_1charNum_BlankPos;
+        //位置無効なら空白扱いで「-」表示
+        p[PanelAssign.TIMS.LocationPoint1] = Status.TIMS_LocationEnabled ? Status.TIMS_LocationDEC : cvs.PElem_1charNum_BlankPos;
+
+        if (Status.TIMSMon_PageNum == TIMSPageENum.D01AA) {
+          p[PanelAssign.TIMS.D01AA.UnitState1] = (int)Status.UnitState1;
+          p[PanelAssign.TIMS.D01AA.UnitState2] = (int)Status.UnitState2;
+          p[PanelAssign.TIMS.D01AA.UnitState3] = (int)Status.UnitState3;
+          p[PanelAssign.TIMS.D01AA.UnitState4] = (int)Status.UnitState4;
+          p[PanelAssign.TIMS.D01AA.DirectionArrow] = (int)Status.TIMS_DirectArrow;
+          p[PanelAssign.TIMS.D01AA.EmergencyCalledCar] = Status.TIMS_EmergencyCaller;
+
+          p[PanelAssign.TIMS.D01AA.TrainNum.NumPrefix] = (int)(Status.IsTrNumEnabled ? Status.TrNum_Header : Pnl_TIMSMon_TrainNum_Header.Blank);
+          p[PanelAssign.TIMS.D01AA.TrainNum.Num1000] = Status.IsTrNumEnabled && Status.TrNum_Number >= 1000 ? (Status.TrNum_Number / 1000) % 10 : cvs.PElem_1charNum_BlankPos;
+          p[PanelAssign.TIMS.D01AA.TrainNum.Num100] = Status.IsTrNumEnabled && Status.TrNum_Number >= 100 ? (Status.TrNum_Number / 100) % 10 : cvs.PElem_1charNum_BlankPos;
+          p[PanelAssign.TIMS.D01AA.TrainNum.Num10] = Status.IsTrNumEnabled && Status.TrNum_Number >= 10 ? (Status.TrNum_Number / 10) % 10 : cvs.PElem_1charNum_BlankPos;
+          p[PanelAssign.TIMS.D01AA.TrainNum.Num1] = Status.IsTrNumEnabled ? Status.TrNum_Number % 10 : cvs.PElem_1charNum_BlankPos;
+          p[PanelAssign.TIMS.D01AA.TrainNum.NumSuffix1]= (int)(Status.IsTrNumEnabled ? Status.TrNum_Footer1 : Pnl_TIMSMon_TrainNum_Footer.Blank);
+          p[PanelAssign.TIMS.D01AA.TrainNum.NumSuffix2] = (int)(Status.IsTrNumEnabled ? Status.TrNum_Footer2 : Pnl_TIMSMon_TrainNum_Footer.Blank);
+
+          p[PanelAssign.TIMS.D01AA.PTrNumSettingEnabledLamp] = Status.IsPTrNumEnabled.ToInt();
+          p[PanelAssign.TIMS.D01AA.PassSettingStateLamp] = Status.IsPassSettingEnabled.ToInt();
+        }
+        else
+        {
+          p[PanelAssign.TIMS.D01AA.UnitState1] = 0;
+          p[PanelAssign.TIMS.D01AA.UnitState2] = 0;
+          p[PanelAssign.TIMS.D01AA.UnitState3] = 0;
+          p[PanelAssign.TIMS.D01AA.UnitState4] = 0;
+          p[PanelAssign.TIMS.D01AA.DirectionArrow] = (int)direct.N;
+          p[PanelAssign.TIMS.D01AA.EmergencyCalledCar] = 0;
+
+          p[PanelAssign.TIMS.D01AA.TrainNum.NumPrefix] = (int)Pnl_TIMSMon_TrainNum_Header.Blank;
+          p[PanelAssign.TIMS.D01AA.TrainNum.Num1000] = cvs.PElem_1charNum_BlankPos;
+          p[PanelAssign.TIMS.D01AA.TrainNum.Num100] = cvs.PElem_1charNum_BlankPos;
+          p[PanelAssign.TIMS.D01AA.TrainNum.Num10] = cvs.PElem_1charNum_BlankPos;
+          p[PanelAssign.TIMS.D01AA.TrainNum.Num1] = cvs.PElem_1charNum_BlankPos;
+          p[PanelAssign.TIMS.D01AA.TrainNum.NumSuffix1] = (int)Pnl_TIMSMon_TrainNum_Footer.Blank;
+          p[PanelAssign.TIMS.D01AA.TrainNum.NumSuffix2] = (int)Pnl_TIMSMon_TrainNum_Footer.Blank;
+
+          p[PanelAssign.TIMS.D01AA.PTrNumSettingEnabledLamp] = cvs.FALSE_VALUE;
+          p[PanelAssign.TIMS.D01AA.PassSettingStateLamp] = cvs.FALSE_VALUE;
+        }
+
+
+      }
 			#region sounds
 			SoundAssign.ATS_S_Chime.GetOutput(sa);
       SoundAssign.ATS_S_Bell.GetOutput(sa);

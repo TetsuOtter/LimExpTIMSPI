@@ -158,7 +158,7 @@
           public const int Num1 = 115;
           public const int NumSuffix1 = 116;
         }
-        public const int SettingCompleteLamp = 117;
+        public const int PTrNumSettingEnabledLamp = 117;
         public const int PassSettingStateLamp = 118;
         public partial class TrainNum
         {

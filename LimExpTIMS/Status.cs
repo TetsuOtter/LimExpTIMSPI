@@ -51,8 +51,16 @@ namespace TR.LimExpTIMS
 
     static public TimeSpan TIMS_DispTime { get; set; } = new TimeSpan(0);
     static public int TIMS_DispSpeed { get; set; } = 0;
+    static public bool TIMS_LocationEnabled { get; set; } = false;
+    static public int TIMS_LocationINT { get; set; } = 0;
+    static public int TIMS_LocationDEC { get; set; } = 0;
 
     static public bool ShokiSentakuBtn { get; set; } = false;
+
+    static public direct TIMS_DirectArrow { get; set; } = direct.F;
+
+    /// <summary>0:なし 1~20:n号車, 21~25:便所</summary>
+    static public int TIMS_EmergencyCaller { get; set; } = 0;
     #endregion
 
     #region D00AA
@@ -63,6 +71,20 @@ namespace TR.LimExpTIMS
 		#region D01AA
 		static public Pnl_Radio_CH Radio_CH { get; internal set; }
 
+    static public bool IsPTrNumEnabled { get; set; } = false;
+    static public bool IsPassSettingEnabled { get; set; } = false;
+    static public Pnl_TIMSMon_TrainNum_Header PTrNum_Header { get; set; } = Pnl_TIMSMon_TrainNum_Header.Blank;
+    static public int PTrNum_Number { get; set; } = 0;
+    static public Pnl_TIMSMon_TrainNum_Footer PTrNum_Footer1 { get; set; } = Pnl_TIMSMon_TrainNum_Footer.Blank;
+    static public Pnl_TIMSMon_TrainNum_Footer PTrNum_Footer2 { get; set; } = Pnl_TIMSMon_TrainNum_Footer.Blank;
+
+    static public bool IsTrNumEnabled { get; set; } = false;
+    static public Pnl_TIMSMon_TrainNum_Header TrNum_Header { get; set; } = Pnl_TIMSMon_TrainNum_Header.Blank;
+    static public int TrNum_Number { get; set; } = 0;
+    static public Pnl_TIMSMon_TrainNum_Footer TrNum_Footer1 { get; set; } = Pnl_TIMSMon_TrainNum_Footer.Blank;
+    static public Pnl_TIMSMon_TrainNum_Footer TrNum_Footer2 { get; set; } = Pnl_TIMSMon_TrainNum_Footer.Blank;
+
+
     static public StaInfo FirstRow { get; internal set; } = null;
     static public StaInfo SecondRow { get; internal set; } = null;
     static public StaInfo ThirdRow { get; internal set; } = null;
@@ -72,6 +94,11 @@ namespace TR.LimExpTIMS
 
     static public ReduceSpeedInfo ReduceSPD1 { get; internal set; } = null;
     static public ReduceSpeedInfo ReduceSPD2 { get; internal set; } = null;
+
+    static public Pnl_TIMSMon_D01AA_UnitState UnitState1 { get; set; } = Pnl_TIMSMon_D01AA_UnitState._VNNN;
+    static public Pnl_TIMSMon_D01AA_UnitState UnitState2 { get; set; } = Pnl_TIMSMon_D01AA_UnitState._VNNN;
+    static public Pnl_TIMSMon_D01AA_UnitState UnitState3 { get; set; } = Pnl_TIMSMon_D01AA_UnitState._VNNN;
+    static public Pnl_TIMSMon_D01AA_UnitState UnitState4 { get; set; } = Pnl_TIMSMon_D01AA_UnitState._VNNN;
     #endregion
 
     #region D04AA
