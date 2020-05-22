@@ -187,6 +187,29 @@ namespace TR.LimExpTIMS
     /// <summary>1文字数値表示において, 空白を表す表示位置</summary>
     public const int PElem_1charNum_BlankPos = 10;
 
-    
+    /// <summary>MR異常表示の閾値[kPa] これ以下で異常</summary>
+    public const int MR_Unusual_ThresholdPres = 720;
+    /// <summary>通常時のMR圧力表示の針のステップ[kPa]</summary>
+    public const int MR_PresDisp_PresStep_Usual = 5;
+    /// <summary>異常時のMR圧力表示の針のステップ[kPa]</summary>
+    public const int MR_PresDisp_PresStep_Unusual = 25;
+    /// <summary>MR圧力表示の通常時の表示下限(表示として.  異常表示は関係ない)</summary>
+    public const int MR_PresDisp_ULimit_Usual = 700;
+    /// <summary>MR圧力表示の通常時の表示範囲[kPa]</summary>
+    public const int MR_PresDisp_Range_Usual = 300;
+    /// <summary>MR圧力表示の異常時の表示範囲[kPa]</summary>
+    public const int MR_PresDisp_Range_Unusual = 1000;
+    /// <summary>通常時のステップ(60)と, 異常時のフルスケール(1000)の最小公倍数</summary>
+    public const int MR_PresDisp_DispRange = 3000;
+    /// <summary>通常時のMR圧表示の表示ステップ[段]</summary>
+    public const int MR_PresDisp_DispStep_Usual = MR_PresDisp_DispRange / (MR_PresDisp_Range_Usual / MR_PresDisp_PresStep_Usual);
+    /// <summary>異常時のMR圧表示の表示ステップ[段]</summary>
+    public const int MR_PresDisp_DispStep_Unusual = MR_PresDisp_DispRange / (MR_PresDisp_Range_Unusual / MR_PresDisp_PresStep_Unusual);
+
+    public const int BC_PresDisp_PresStep = 20;
+
+    public const int TIMS_D01AA_TimeHH_Blank = 24;
+    public const int TIMS_D01AA_TimeMM_Blank = 60;
+    public const int TIMS_D01AA_TimeSS_Blank = 0;
   }
 }

@@ -124,7 +124,7 @@ namespace TR.LimExpTIMS
 
     static public int Keiki_BCPres { get; set; } = 0;
     static public int Keiki_MRPres { get; set; } = 0;
-
+    static public bool Keiki_MRPres_Unusual { get; set; } = false;
     static public int Keiki_BPos { get; set; } = 0;
 
     static public bool Keiki_Yokusoku { get; set; } = false;

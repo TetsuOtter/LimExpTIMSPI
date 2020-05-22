@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using TR.LimExpTIMS.TIMS;
 
 namespace TR.LimExpTIMS
 {
@@ -181,7 +183,87 @@ namespace TR.LimExpTIMS
           p[PanelAssign.TIMS.D01AA.PassSettingStateLamp] = cvs.FALSE_VALUE;
         }
 
+        if (Status.Keiki_MRPres_Unusual)
+        {
+          int MRPresDisp = Status.Keiki_MRPres / cvs.MR_PresDisp_PresStep_Unusual;
+          MRPresDisp *= cvs.MR_PresDisp_DispStep_Unusual;
+          p[PanelAssign.GCP.MRUnusualBand] = MRPresDisp;
+          p[PanelAssign.GCP.MRUnusualScale] = cvs.TRUE_VALUE;
+          p[PanelAssign.GCP.MRNeedle] = MRPresDisp;
+        }
+        else
+        {
+          p[PanelAssign.GCP.MRUnusualBand] = 0;
+          p[PanelAssign.GCP.MRUnusualScale] = cvs.FALSE_VALUE;
+          int MRPresDisp = (Status.Keiki_MRPres - cvs.MR_PresDisp_ULimit_Usual) / cvs.MR_PresDisp_PresStep_Usual;
+          MRPresDisp *= cvs.MR_PresDisp_DispStep_Usual;
+          p[PanelAssign.GCP.MRNeedle] = MRPresDisp;
+        }
 
+        if (Status.Keiki_BCPres <= 200)
+        {
+          p[PanelAssign.GCP.BC0] = Status.Keiki_BCPres / cvs.BC_PresDisp_PresStep;
+          p[PanelAssign.GCP.BC200] = 0;
+          p[PanelAssign.GCP.BC400] = 0;
+          p[PanelAssign.GCP.BC600] = 0;
+        }
+        else if (Status.Keiki_BCPres <= 400)
+        {
+          p[PanelAssign.GCP.BC0] = 11;
+          p[PanelAssign.GCP.BC200] = (Status.Keiki_BCPres - 200) / cvs.BC_PresDisp_PresStep;
+          p[PanelAssign.GCP.BC400] = 0;
+          p[PanelAssign.GCP.BC600] = 0;
+        }
+        else if (Status.Keiki_BCPres <= 600)
+        {
+          p[PanelAssign.GCP.BC0] = 11;
+          p[PanelAssign.GCP.BC200] = 11;
+          p[PanelAssign.GCP.BC400] = (Status.Keiki_BCPres - 400) / cvs.BC_PresDisp_PresStep;
+          p[PanelAssign.GCP.BC600] = 0;
+        }
+        else
+        {
+          p[PanelAssign.GCP.BC0] = 11;
+          p[PanelAssign.GCP.BC200] = 11;
+          p[PanelAssign.GCP.BC400] = 11;
+          p[PanelAssign.GCP.BC600] = (Status.Keiki_BCPres - 600) / cvs.BC_PresDisp_PresStep;
+        }
+
+        if(Status.TIMSMon_PageNum== TIMSPageENum.D01AA)
+        {
+          void SetStaInfo(in StaInfo si, in int StaNamePos,
+            in int ArrHHPos, in int ArrMMPos, in int ArrSSPos,
+            in int DepHHPos, in int DepMMPos, in int DepSSPos,
+            in int ArrSepPos, in int DepSepPos,
+            in int TrackNumPos, in int RunTimeMMPos, in int RunTimeSSPos, in int LimInPos, in int LimOutPos)
+          {
+            p[StaNamePos] = si.StaIndex;
+            p[ArrHHPos] = si.Arrive.HH ?? cvs.TIMS_D01AA_TimeHH_Blank;
+            p[ArrMMPos] = si.Arrive.MM ?? cvs.TIMS_D01AA_TimeMM_Blank;
+            p[ArrSSPos] = si.Arrive.SS;
+            p[DepHHPos] = si.Depart.HH ?? cvs.TIMS_D01AA_TimeHH_Blank;
+            p[DepMMPos] = si.Depart.MM ?? cvs.TIMS_D01AA_TimeMM_Blank;
+            p[DepSSPos] = si.Depart.SS;
+
+            p[ArrSepPos] = (int)si.Arrive_Sep;
+            p[DepSepPos] = (int)si.Depart_Sep;
+
+            p[TrackNumPos] = si.TrackNum;
+            p[RunTimeMMPos] = si.TimeDst.MM ?? cvs.TIMS_D01AA_TimeMM_Blank;
+            p[RunTimeSSPos] = si.TimeDst.SS;
+            p[LimInPos] = si.ArrLimitSPD ?? 0;
+            p[LimOutPos] = si.DepLimitSPD ?? 0;
+          }
+
+          SetStaInfo(Status.FifthRow, PanelAssign.TIMS.D01AA.StaName2, PanelAssign.TIMS.D01AA.Arr2HH, PanelAssign.TIMS.D01AA.Arr2MM, PanelAssign.TIMS.D01AA.Arr2SS, PanelAssign.TIMS.D01AA.Dep1HH, PanelAssign.TIMS.D01AA.Dep1MM, PanelAssign.TIMS.D01AA.Dep1SS, PanelAssign.TIMS.D01AA.Arr2_Sep, PanelAssign.TIMS.D01AA.Dep2_Sep, PanelAssign.TIMS.D01AA.TrackNum2, PanelAssign.TIMS.D01AA.RunTime2MM, PanelAssign.TIMS.D01AA.RunTime2SS, PanelAssign.TIMS.D01AA.LimIN2, PanelAssign.TIMS.D01AA.LimOUT2);
+          SetStaInfo(Status.FifthRow, PanelAssign.TIMS.D01AA.StaName3, PanelAssign.TIMS.D01AA.Arr3HH, PanelAssign.TIMS.D01AA.Arr3MM, PanelAssign.TIMS.D01AA.Arr3SS, PanelAssign.TIMS.D01AA.Dep1HH, PanelAssign.TIMS.D01AA.Dep1MM, PanelAssign.TIMS.D01AA.Dep1SS, PanelAssign.TIMS.D01AA.Arr3_Sep, PanelAssign.TIMS.D01AA.Dep3_Sep, PanelAssign.TIMS.D01AA.TrackNum3, PanelAssign.TIMS.D01AA.RunTime3MM, PanelAssign.TIMS.D01AA.RunTime3SS, PanelAssign.TIMS.D01AA.LimIN3, PanelAssign.TIMS.D01AA.LimOUT3);
+          SetStaInfo(Status.FifthRow, PanelAssign.TIMS.D01AA.StaName4, PanelAssign.TIMS.D01AA.Arr4HH, PanelAssign.TIMS.D01AA.Arr4MM, PanelAssign.TIMS.D01AA.Arr4SS, PanelAssign.TIMS.D01AA.Dep1HH, PanelAssign.TIMS.D01AA.Dep1MM, PanelAssign.TIMS.D01AA.Dep1SS, PanelAssign.TIMS.D01AA.Arr4_Sep, PanelAssign.TIMS.D01AA.Dep4_Sep, PanelAssign.TIMS.D01AA.TrackNum4, PanelAssign.TIMS.D01AA.RunTime4MM, PanelAssign.TIMS.D01AA.RunTime4SS, PanelAssign.TIMS.D01AA.LimIN4, PanelAssign.TIMS.D01AA.LimOUT4);
+          SetStaInfo(Status.FifthRow, PanelAssign.TIMS.D01AA.StaName5, PanelAssign.TIMS.D01AA.Arr5HH, PanelAssign.TIMS.D01AA.Arr5MM, PanelAssign.TIMS.D01AA.Arr5SS, PanelAssign.TIMS.D01AA.Dep1HH, PanelAssign.TIMS.D01AA.Dep1MM, PanelAssign.TIMS.D01AA.Dep1SS, PanelAssign.TIMS.D01AA.Arr5_Sep, PanelAssign.TIMS.D01AA.Dep5_Sep, PanelAssign.TIMS.D01AA.TrackNum5, PanelAssign.TIMS.D01AA.RunTime5MM, PanelAssign.TIMS.D01AA.RunTime5SS, PanelAssign.TIMS.D01AA.LimIN5, PanelAssign.TIMS.D01AA.LimOUT5);
+        }
+        else
+        {
+          
+        }
       }
 			#region sounds
 			SoundAssign.ATS_S_Chime.GetOutput(sa);

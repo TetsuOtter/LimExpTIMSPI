@@ -679,6 +679,15 @@
     LastStop,
   }
 
+  public enum Pnl_TIMSMon_NotificationL
+  {
+    Blank
+  }
+  public enum Pnl_TIMSMon_NotificationR
+  {
+    Blank
+  }
+
   static public class Pnl_BitAssign
   {
     public const byte D05AA_1_EBSys = 0b00000100;

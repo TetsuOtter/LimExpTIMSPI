@@ -182,7 +182,88 @@
     {
       public partial class D01AA
       {
-        //130~207 触らないため略
+        public const int StaName1 = 130;
+        public const int StaName2 = 131;
+        public const int StaName3 = 132;
+        public const int StaName4 = 133;
+        public const int StaName5 = 134;
+
+        public const int Arr1HH = 135;
+        public const int Arr1MM = 136;
+        public const int Arr1SS = 137;
+        public const int Arr2HH = 138;
+        public const int Arr2MM = 139;
+        public const int Arr2SS = 140;
+        public const int Arr3HH = 141;
+        public const int Arr3MM = 142;
+        public const int Arr3SS = 143;
+        public const int Arr4HH = 144;
+        public const int Arr4MM = 145;
+        public const int Arr4SS = 146;
+        public const int Arr5HH = 147;
+        public const int Arr5MM = 148;
+        public const int Arr5SS = 149;
+
+        public const int Dep1HH = 150;
+        public const int Dep1MM = 151;
+        public const int Dep1SS = 152;
+        public const int Dep2HH = 153;
+        public const int Dep2MM = 154;
+        public const int Dep2SS = 155;
+        public const int Dep3HH = 156;
+        public const int Dep3MM = 157;
+        public const int Dep3SS = 158;
+        public const int Dep4HH = 159;
+        public const int Dep4MM = 160;
+        public const int Dep4SS = 161;
+        public const int Dep5HH = 162;
+        public const int Dep5MM = 163;
+        public const int Dep5SS = 164;
+
+        public const int Arr1_Sep = 170;
+        public const int Arr2_Sep = 171;
+        public const int Arr3_Sep = 172;
+        public const int Arr4_Sep = 173;
+        public const int Arr5_Sep = 174;
+
+        public const int TrackNum1 = 165;
+        public const int TrackNum2 = 166;
+        public const int TrackNum3 = 167;
+        public const int TrackNum4 = 168;
+        public const int TrackNum5 = 169;
+
+        public const int RunTime2MM = 178;
+        public const int RunTime2SS = 179;
+        public const int RunTime3MM = 180;
+        public const int RunTime3SS = 181;
+        public const int RunTime4MM = 182;
+        public const int RunTime4SS = 183;
+        public const int RunTime5MM = 184;
+        public const int RunTime5SS = 185;
+
+        public const int LimIN1 = 188;
+        public const int LimOUT1 = 189;
+        public const int LimIN2 = 190;
+        public const int LimOUT2 = 191;
+        public const int LimIN3 = 192;
+        public const int LimOUT3 = 193;
+        public const int LimIN4 = 194;
+        public const int LimOUT4 = 195;
+        public const int LimIN5 = 196;
+        public const int LimOUT5 = 197;
+
+        public const int Dep1_Sep = 198;
+        public const int Dep2_Sep = 199;
+        public const int Dep3_Sep = 200;
+        public const int Dep4_Sep = 201;
+        public const int Dep5_Sep = 202;
+
+        public const int StaNameN = 203;
+        public const int ArrNHH = 204;
+        public const int ArrNMM = 205;
+        public const int ArrNSS = 206;
+        public const int TrackNumN = 207;
+        public const int ArrN_Sep = 208;
       }
       public const int NotificationL = 209;
       public const int NotificationR = 210;
