@@ -34,22 +34,22 @@ namespace TR.LimExpTIMS.TIMS
       switch (index)
       {
         case 0:
-          FirstRow = sinfo;
+          Status.FirstRow = sinfo;
           break;
         case 1:
-          SecondRow = sinfo;
+          Status.SecondRow = sinfo;
           break;
         case 2:
-          ThirdRow = sinfo;
+          Status.ThirdRow = sinfo;
           break;
         case 3:
-          FourthRow = sinfo;
+          Status.FourthRow = sinfo;
           break;
         case 4:
-          FifthRow = sinfo;
+          Status.FifthRow = sinfo;
           break;
         case 5:
-          NextStop = sinfo;
+          Status.NextStop = sinfo;
           break;
         default:
           throw new ArgumentOutOfRangeException();
