@@ -81,6 +81,7 @@
     <Compile Include="Manager\ButtonManager.cs" />
     <Compile Include="Cab\Cab_IF.cs" />
     <Compile Include="Manager\LogManager.cs" />
+    <Compile Include="Manager\PanelManager.cs" />
     <Compile Include="Manager\SettingManager.cs" />
     <Compile Include="Manager\SleepManager.cs" />
     <Compile Include="Manager\TimeManager.cs" />
