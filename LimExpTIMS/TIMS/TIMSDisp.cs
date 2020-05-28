@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace TR.LimExpTIMS
 {
-  static class TIMSDisp
-  {
-    static public TIMSPageENum PageNum { get; set; }
+	static class TIMSDisp
+	{
+		static public TIMSPageENum PageNum { get; set; }
 
 
-  }
+	}
 }

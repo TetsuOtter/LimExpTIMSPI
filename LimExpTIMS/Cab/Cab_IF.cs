@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace TR.LimExpTIMS.Cab
 {
-  public static class Cab_IF
-  {
-    static public void Init()
-    {
+	public static class Cab_IF
+	{
+		static public void Init()
+		{
 
-    }
-  }
+		}
+	}
 }

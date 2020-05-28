@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace TR.LimExpTIMS
 {
-  static class No1Disp
-  {
+	static class No1Disp
+	{
 
-  }
+	}
 }
