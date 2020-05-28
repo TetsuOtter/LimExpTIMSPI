@@ -50,7 +50,7 @@
 
     None,//(予備)
   };
-  
+
   public enum DispBL
   {
     Max, UMid, Mid, LMid, Min, Black, Red
@@ -456,7 +456,7 @@
     //準備中
     Blank = 0,
     A = 1,
-    Z = 'Z'-'A'+1,
+    Z = 'Z' - 'A' + 1,
 
     SO_Ebi,
     SO_Atsu,
@@ -570,7 +570,7 @@
     Black,
     Red
   }
-  
+
   public enum Pnl_TIMSMon_D01AA_TimeSep
   {
     /// <summary>空白</summary>
@@ -590,7 +590,7 @@
     /// <summary>"="</summary>
     LastStop
   }
-  
+
   /// <summary>行路表示部の文字色</summary>
   public enum Pnl_TIMSMon_D01AA_TTCharColor
   {
@@ -706,6 +706,256 @@
     public const byte CabNFBPanel_2_SnowB = 0b00000100;
     public const byte CabNFBPanel_2_TojiRen = 0b00000010;
     public const byte CabNFBPanel_2_PanUp = 0b00000001;
+  }
+
+  public enum Panel_AssignEnum
+  {
+    ATS_White = 0,
+    ATS_Red = 1,
+    PPower = 2,
+    PPatternApproaching = 3,
+    PBrakeDisabled = 4,
+    PBrakeON = 5,
+    //6 Pパターン発生
+    PBroken = 7,
+    PLamp = 8,
+    PEmergBrake = 9,
+    EBAlermLamp = 10,
+    //11 Ps電源
+    //12 Ps表示灯
+    PsPatternCreated = 13,
+    PsPatternApproaching = 14,
+    PsBrakeON = 15,
+    PsDisabled = 16,
+    PsBroken = 17,
+    PsDrivingSpeed = 18,
+    PsPatternSpeed = 19,
+    StraightBackupBrake = 20,
+    SnowResistantBrake = 21,
+    //22~27 NULL
+    CabSeSLocation = 28,
+    MCKeyDisplay = 29,
+    BrakeLocationDisplay = 30,
+    EmergencyBrakeLamp = 31,
+    MasterControllerHandle = 32,
+    ReverserHandle = 33,
+    /// <summary>定速</summary>
+    ConstantSpeedLamp = 34,
+    /// <summary>抑速</summary>
+    HoldingSpeedLamp = 35,
+    //36 NULL
+    TIMS_Hour = 37,
+    TIMS_Minute = 38,
+    TIMS_Second = 39,
+    //40~44 NULL
+    GCP_Speed100 = 45,
+    GCP_Speed10 = 46,
+    GCP_Speed1 = 47,
+    S00AxPage = 48,
+    A06AAPage = 49,
+    SpeedMeterNeedle = 50,
+    D00AAICButtons = 51,
+    D04AA_PassSettingButton = 52,
+    D04AA_PrefixSetting = 53,
+    D04AA_TenKeyModeSelectButton = 54,
+    D04AA_TenKeyPressState = 55,
+    D04AA_OtherKey = 56,
+    D04AA_Cfgrd_NumPrefix = 57,
+    D04AA_Cfgrd_Num1000 = 58,
+    D04AA_Cfgrd_Num100 = 59,
+    D04AA_Cfgrd_Num10 = 60,
+    D04AA_Cfgrd_Num1 = 61,
+    D04AA_Cfgrd_NumSuffix1 = 62,
+    D04AA_Cfgrd_NumSuffix2 = 63,
+    D04AA_Entering_NumPrefix = 64,
+    D04AA_Entering_Num1000 = 65,
+    D04AA_Entering_Num100 = 66,
+    D04AA_Entering_Num10 = 67,
+    D04AA_Entering_Num1 = 68,
+    D04AA_Entering_NumSuffix1 = 69,
+    D04AA_Entering_NumSuffix2 = 70,
+    D00AAButtonPushingImage = 71,
+    D05AA_DirectionArrow = 72,
+    D05AA_CabSeSAndEBState = 73,
+    D05AA_DirectBackupBrakeState = 74,
+    D05AA_ATSBrakeState = 75,
+    D05AA_ConductorEBAndBHEBState = 76,
+    D05AA_ParkingBrakeState = 77,
+    D05AA_MovementProhibitionSystemState = 78,
+    PageNameNum = 79,
+    TsukokuJohoMonitoringChar = 80,
+    UnkoJohoButton = 81,
+    ShireiJohoButton = 82,
+    KiseiListButton = 83,
+    TsukokuButton = 84,
+    ShokiSentakuButton = 85,
+    //86~90 NULL
+    PTrNum_NumPrefix = 91,
+    PTrNum_Num1000 = 92,
+    PTrNum_Num100 = 93,
+    PTrNum_Num10 = 94,
+    PTrNum_Num1 = 95,
+    PTrNum_NumSuffix1 = 96,
+    PTrNum_NumSuffix2 = 97,
+    Location1100 = 98,
+    Location10 = 99,
+    Location1 = 100,
+    LocationPoint1 = 101,
+    TIMS_CurrentSpeed1 = 102,
+    TIMS_CurrentSpeed110 = 103,
+    //104 NULL
+    UnitState1 = 105,
+    UnitState2 = 106,
+    UnitState3 = 107,
+    UnitState4 = 108,
+    DirectionArrow = 109,
+    EmergencyCalledCar = 110,
+    D01AA_NumPrefix = 111,
+    D01AA_Num1000 = 112,
+    D01AA_Num100 = 113,
+    D01AA_Num10 = 114,
+    D01AA_Num1 = 115,
+    D01AA_NumSuffix1 = 116,
+    PTrNumSettingEnabledLamp = 117,
+    PassSettingStateLamp = 118,
+    D01AA_NumSuffix2 = 119,
+    MRUnusualBand = 120,
+    MRUnusualScale = 121,
+    BC0 = 123,
+    BC200 = 124,
+    BC400 = 125,
+    BC600 = 126,
+    //127 NULL
+    MRNeedle = 128,
+    //129 NULL
+    StaName1 = 130,
+    StaName2 = 131,
+    StaName3 = 132,
+    StaName4 = 133,
+    StaName5 = 134,
+    Arr1HH = 135,
+    Arr1MM = 136,
+    Arr1SS = 137,
+    Arr2HH = 138,
+    Arr2MM = 139,
+    Arr2SS = 140,
+    Arr3HH = 141,
+    Arr3MM = 142,
+    Arr3SS = 143,
+    Arr4HH = 144,
+    Arr4MM = 145,
+    Arr4SS = 146,
+    Arr5HH = 147,
+    Arr5MM = 148,
+    Arr5SS = 149,
+
+    Dep1HH = 150,
+    Dep1MM = 151,
+    Dep1SS = 152,
+    Dep2HH = 153,
+    Dep2MM = 154,
+    Dep2SS = 155,
+    Dep3HH = 156,
+    Dep3MM = 157,
+    Dep3SS = 158,
+    Dep4HH = 159,
+    Dep4MM = 160,
+    Dep4SS = 161,
+    Dep5HH = 162,
+    Dep5MM = 163,
+    Dep5SS = 164,
+
+    Arr1_Sep = 170,
+    Arr2_Sep = 171,
+    Arr3_Sep = 172,
+    Arr4_Sep = 173,
+    Arr5_Sep = 174,
+
+    TrackNum1 = 165,
+    TrackNum2 = 166,
+    TrackNum3 = 167,
+    TrackNum4 = 168,
+    TrackNum5 = 169,
+
+    RunTime2MM = 178,
+    RunTime2SS = 179,
+    RunTime3MM = 180,
+    RunTime3SS = 181,
+    RunTime4MM = 182,
+    RunTime4SS = 183,
+    RunTime5MM = 184,
+    RunTime5SS = 185,
+
+    LimIN1 = 188,
+    LimOUT1 = 189,
+    LimIN2 = 190,
+    LimOUT2 = 191,
+    LimIN3 = 192,
+    LimOUT3 = 193,
+    LimIN4 = 194,
+    LimOUT4 = 195,
+    LimIN5 = 196,
+    LimOUT5 = 197,
+
+    Dep1_Sep = 198,
+    Dep2_Sep = 199,
+    Dep3_Sep = 200,
+    Dep4_Sep = 201,
+    Dep5_Sep = 202,
+
+    StaNameN = 203,
+    ArrNHH = 204,
+    ArrNMM = 205,
+    ArrNSS = 206,
+    TrackNumN = 207,
+    ArrN_Sep = 208,
+    NotificationL = 209,
+    NotificationR = 210,
+    //211 NULL
+    CabNFBBase = 212,
+    CabNFB1 = 213,
+    CabNFB2 = 214,
+    CabNFB3 = 215,
+    //216 NULL
+    ACDCButton = 217,
+    ACDCLamp = 218,
+    ControlVolUnusual = 219,
+    ControlVol10 = 220,
+    ControlVol1 = 221,
+    ACVolUnusual = 222,
+    ACVol10000 = 223,
+    ACVol1000 = 224,
+    ACVol110 = 225,
+    DCVolUnusual = 226,
+    DCVol1000 = 227,
+    DCVol100 = 228,
+    DCVol10 = 229,
+    ControlVolNeedle = 230,
+    ACVolNeedle = 231,
+    DCVolNeedle = 232,
+    AccidentLamp = 233,
+    ThreePhaseLamp = 234,
+    //235 NULL
+    VCBState = 236,
+    UpperMessageArea = 237,
+    LowerMessageArea = 238,
+    ShortCutKeyState = 239,
+    HeadState = 240,
+    No1BrightAdjust = 241,
+    No2BrightAdjust = 242,
+    TIMSBrightAdjust = 243,
+    No1BrightAdjustButton = 244,
+    No2BrightAdjustButton = 245,
+    TIMSBrightAdjustButton = 246,
+    TIMSVolumeAdjustButton = 247,
+    D0nXXBase = 248,
+    RadioChannelNum = 249,
+    HELP1 = 250,
+    HELP2 = 251,
+    EmergecyCallButton = 252,
+    ICReaderWriter = 253,
+    BougoNotificator = 254,
+    A01AA_EmergencyCalledCar = 255,
   }
 
   #endregion
