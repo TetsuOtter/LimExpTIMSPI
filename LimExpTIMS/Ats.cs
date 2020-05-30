@@ -5,6 +5,8 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
+using TR.LimExpTIMS.Assign;
+
 namespace TR.LimExpTIMS
 {
 	/// <summary>BVEと対話するインターフェイス</summary>

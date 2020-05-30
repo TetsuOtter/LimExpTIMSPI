@@ -9,6 +9,7 @@ namespace TR.LimExpTIMS
 		{
 			PTyp = ptyp;
 			Index = index;
+			LoopInterval = loopInterval;
 			OffsetToWrite = index * sizeof(int);
 		}
 		

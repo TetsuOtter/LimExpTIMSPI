@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
+using TR.LimExpTIMS.Assign;
 using TR.LimExpTIMS.TIMS;
 namespace TR.LimExpTIMS
 {
@@ -111,7 +113,7 @@ namespace TR.LimExpTIMS
 
 				case BeaconAssign.TIMS_NextStopComming://次駅接近 cmp
 					if (Ats.IsLETsPIMode) return;//LETsPIモードでは無効(駅ごとのLocationをもとに自動再生)
-					(e.beacon.Data >= 0 ? SoundAssign.Accidental_Passage_Preventer_Stop_Once : SoundAssign.Accidental_Passage_Preventer_Pass_Once).Play();//正なら停車 負なら通過
+					(e.beacon.Data >= 0 ? SoundAssign.Pick(Sound_AssignEnum.Accidental_Passage_Preventer_Stop_Once) : SoundAssign.Pick(Sound_AssignEnum.Accidental_Passage_Preventer_Pass_Once)).Play();//正なら停車 負なら通過
 					Status.NextStop.StaLocation = (int)((Math.Abs(e.beacon.Data) % 10000) + e.beacon.Z);
 
 

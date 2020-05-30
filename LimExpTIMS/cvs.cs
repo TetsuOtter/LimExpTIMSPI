@@ -184,8 +184,10 @@ namespace TR.LimExpTIMS
 		/// <summary>1両の長さ[m]</summary>
 		public const int OneCarLength = 20;
 
-		/// <summary>1文字数値表示において, 空白を表す表示位置</summary>
-		public const int PElem_1charNum_BlankPos = 10;
+		/// <summary>TIMS表示器の現在位置表示が無効化されていた際に表示する文字の位置</summary>
+		public const int PElem_LocationDEC_DisabledChar = 10;
+		/// <summary>数値画像の空白表示位置</summary>
+		public const int PElem_Num_BlankPos = 10;
 
 		/// <summary>MR異常表示の閾値[kPa] これ以下で異常</summary>
 		public const int MR_Unusual_ThresholdPres = 720;

@@ -76,6 +76,12 @@ namespace TR.LimExpTIMS
 
 			return ls[pos];
 		}
+
+		/// <summary>10進数の引数の位の数字を取り出します.</summary>
+		/// <param name="v">取り出す元の数値</param>
+		/// <param name="pos">posの位(例 : 10の位)</param>
+		/// <returns>指定の位の数値</returns>
+		static public int NumPlaceOf(this in int v, in int pos) => (v / pos) % 10;
 	}
 
 	public class DoDLLAct

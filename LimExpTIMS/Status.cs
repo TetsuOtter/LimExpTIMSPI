@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
+
 using Microsoft.SqlServer.Server;
 using TR.LimExpTIMS.TIMS;
 
@@ -55,13 +57,18 @@ namespace TR.LimExpTIMS
 		static public int TIMS_LocationINT { get; set; } = 0;
 		static public int TIMS_LocationDEC { get; set; } = 0;
 
-		static public bool ShokiSentakuBtn { get; set; } = false;
+		static public bool ShokiSentakuBtnPushed { get; set; } = false;
 
 		static public direct TIMS_DirectArrow { get; set; } = direct.F;
 
 		/// <summary>0:なし 1~20:n号車, 21~25:便所</summary>
 		static public int TIMS_EmergencyCaller { get; set; } = 0;
+
+		/// <summary>運行情報が存在するかどうか</summary>
+		static public bool IsThereOpInfo { get; set; } = false;
 		#endregion
+
+		static public bool S00AB_UteshiBtnPushed { get; set; } = false;
 
 		#region D00AA
 		public static Pnl_TIMSMon_D00AA_Btn D00AA_Btn { get; set; } = Pnl_TIMSMon_D00AA_Btn.Blank;
@@ -102,10 +109,10 @@ namespace TR.LimExpTIMS
 		#endregion
 
 		#region D04AA
-		static public bool D04AA_PassSettingBtn { get; set; } = false;
+		static public bool D04AA_PassSettingBtnPushed { get; set; } = false;
 
-		static public Pnl_TIMSMon_TrainNum_Header D04AA_PrefixBtn { get; set; } = Pnl_TIMSMon_TrainNum_Header.Blank;
-		static public Pnl_TIMSMon_D04AA_10KeyMode D04AA_10KeyMode { get; set; } = Pnl_TIMSMon_D04AA_10KeyMode.Blank;
+		static public Pnl_TIMSMon_TrainNum_Header D04AA_SelectedPrefixBtn { get; set; } = Pnl_TIMSMon_TrainNum_Header.Blank;
+		static public Pnl_TIMSMon_D04AA_10KeyMode D04AA_Selected10KeyMode { get; set; } = Pnl_TIMSMon_D04AA_10KeyMode.Blank;
 
 		/// <summary>0:Blank, 1:D1...10:D0, 11:訂正</summary>
 		static public int D04AA_10KeyPressedNum { get; set; } = 0;
@@ -124,7 +131,6 @@ namespace TR.LimExpTIMS
 
 		static public int Keiki_BCPres { get; set; } = 0;
 		static public int Keiki_MRPres { get; set; } = 0;
-		static public bool Keiki_MRPres_Unusual { get; set; } = false;
 		static public int Keiki_BPos { get; set; } = 0;
 
 		static public bool Keiki_Yokusoku { get; set; } = false;
@@ -171,5 +177,129 @@ namespace TR.LimExpTIMS
 		static public Pnl_IC_RW_Display IC_RW { get; set; } = Pnl_IC_RW_Display.Blank;
 		static public bool IC_Readable { get; set; } = false;
 		#endregion
+	}
+
+	public static class PanelElemShowStates
+	{
+		static public void Check()
+		{
+			__CabSeSLocation = Status.DispMode == DisplayingModeENum.CabSeSShowing;
+			__TIMS_UpperBar = !(Status.TIMSMon_PageNum == TIMSPageENum.None || Status.TIMSMon_PageNum == TIMSPageENum.S00AA || Status.TIMSMon_PageNum == TIMSPageENum.S00AB || Status.TIMSMon_PageNum == TIMSPageENum.A06AA);
+			__TIMS_LowerBar = !(Status.TIMSMon_PageNum == TIMSPageENum.None || Status.TIMSMon_PageNum == TIMSPageENum.S00AA || Status.TIMSMon_PageNum == TIMSPageENum.S00AB);
+			__GCP_Speed100 = Status.Keiki_DispSpeed >= 100;
+			__GCP_Speed10 = __GCP_Speed100 && Status.Keiki_DispSpeed >= 10;//3桁なら確実にVisible
+			__S00AxPage = Status.TIMSMon_PageNum == TIMSPageENum.S00AA || Status.TIMSMon_PageNum == TIMSPageENum.S00AB;
+			__A06AAPage = Status.TIMSMon_PageNum == TIMSPageENum.A06AA;
+			__IsD00AA = Status.TIMSMon_PageNum == TIMSPageENum.D00AA;
+			__IsD01AA = Status.TIMSMon_PageNum == TIMSPageENum.D01AA;
+			__IsD04AA = Status.TIMSMon_PageNum == TIMSPageENum.D04AA;
+			__IsD05AA = Status.TIMSMon_PageNum == TIMSPageENum.D05AA;
+			__CabNFB = Status.DispMode == DisplayingModeENum.CabNFBShowing;
+			__TIMS_Location = __TIMS_UpperBar && Status.TIMS_LocationEnabled;
+
+			__ATS_Enabled = __IsD01AA && Status.CabSeS_kore == direct.F && Status.ATSP_PW;
+
+			__MR_Unusual = Status.Keiki_MRPres <= cvs.MR_Unusual_ThresholdPres;
+			__MRPres_DispNum = __MR_Unusual ? (Status.Keiki_MRPres / cvs.MR_PresDisp_PresStep_Unusual) * cvs.MR_PresDisp_DispStep_Unusual :
+			 ((Status.Keiki_MRPres - cvs.MR_PresDisp_ULimit_Usual) / cvs.MR_PresDisp_PresStep_Usual) * cvs.MR_PresDisp_DispStep_Usual;
+
+			__TIMS_Notification = !(Status.TIMSMon_PageNum == TIMSPageENum.None || Status.TIMSMon_PageNum == TIMSPageENum.S00AA);
+
+			//__CtrlVUnusual = false;
+			//__SourceACUnusual = false;
+			//__SourceDCUnusual = false;
+
+			__OutOfCar = Status.DispMode == DisplayingModeENum.OutOfCar;
+			__IsA01AA = Status.TIMSMon_PageNum == TIMSPageENum.A01AA;
+		}
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		static public bool CabSeSLocation() => __CabSeSLocation;
+		static private bool __CabSeSLocation = false;
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		static public bool TIMS_UpperBar() => __TIMS_UpperBar;
+		static private bool __TIMS_UpperBar = false;
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		static public bool TIMS_LowerBar() => __TIMS_LowerBar;
+		static private bool __TIMS_LowerBar = false;
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		static public bool GCP_Speed100() => __GCP_Speed100;
+		static private bool __GCP_Speed100 = false;
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		static public bool GCP_Speed10() => __GCP_Speed10;
+		static private bool __GCP_Speed10 = false;
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		static public bool S00AxPage() => __S00AxPage;
+		static private bool __S00AxPage = false;
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		static public bool A06AAPage() => __A06AAPage;
+		static private bool __A06AAPage = false;
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		static public bool IsD00AA() => __IsD00AA;
+		static private bool __IsD00AA = false;
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		static public bool IsD01AA() => __IsD01AA;
+		static private bool __IsD01AA = false;
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		static public bool IsD04AA() => __IsD04AA;
+		static private bool __IsD04AA = false;
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		static public bool IsD05AA() => __IsD05AA;
+		static private bool __IsD05AA = false;
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		static public bool CabNFB() => __CabNFB;
+		static private bool __CabNFB = false;
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		static public bool TIMS_Location() => __TIMS_Location;
+		static private bool __TIMS_Location = false;
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		static public bool ATS_Enabled() => __ATS_Enabled;
+		static private bool __ATS_Enabled = false;
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		static public bool MR_Unusual() => __MR_Unusual;
+		static private bool __MR_Unusual = false;
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		static public object MRPres_DispNum(object _) => __MRPres_DispNum;
+		static private int __MRPres_DispNum = 0;
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		static public bool TIMS_Notification() => __TIMS_Notification;
+		static private bool __TIMS_Notification = false;
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		static public bool CtrlVUnusual() => __CtrlVUnusual;
+		static private bool __CtrlVUnusual = false;
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		static public bool SourceACUnusual() => __SourceACUnusual;
+		static private bool __SourceACUnusual = false;
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		static public bool SourceDCUnusual() => __SourceDCUnusual;
+		static private bool __SourceDCUnusual = false;
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		static public bool OutOfCar() => __OutOfCar;
+		static private bool __OutOfCar = false;
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		static public bool IsA01AA() => __IsA01AA;
+		static private bool __IsA01AA = false;
+
 	}
 }

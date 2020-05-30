@@ -10,6 +10,7 @@
     <RootNamespace>TR.LimExpTIMS</RootNamespace>
     <AssemblyName>TR.LimExpTIMS</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <LangVersion>8.0</LangVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
     <NuGetPackageImportStamp>
@@ -77,6 +78,9 @@
     <Compile Include="..\..\IAtsPI\IAtsPI.cs">
       <Link>IAtsPI\IAtsPI.cs</Link>
     </Compile>
+    <Compile Include="Assign\ButtonAssign.cs" />
+    <Compile Include="Assign\PanelAssign.cs" />
+    <Compile Include="Assign\SoundAssign.cs" />
     <Compile Include="ATSPsP\ATSIF.cs" />
     <Compile Include="Manager\ButtonManager.cs" />
     <Compile Include="Cab\Cab_IF.cs" />
@@ -88,7 +92,7 @@
     <Compile Include="Manager\SoundManager.cs" />
     <Compile Include="TIMS\AnnXX.cs" />
     <Compile Include="ATSPsP\AskATSPsP.cs" />
-    <Compile Include="Assign.cs" />
+    <Compile Include="Assign\BeaconAssign.cs" />
     <Compile Include="Ats.cs" />
     <Compile Include="TIMS\D01AA.cs" />
     <Compile Include="TIMS\D04AA.cs" />
