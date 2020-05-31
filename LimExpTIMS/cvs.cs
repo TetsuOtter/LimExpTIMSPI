@@ -213,5 +213,8 @@ namespace TR.LimExpTIMS
 		public const int TIMS_D01AA_TimeHH_Blank = 24;
 		public const int TIMS_D01AA_TimeMM_Blank = 60;
 		public const int TIMS_D01AA_TimeSS_Blank = 0;
+
+		/// <summary>DNで非表示とする際に使用する値</summary>
+		public const int DigitalNumber_HiddenValue = int.MaxValue / 10000;//214,748まで使うようなDN要素はないと信じて
 	}
 }
