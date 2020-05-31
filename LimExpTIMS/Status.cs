@@ -9,35 +9,36 @@ namespace TR.LimExpTIMS
 	/// <summary>状態を管理する.  ウィンドウ表示クラスで扱いやすいような形を用いる.</summary>
 	static public class Status
 	{
+
 		/// <summary>自車のCabSeS状態</summary>
-		static public direct CabSeS_kore { get; set; }
+		static public direct CabSeS_kore { get; set; }= direct.N;
 		/// <summary>他車1(最後尾車両)のCabSeS状態</summary>
-		static public direct CabSeS_hoka1 { get; set; }
+		static public direct CabSeS_hoka1 { get; set; }= direct.N;
 		/// <summary>他車2(中間先頭車1)のCabSeS状態</summary>
-		static public direct CabSeS_hoka2 { get; set; }
+		static public direct CabSeS_hoka2 { get; set; }= direct.N;
 		/// <summary>他車3(中間先頭車2)のCabSeS状態</summary>
-		static public direct CabSeS_hoka3 { get; set; }
+		static public direct CabSeS_hoka3 { get; set; }= direct.N;
 
 		/// <summary>Panel表示モード状態</summary>
-		static public DisplayingModeENum DispMode { get; set; }
+		static public DisplayingModeENum DispMode { get; set; }= DisplayingModeENum.Driving;
 		/// <summary>マスコンキーの状態</summary>
-		static public MCKeyStateENum MCKey { get; set; }
+		static public MCKeyStateENum MCKey { get; set; }= MCKeyStateENum.Removed;
 		/// <summary>架線電圧種類</summary>
-		static public WireVolType WireType { get; set; }
+		static public WireVolType WireType { get; set; }= WireVolType.DC1500V;
 
 		/// <summary>No1表示器のバックライト状態</summary>
-		static public DispBL No1DispBL { get; set; }
+		static public DispBL No1DispBL { get; set; }= DispBL.Max;
 		/// <summary>No2表示器のバックライト状態</summary>
-		static public DispBL No2DispBL { get; set; }
+		static public DispBL No2DispBL { get; set; }= DispBL.Max;
 		/// <summary>TIMS表示器のバックライト状態</summary>
-		static public DispBL TIMSDispBL { get; set; }
+		static public DispBL TIMSDispBL { get; set; }= DispBL.Max;
 
 		/// <summary>各NFBの状態</summary>
 		static public bool[] NFB { get; set; } = new bool[Enum.GetNames(typeof(NFBs)).Length];
 		/// <summary>車両ボタンの押下状態</summary>
 		static public bool[] Btn { get; set; } = new bool[Enum.GetNames(typeof(Btns)).Length];
 
-		static public TIMSPageENum TIMSMon_PageNum { get; set; }
+		static public TIMSPageENum TIMSMon_PageNum { get; set; } = TIMSPageENum.D01AA;
 
 		#region TIMS Disp PanelStatuses
 		#region Common
@@ -211,6 +212,10 @@ namespace TR.LimExpTIMS
 
 			__OutOfCar = Status.DispMode == DisplayingModeENum.OutOfCar;
 			__IsA01AA = Status.TIMSMon_PageNum == TIMSPageENum.A01AA;
+
+			__BC200 = Status.Keiki_BCPres >= 200;
+			__BC400 = __BC200 && Status.Keiki_BCPres >= 400;//boolの比較の方が速いと信じて
+			__BC600 = __BC400 && Status.Keiki_BCPres >= 600;//boolの比較の方が速いと信じて
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -265,6 +270,8 @@ namespace TR.LimExpTIMS
 		static public bool TIMS_Location() => __TIMS_Location;
 		static private bool __TIMS_Location = false;
 
+		/// <summary>D01AAかつATSにアクセスできるかどうかを返す.</summary>
+		/// <returns>D01AAかつATSにアクセスできるかどうか</returns>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		static public bool ATS_Enabled() => __ATS_Enabled;
 		static private bool __ATS_Enabled = false;
@@ -301,5 +308,16 @@ namespace TR.LimExpTIMS
 		static public bool IsA01AA() => __IsA01AA;
 		static private bool __IsA01AA = false;
 
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		static public bool BC200() => __BC200;
+		static private bool __BC200 = false;
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		static public bool BC400() => __BC400;
+		static private bool __BC400 = false;
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		static public bool BC600() => __BC600;
+		static private bool __BC600 = false;
 	}
 }
