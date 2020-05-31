@@ -77,7 +77,7 @@ namespace TR.LimExpTIMS.Manager
 		{
 			//特にすることはない.
 		}
-		public override int HiddenValue { get; } = int.MaxValue;//さすがにPanel表示で最大までは使い切らないと信じて
+		public override int HiddenValue { get; } = cvs.DigitalNumber_HiddenValue;
 		
 		private int __RawValue = 0;//RawValueのキャッシュ
 		public override object RawValue
